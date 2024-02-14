@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerifyOtp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-127dp"
+        tools:layout_editor_absoluteY="-128dp">
+
+        <TextView
+            android:id="@+id/txtVerify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginEnd="20sp"
+            android:textAlignment="center"
+            android:text="Enter Verification Code"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/msgVerify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtVerify"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginEnd="20sp"
+            android:text="We have sent you an SMS with a OTP code to your number for verification"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:id="@+id/editNumberLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/msgVerify"
+            android:layout_marginTop="30sp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/tvNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btnEditNumber"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5sp"
+                android:onClick="btnEditClicked"
+                android:src="@drawable/icon_edit" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/otpEtLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editNumberLayout"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginEnd="20sp"
+            android:gravity="center_horizontal">
+
+            <EditText
+                android:id="@+id/otpET1"
+                android:layout_width="55sp"
+                android:layout_height="55sp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:imeActionLabel="Next Tab"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/otpET2"
+                android:layout_width="55sp"
+                android:layout_height="55sp"
+                android:layout_marginStart="5sp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:imeActionLabel="Next Tab"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/otpET3"
+                android:layout_width="55sp"
+                android:layout_height="55sp"
+                android:layout_marginStart="5sp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:imeActionLabel="Next Tab"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/otpET4"
+                android:layout_width="55sp"
+                android:layout_height="55sp"
+                android:layout_marginStart="5sp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:imeActionLabel="Next Tab"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/otpET5"
+                android:layout_width="55sp"
+                android:layout_height="55sp"
+                android:layout_marginStart="5sp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:imeActionLabel="Next Tab"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/otpET6"
+                android:layout_width="55sp"
+                android:layout_height="55sp"
+                android:layout_marginStart="5sp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:imeActionLabel="Next Tab"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/otpEtLayout"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginEnd="20sp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/msgOTP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Didn't receive the OTP?"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/btnVerifyOtpResendCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/msgOTP"
+                android:onClick="btnResendClick"
+                android:paddingStart="5sp"
+                android:text="RESEND"
+                android:textColor="@color/light_blue"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txtTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/msgOTP"
+                android:paddingStart="5sp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnVerifyOtpContinue"
+            android:layout_width="match_parent"
+            android:layout_height="55sp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20sp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginBottom="20sp"
+            android:background="@drawable/button_background"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:onClick="btnContinueClick"/>
+
+        <ProgressBar
+            android:id="@+id/verifyOtpProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/errOtpVerify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/red"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="85sp"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
