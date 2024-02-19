@@ -173,7 +173,10 @@ public class PasswordResetSite extends AppCompatActivity {
                                     });
 
                                 }else{
+                                    binding.btnResetPassword.setVisibility(View.VISIBLE);
+                                    binding.progressPasswordResetSite.setVisibility(View.INVISIBLE);
                                     Log.e("ResetPassword", result.getError().toString());
+                                    Toast.makeText(PasswordResetSite.this, "Token expired! Send Email again", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

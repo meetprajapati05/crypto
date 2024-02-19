@@ -60,12 +60,10 @@ public class HomePage extends AppCompatActivity {
     }
 
     public void setFragment(Fragment fragment){
-        FragmentManager fm =getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-
-        ft.replace(R.id.frameLayout, fragment);
-
-        ft.commit();
+            FragmentManager fm =getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.frameLayout, fragment);
+            ft.commit();
 
     }
 }

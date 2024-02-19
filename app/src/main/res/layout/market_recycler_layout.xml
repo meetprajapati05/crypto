@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewMarket"
+        android:layout_width="match_parent"
+        android:layout_height="90sp"
+        app:cardCornerRadius="20sp"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageCrypto"
+                android:layout_width="60sp"
+                android:layout_height="60sp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8sp"
+                app:civ_border_color="@color/light_green"
+                app:civ_border_width="3sp"
+                app:civ_border_overlay="true"/>
+
+            <TextView
+                android:id="@+id/txtCryptoName"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:text="Bitcoin"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/imageCrypto"
+                android:layout_toStartOf="@id/txtCryptoPrice"
+                android:layout_marginTop="8sp"
+                android:layout_marginEnd="4sp"
+                android:layout_marginStart="10sp"/>
+
+            <TextView
+                android:id="@+id/txtCryptoPriceSymbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="18sp"
+                android:layout_marginTop="8sp"
+                android:text="$"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtCryptoPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2sp"
+                android:layout_marginTop="8sp"
+                android:text="25000.00"
+                android:layout_toLeftOf="@id/txtCryptoPriceSymbol"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtCryptoSymbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="6sp"
+                android:layout_marginBottom="8sp"
+                android:layout_toEndOf="@id/imageCrypto"
+                android:text="btc"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtCryptoInDeVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="18sp"
+                android:layout_marginBottom="8sp"
+                android:text="0.25%"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imgInDeVal"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:src="@drawable/baseline_arrow_drop_up_24"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@id/txtCryptoInDeVal"
+                android:scaleType="center"
+                android:layout_marginBottom="7sp"
+                android:layout_marginEnd="2sp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

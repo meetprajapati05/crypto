@@ -3,14 +3,152 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.MarketFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/marketToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_currency_search"/>
+
+        <TextView
+            android:id="@+id/marketTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Market"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:fontFamily="@font/coiny"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+    <HorizontalScrollView
+        android:id="@+id/marketButtonsScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/marketToolbar"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMarketUSD"
+                android:layout_width="70sp"
+                android:layout_height="40sp"
+                android:layout_marginStart="5sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/market_selected_button_background"
+                android:text="USD"
+                android:textColor="@color/white"
+                android:textSize="12dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMarketINR"
+                android:layout_width="70sp"
+                android:layout_height="40sp"
+                android:layout_marginStart="5sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/market_unselected_button_backgroug"
+                android:text="INR"
+                android:textSize="12dp"
+                android:textColor="@color/light_green"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMarketBTC"
+                android:layout_width="70sp"
+                android:layout_height="40sp"
+                android:layout_marginStart="5sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/market_unselected_button_backgroug"
+                android:text="BTC"
+                android:textSize="12dp"
+                android:textColor="@color/light_green" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMarketETH"
+                android:layout_width="70sp"
+                android:layout_height="40sp"
+                android:layout_marginStart="5sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/market_unselected_button_backgroug"
+                android:text="ETH"
+                android:textSize="12dp"
+                android:textColor="@color/light_green"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMarketDOT"
+                android:layout_width="70sp"
+                android:layout_height="40sp"
+                android:layout_marginStart="5sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/market_unselected_button_backgroug"
+                android:text="DOT"
+                android:textSize="12dp"
+                android:textColor="@color/light_green" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/marketNestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/marketButtonsScroll">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/marketRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="150sp"
+                android:layout_height="60sp"
+                android:layout_below="@id/marketRecycler"
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible"
+                app:lottie_colorFilter="@color/light_green"
+                android:layout_marginBottom="50sp"
+                android:id="@+id/progressLoadMore"
+                app:lottie_rawRes="@raw/load_more"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                />
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/marketLoadingAnimation"
+        android:layout_width="120sp"
+        android:layout_height="120sp"
+        app:lottie_rawRes="@raw/sent_watch"
         android:layout_centerInParent="true"
-        android:text="Market Fragment"
-        android:textSize="30sp" />
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        android:visibility="invisible"/>
 
 </RelativeLayout>
