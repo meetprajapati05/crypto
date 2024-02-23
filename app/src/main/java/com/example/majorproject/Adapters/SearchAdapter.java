@@ -1,6 +1,7 @@
 package com.example.majorproject.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.majorproject.MarketDetail;
 import com.example.majorproject.Models.CryptoDataModel;
 import com.example.majorproject.R;
 
@@ -51,6 +54,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             holder.rank.setText(data.get(position).getMarket_cap_rank());
         }
 
+        //Card click to move next page
+        holder.searchCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MarketDetail.class);
+                intent.putExtra("name",data.get(position).getName());
+                intent.putExtra("symbol",data.get(position).getSymbol());
+                intent.putExtra("type",data.get(position).getType());
+                intent.putExtra("id",data.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
+
         setAnimation(holder.itemView, position);
     }
 
@@ -62,12 +78,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView name,symbol,rank;
+        CardView searchCard;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageCryptoSearch);
             name = itemView.findViewById(R.id.txtCryptoNameSearch);
             symbol = itemView.findViewById(R.id.txtCryptoSymbolSearch);
             rank = itemView.findViewById(R.id.txtRankSearch);
+            searchCard = itemView.findViewById(R.id.searchLayoutCard);
         }
     }
 

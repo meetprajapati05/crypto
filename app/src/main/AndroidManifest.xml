@@ -15,6 +15,12 @@
         android:theme="@style/Theme.MajorProject"
         tools:targetApi="31">
         <activity
+            android:name=".SellPage"
+            android:exported="false" />
+        <activity
+            android:name=".BuyPage"
+            android:exported="false" />
+        <activity
             android:name=".SearchCurrency"
             android:exported="false" />
         <activity

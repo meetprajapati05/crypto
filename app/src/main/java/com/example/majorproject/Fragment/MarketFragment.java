@@ -219,6 +219,8 @@ public class MarketFragment extends Fragment {
                                 model.setCurrent_price(apiData.getDouble("current_price"));
                                 model.setPrice_change_percentage_24h(apiData.getDouble("price_change_percentage_24h"));
                                 model.setType(type);
+                                model.setId(apiData.getString("id"));
+
                                 data.add(model);
 
                             } catch (JSONException e) {
@@ -256,6 +258,7 @@ public class MarketFragment extends Fragment {
                         model.setCurrent_price(apiData.getDouble("current_price"));
                         model.setPrice_change_percentage_24h(apiData.getDouble("price_change_percentage_24h"));
                         model.setType(type);
+                        model.setId(apiData.getString("id"));
                         data.add(model);
                     }
                     adapter = new MarketAdapter(getContext(), data);

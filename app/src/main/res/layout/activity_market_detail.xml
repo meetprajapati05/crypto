@@ -6,11 +6,95 @@
     android:layout_height="match_parent"
     tools:context=".MarketDetail">
 
-    <TextView
-        android:id="@+id/txtName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:layout_centerInParent="true"/>
+   <androidx.appcompat.widget.Toolbar
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:elevation="6sp">
+
+       <ImageView
+           android:id="@+id/btnMarketDetailBack"
+           android:layout_width="30sp"
+           android:layout_height="30sp"
+           android:src="@drawable/icon_back"/>
+
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center">
+
+           <TextView
+               android:id="@+id/marketTitleSymbol"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:fontFamily="@font/coiny"
+               android:text="BTC"
+               android:textColor="@color/black"
+               android:textSize="24sp" />
+
+           <TextView
+               android:id="@+id/marketTitleType"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="8sp"
+               android:layout_toEndOf="@id/marketTitleSymbol"
+               android:fontFamily="@font/coiny"
+               android:paddingStart="3sp"
+               android:text="USD"
+               android:textColor="@color/black"
+               android:textSize="18sp" />
+
+       </RelativeLayout>
+
+       <CheckBox
+           android:id="@+id/btnAddWatchlist"
+           android:layout_width="35sp"
+           android:layout_height="35sp"
+           android:layout_gravity="end"
+           android:layout_marginEnd="10sp"
+           android:button="@null"
+           android:background="@drawable/checkbox_watchlist_background"
+           app:useMaterialThemeColors="false"/>
+
+   </androidx.appcompat.widget.Toolbar>
+
+    <WebView
+        android:id="@+id/marketDetailChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="65sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65sp"
+        android:layout_alignParentBottom="true">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMarketDetailSell"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="sell"
+            android:textSize="20sp"
+            android:background="@drawable/button_sell_background"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_margin="5sp"
+            android:layout_weight="1"/>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMarketDetailBuy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="buy"
+            android:textSize="20sp"
+            android:background="@drawable/button_buy_background"
+            android:layout_margin="5sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -11,4 +11,9 @@
         android:icon="@drawable/baseline_bar_chart_24"
         android:title="Market"/>
 
+    <item
+        android:id="@+id/bottomOptWatchlist"
+        android:icon="@drawable/icon_watchlist_bottom_nav"
+        android:title="Watchlist"/>
+
 </menu>

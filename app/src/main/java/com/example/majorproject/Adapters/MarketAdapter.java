@@ -102,6 +102,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
                 intent.putExtra("name",data.get(position).getName());
                 intent.putExtra("symbol",data.get(position).getSymbol());
                 intent.putExtra("type",data.get(position).getType());
+                intent.putExtra("id",data.get(position).getId());
                 context.startActivity(intent);
             }
         });

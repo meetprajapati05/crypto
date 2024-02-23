@@ -105,6 +105,8 @@ public class SearchCurrency extends AppCompatActivity {
                                 model.setSymbol(apiData.getString("symbol"));
                                 model.setImage(apiData.getString("large"));
                                 model.setMarket_cap_rank(apiData.getString("market_cap_rank"));
+                                model.setId(apiData.getString("id"));
+                                model.setType("usd");
                                 data.add(model);
                             }
                             SearchAdapter adapter = new SearchAdapter(SearchCurrency.this, data);

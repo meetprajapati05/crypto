@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.example.majorproject.Fragment.HomeFragment;
 import com.example.majorproject.Fragment.MarketFragment;
+import com.example.majorproject.Fragment.WatchlistFragment;
 import com.example.majorproject.databinding.ActivityHomePageBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -47,8 +48,9 @@ public class HomePage extends AppCompatActivity {
 
                if(itemId == R.id.bottomOptHome){
                    setFragment(new HomeFragment());
-               }
-               else{
+               } else if (itemId==R.id.bottomOptWatchlist) {
+                   setFragment(new WatchlistFragment());
+               } else{
                    setFragment(new MarketFragment());
                }
 
@@ -64,6 +66,5 @@ public class HomePage extends AppCompatActivity {
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.frameLayout, fragment);
             ft.commit();
-
     }
 }
