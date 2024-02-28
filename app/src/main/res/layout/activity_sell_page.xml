@@ -21,8 +21,7 @@
         android:maxWidth="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
-        android:layout_below="@+id/toolbar"
-        android:src="@drawable/flag_republic_of_the_congo" />
+        android:layout_below="@+id/toolbar" />
 
     <TextView
         android:id="@+id/txtSellPageCryptoName"
@@ -33,7 +32,6 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/imgSellPageCrypto"
         android:fontFamily="@font/alata"
-        android:text="bitcoin"
         android:textSize="23dp"
         android:textStyle="bold" />
     <TextView
@@ -44,7 +42,6 @@
         android:layout_marginStart="5dp"
         android:layout_below="@+id/toolbar"
         android:layout_toRightOf="@+id/txtSellPageCryptoName"
-        android:text="eth"
         android:textSize="18dp"
         android:textStyle="bold"
         android:fontFamily="@font/alata"
@@ -57,7 +54,6 @@
         android:layout_marginStart="15dp"
         android:layout_below="@+id/txtSellPageCryptoName"
         android:layout_toRightOf="@+id/imgSellPageCrypto"
-        android:text="bte"
         android:textSize="20dp"
         android:fontFamily="@font/alata"
         />
@@ -92,7 +88,6 @@
         android:layout_marginStart="13dp"
         android:layout_below="@+id/txtSellPageCryptoName"
         android:layout_toRightOf="@+id/txtSellPageCryptoSymbol"
-        android:text="1234"
         android:textSize="18dp"
         android:fontFamily="@font/alata"
         />
@@ -111,18 +106,17 @@
         />
 
     <TextView
-        android:id="@+id/text6"
+        android:id="@+id/txtSellPageCryptoValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text5"
-        android:layout_marginTop="5dp"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:text="$12345"
-        android:textStyle="bold"
-        android:textSize="20dp"
+        android:layout_marginRight="23dp"
         android:fontFamily="@font/alata"
-        />
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/buttonlayout"
@@ -142,8 +136,9 @@
             android:layout_marginEnd="5sp"
             android:layout_weight="1"
             android:background="@drawable/edittext_buy_sell_page_background"
+            android:inputType="number"
             android:textAlignment="center"
-            android:textColor="#FFC107" />
+            android:textColor="@color/light_green" />
 
         <EditText
             android:id="@+id/etSellPageQuantity"
@@ -155,27 +150,46 @@
             android:layout_marginTop="50dp"
             android:layout_weight="1"
             android:background="@drawable/edittext_buy_sell_page_background"
+            android:inputType="number"
             android:textAlignment="center"
-            android:textColor="#FFC107" />
+            android:textColor="@color/light_green" />
 
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/txtSellPageSeekbarValue"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/buttonlayout"
+        android:layout_marginTop="20sp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/seekbarSellPageLaverage"
-        android:textSize="23dp"
-        android:fontFamily="@font/alata"
-        />
+        >
+
+        <TextView
+            android:id="@+id/msgLeverage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alata"
+            android:text="Leverage : "
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtLeverage"
+            android:layout_marginStart="5dp"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/alata"
+            android:layout_toRightOf="@id/msgLeverage"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/balanceLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btnSellPageBuy"
+        android:layout_above="@id/btnSellLayout"
         android:layout_centerHorizontal="true"
         >
 
@@ -201,21 +215,55 @@
             />
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSellPageBuy"
+    <RelativeLayout
+        android:id="@+id/btnSellLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="50sp"
         android:layout_marginStart="20sp"
         android:layout_marginTop="15sp"
         android:layout_marginEnd="20sp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20sp"
-        android:background="@drawable/button_buy_background"
-        android:backgroundTint="#FF0000"
-        android:fontFamily="@font/alata"
-        android:text="Sell"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:textColor="#fff" />
+        android:layout_marginBottom="20sp"        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSellPageSell"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_buy_background"
+            android:backgroundTint="#FF0000"
+            android:fontFamily="@font/alata"
+            android:text="Sell"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:textColor="#fff" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/btnSellProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_rawRes="@raw/animation_for_buy_sell_loading"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txtSellPageDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/txtSellPageQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/txtSellPageCurrentPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

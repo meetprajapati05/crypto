@@ -194,7 +194,7 @@ public class MarketFragment extends Fragment {
     private void setRecyclerView(int page, String type) {
         OkHttpClient okHttpClient = new OkHttpClient()
                 .newBuilder().build();
-        AndroidNetworking.initialize(getContext(),okHttpClient);
+        AndroidNetworking.initialize(getActivity(),okHttpClient);
 
         AndroidNetworking.setParserFactory(new GsonParserFactory());
 
@@ -275,7 +275,7 @@ public class MarketFragment extends Fragment {
                 error.printStackTrace();
             }
         });
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(request);
     }
 

@@ -1,5 +1,6 @@
 package com.example.majorproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.example.majorproject.databinding.ActivityMarketDetailBinding;
 
 import org.bson.Document;
 
+import java.util.Collections;
+
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
@@ -28,13 +31,14 @@ import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class MarketDetail extends AppCompatActivity {
     ActivityMarketDetailBinding binding;
-    String name,symbol,type,coin_id;
+    String name,symbol,type,coin_id,coin_purchase_date_and_time;
 
     App app;
     User user;
     MongoClient client;
     MongoDatabase database;
     MongoCollection<Document> collection;
+    String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +57,15 @@ public class MarketDetail extends AppCompatActivity {
         symbol = getIntent().getStringExtra("symbol").toString();
         type = getIntent().getStringExtra("type").toString();
         coin_id = getIntent().getStringExtra("id").toString();
+        coin_purchase_date_and_time = getIntent().getStringExtra("purchase_date_and_time");
+
 
         binding.marketTitleSymbol.setText(symbol.toUpperCase());
         binding.marketTitleType.setText(type.toUpperCase());
+
+        SharedPreferences emailPreferences = getSharedPreferences("MajorProject", MODE_PRIVATE);
+        email = emailPreferences.getString("email",null);
+
 
         //Check data is enterd in watchlist or not if exist then check btnAddWatchlist
         SharedPreferences preferences = getSharedPreferences("Watchlist",MODE_PRIVATE);
@@ -63,7 +73,7 @@ public class MarketDetail extends AppCompatActivity {
         if(isChecked){
             binding.btnAddWatchlist.setChecked(true);
         }else {
-            Document checkData = new Document().append("user_id",user.getId()).append("watchlist.coin_name", name);
+            Document checkData = new Document().append("user_id",user.getId()).append("email",email).append("watchlist.coin_name", name);
 
             collection.find(checkData).first().getAsync(new App.Callback<Document>() {
                 @Override
@@ -112,9 +122,16 @@ public class MarketDetail extends AppCompatActivity {
         binding.btnMarketDetailSell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent iSell = new Intent(getApplicationContext(),SellPage.class);
-                iSell.putExtra("id",coin_id);
-                startActivity(iSell);
+                if(coin_purchase_date_and_time!=null) {
+                   ;Intent iSell = new Intent(getApplicationContext(), SellPage.class);
+                    iSell.putExtra("id", coin_id);
+                    iSell.putExtra("purchase_date_and_time", coin_purchase_date_and_time);
+                    startActivity(iSell);
+                }else{
+                    Intent iSell = new Intent(getApplicationContext(), SellPage.class);
+                    iSell.putExtra("id", coin_id);
+                    startActivity(iSell);
+                }
             }
         });
 
@@ -123,9 +140,9 @@ public class MarketDetail extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(binding.btnAddWatchlist.isChecked()){
-                    Document filter = new Document("user_id", user.getId());
-                    Document data = new Document().append("coin_name", name).append("coin_symbol", symbol).append("coin_id",coin_id);
-                    Document updateDocument = new Document("$push", new Document("watchlist",data));
+                    Document filter = new Document("user_id", user.getId()).append("email", email);
+
+                    Document updateDocument = new Document("$push", new Document("watchlist",new Document().append("coin_name", name).append("coin_symbol", symbol).append("coin_id",coin_id)));
                     collection.updateOne(filter,updateDocument).getAsync(new App.Callback<UpdateResult>() {
                         @Override
                         public void onResult(App.Result<UpdateResult> result) {
@@ -144,7 +161,7 @@ public class MarketDetail extends AppCompatActivity {
                     });
                 }else{
                     Document removeUpdateFilter = new Document().append("$pull", new Document("watchlist",new Document("coin_name",name).append("coin_symbol",symbol).append("coin_id",coin_id)));
-                    collection.updateOne(new Document("user_id", user.getId()), removeUpdateFilter).getAsync(new App.Callback<UpdateResult>() {
+                    collection.updateOne(new Document("user_id", user.getId()).append("email",email), removeUpdateFilter).getAsync(new App.Callback<UpdateResult>() {
                         @Override
                         public void onResult(App.Result<UpdateResult> result) {
                             if(result.isSuccess()){

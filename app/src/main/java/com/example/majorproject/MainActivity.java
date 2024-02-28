@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         //Get user id from SharedPreference that store in Home page
 
         SharedPreferences getUserId = getSharedPreferences("MajorProject", MODE_PRIVATE);
-        String user_id = getUserId.getString("user_id", null);
+        String user_id = getUserId.getString("email", null);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }else{
                     Intent iHome = new Intent(MainActivity.this, HomePage.class);
-                    iHome.putExtra("user_id", user_id);
+                    iHome.putExtra("email", user_id);
                     startActivity(iHome);
                     finish();
                 }

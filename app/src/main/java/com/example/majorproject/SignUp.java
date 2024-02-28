@@ -277,6 +277,7 @@ public class SignUp extends AppCompatActivity {
                                     //Pass next activity
                                     Intent iHome = new Intent(SignUp.this, HomePage.class);
                                     iHome.putExtra("user_id", user.getId());
+                                    iHome.putExtra("email", user.getProfile().getEmail());
                                     startActivity(iHome);
                                     finishAffinity();
                                 }else{
@@ -294,7 +295,7 @@ public class SignUp extends AppCompatActivity {
                 }else{
                     binding.btnRegisterGoogle.setVisibility(View.VISIBLE);
                     binding.progressRegisterGoogle.setVisibility(View.INVISIBLE);
-                    Toast.makeText(SignUp.this, result.getError().getErrorMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("ErrAddGoogleData", result.getError().getErrorMessage());
                 }
             }
         });
@@ -313,7 +314,8 @@ public class SignUp extends AppCompatActivity {
                 .append("phone_no", null)
                 .append("password", null)
                 .append("provider", user.getProviderType().name())
-                .append("img_url", Objects.requireNonNull(account.getPhotoUrl()).toString());
+                .append("img_url", Objects.requireNonNull(account.getPhotoUrl()).toString())
+                .append("balance", 10000.0);
 
         collection.insertOne(data).getAsync(new App.Callback<InsertOneResult>() {
             @Override
@@ -323,6 +325,7 @@ public class SignUp extends AppCompatActivity {
                 if (result.isSuccess()) {
                     Intent intent = new Intent(SignUp.this, HomePage.class);
                     intent.putExtra("user_id", user.getId());
+                    intent.putExtra("email",user.getProfile().getEmail());
                     startActivity(intent);
                     finishAffinity();
                 } else {

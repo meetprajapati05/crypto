@@ -1,5 +1,7 @@
 package com.example.majorproject.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -89,6 +91,8 @@ public class WatchlistFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         setWatchlistRecycler();
 
+
+
         //Refresh Recycler data
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -104,45 +108,48 @@ public class WatchlistFragment extends Fragment {
     }
     public void setWatchlistRecycler(){
 
+        SharedPreferences preferences = getContext().getSharedPreferences("MajorProject", Context.MODE_PRIVATE);
+        String email = preferences.getString("email",null);
+
         MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
 
-        Document document = new Document("user_id", user.getId());
-        collection.find(document)
-                .first()
-                .getAsync(new App.Callback<Document>() {
-                    @Override
-                    public void onResult(App.Result<Document> result) {
-                        if(result.isSuccess()){
-                            if(result.get()!=null){
-                                data.clear();
-                                List<Document> watchlist = result.get().getList("watchlist", Document.class);
-                                if(watchlist!=null){
-                                    for(Document watchlistItem : watchlist){
-                                        String coin_name = watchlistItem.getString("coin_name");
-                                        String coin_symbol = watchlistItem.getString("coin_symbol");
-                                        String id = watchlistItem.getString("coin_id");
-                                        //Filter api and get data that are added in watchlist
-                                        if(coins!=null) {
-                                            coins = coins + "," + id;
-                                        }  else {
-                                            coins = id;
+
+        if(email!=null) {
+            Document document = new Document("user_id", user.getId()).append("email",email);
+            collection.find(document)
+                    .first()
+                    .getAsync(new App.Callback<Document>() {
+                        @Override
+                        public void onResult(App.Result<Document> result) {
+                            if (result.isSuccess()) {
+                                if (result.get() != null) {
+                                    data.clear();
+                                    List<Document> watchlist = result.get().getList("watchlist", Document.class);
+                                    if (watchlist != null) {
+                                        for (Document watchlistItem : watchlist) {
+                                            String coin_name = watchlistItem.getString("coin_name");
+                                            String coin_symbol = watchlistItem.getString("coin_symbol");
+                                            String id = watchlistItem.getString("coin_id");
+                                            //Filter api and get data that are added in watchlist
+                                            if (coins != null) {
+                                                coins = coins + "," + id;
+                                            } else {
+                                                coins = id;
+                                            }
+                                        }
+                                        if (coins != null) {
+                                            filterApiWithWatchlistData(coins);
                                         }
                                     }
-                                    if(coins!=null) {
-                                        filterApiWithWatchlistData(coins);
-                                    }
+                                } else {
+
                                 }
+                            } else {
+                                Log.e("ErrWatchlistDatabase", result.getError().toString());
                             }
-                            else{
-
-                            }
-                        }else{
-                            Log.e("ErrWatchlistDatabase", result.getError().toString());
                         }
-                    }
-                });
-
-
+                    });
+        }
 
 
        /* StringRequest request = new StringRequest(Request.Method.GET, apiurl, new Response.Listener<String>() {
@@ -208,8 +215,6 @@ public class WatchlistFragment extends Fragment {
     }
 
     public void filterApiWithWatchlistData(String coins){
-        AndroidNetworking.initialize(getContext());
-
         OkHttpClient okHttpClient = new OkHttpClient()
                 .newBuilder().build();
 
@@ -256,45 +261,6 @@ public class WatchlistFragment extends Fragment {
                         Log.e("ErrWatchlistApi", anError.getErrorBody());
                     }
                 });
-
-       /* String api = "https://api.coingecko.com/api/v3/simple/price?ids="+coin_name.toString().toLowerCase()+"&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true&precision=18";
-        StringRequest request = new StringRequest(Request.Method.GET, api, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject objData = new JSONObject(response);
-                    if (objData.has(coin_name.toLowerCase())) {
-                        JSONObject objCoin = objData.getJSONObject(coin_name.toLowerCase());
-
-                        CryptoDataModel model = new CryptoDataModel();
-                        model.setName(coin_name);
-                        model.setSymbol(symbol);
-                        model.setType("usd");
-                        model.setCurrent_price(objCoin.optDouble("usd", 0.0));
-                        model.setPrice_change_percentage_24h(objCoin.optDouble("usd_24h_change", 0.0));
-                        model.setImage("https://cryptologos.cc/logos/" + coin_name.toLowerCase() + "-" + symbol.toLowerCase() + "-logo.png");
-
-                        data.add(model);
-                    }
-
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                adapter = new MarketAdapter(getContext(), data);
-                progressBar.setVisibility(View.INVISIBLE);
-                recyclerView.setAdapter(adapter);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if(error.getMessage()!=null) {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Log.e("ErrWatchlistDataApi", error.getMessage().toString());
-                }
-            }
-        });
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        queue.add(request);*/
     }
 
   /*  public void filterApiWithWatchlistData(String coin_name){

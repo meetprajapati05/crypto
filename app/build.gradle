@@ -50,13 +50,13 @@ dependencies {
     //implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
 
     //For Google auth
-    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    implementation 'com.google.android.gms:play-services-auth:21.0.0'
 
     //Country Code Picker
     implementation 'com.hbb20:ccp:2.7.3'
 
     //MongoDB dependencies
-    implementation 'io.realm:realm-gradle-plugin:10.16.1'
+    implementation 'io.realm:realm-gradle-plugin:10.18.0'
 
     //Circular ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
@@ -74,7 +74,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //Lottie
-    implementation "com.airbnb.android:lottie:3.4.0"
+    implementation 'com.airbnb.android:lottie:6.3.0'
 
 
 }

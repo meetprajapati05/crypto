@@ -358,9 +358,9 @@ public class VerifyOtp extends AppCompatActivity {
                 binding.otpET6.getText().toString();
 
         binding.verifyOtpProgress.setVisibility(View.VISIBLE);
+        binding.btnVerifyOtpContinue.setVisibility(View.INVISIBLE);
 
         if(verifyCode!=null) {
-
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verifyCode, enterdCode);
 
             auth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -379,37 +379,43 @@ public class VerifyOtp extends AppCompatActivity {
                                         mongoDatabase = mongoClient.getDatabase(getString(R.string.MONGO_DATABASE_NAME));
                                         MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
 
-                                        Document data = new Document(new Document("user_id", user.getId())
+                                        Document data = new Document(new Document("user_id", app.currentUser().getId())
                                                 .append("name", name)
                                                 .append("email", email)
                                                 .append("phone_no", phone_no)
                                                 .append("password", password)
                                                 .append("provider", user.getProviderType().name())
                                                 .append("img_url", null)
+                                                .append("balance", 10000.0)
                                         );
 
                                         collection.insertOne(data).getAsync(new App.Callback<InsertOneResult>() {
                                             @Override
                                             public void onResult(App.Result<InsertOneResult> result) {
                                                 if (result.isSuccess()) {
+                                                    Toast.makeText(VerifyOtp.this, "Sign Up Successfully", Toast.LENGTH_SHORT).show();
                                                     binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
                                                     Intent intent = new Intent(VerifyOtp.this, HomePage.class);
                                                     intent.putExtra("user_id", user.getId());
+                                                    intent.putExtra("email",email);
                                                     startActivity(intent);
                                                     finishAffinity();
                                                 } else {
                                                     binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
+                                                    binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
                                                     Log.e("VerifyOtpDatabaseErr", result.getError().toString());
                                                 }
                                             }
                                         });
                                     }else {
                                         binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
+                                        binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
                                         Log.e("VerifyOtp:line_393","Null value");
                                     }
 
                                 }else {
                                     binding.errOtpVerify.setVisibility(View.INVISIBLE);
+                                    binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
                                     binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
                                     Log.e("RegisterEmail", result.getError().toString());
                                 }
@@ -420,11 +426,13 @@ public class VerifyOtp extends AppCompatActivity {
                         binding.errOtpVerify.setVisibility(View.INVISIBLE);
                         binding.errOtpVerify.setText("Invalid OTP!");
                         binding.errOtpVerify.setVisibility(View.VISIBLE);
+                        binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
                     }
                 }
             });
         }else{
             binding.errOtpVerify.setVisibility(View.INVISIBLE);
+            binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
             Toast.makeText(this, "VerifyCode is null", Toast.LENGTH_SHORT).show();
         }
     }

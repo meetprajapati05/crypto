@@ -191,6 +191,7 @@ public class SingIn extends AppCompatActivity {
                                         //Pass next activity
                                         Intent iHome = new Intent(SingIn.this, HomePage.class);
                                         iHome.putExtra("user_id", user.getId());
+                                        iHome.putExtra("email",user.getProfile().getEmail());
                                         startActivity(iHome);
                                         finishAffinity();
                                     }else{
@@ -242,6 +243,9 @@ public class SingIn extends AppCompatActivity {
                     //Pass to home page
                     Intent iSignIn = new Intent(SingIn.this, HomePage.class);
                     iSignIn.putExtra("user_id", user.getId());
+                    iSignIn.putExtra("email", binding.etLoginEmail.getText().toString());
+                    iSignIn.putExtra("signIn",true);
+                    iSignIn.putExtra("pass",binding.etLoginPass.getText().toString());
                     startActivity(iSignIn);
                     finishAffinity();
 
@@ -271,6 +275,7 @@ public class SingIn extends AppCompatActivity {
         userData.append("password", null);
         userData.append("provider", user.getProviderType().name());
         userData.append("img_url", Objects.requireNonNull(account.getPhotoUrl()).toString());
+        userData.append("balance", 10000.0);
 
         collection.insertOne(userData).getAsync(new App.Callback<InsertOneResult>() {
             @Override
@@ -278,8 +283,10 @@ public class SingIn extends AppCompatActivity {
                 binding.btnLoginGoogle.setVisibility(View.VISIBLE);
                 binding.progressLoginGoogleSingIn.setVisibility(View.INVISIBLE);
                 if (result.isSuccess()) {
+                    Toast.makeText(SingIn.this, "Google SignUp Successfully ", Toast.LENGTH_SHORT).show();
                     Intent iGoogleSignUp = new Intent(SingIn.this, HomePage.class);
                     iGoogleSignUp.putExtra("user_id", user.getId());
+                    iGoogleSignUp.putExtra("email", user.getProfile().getEmail());
                     startActivity(iGoogleSignUp);
                     finishAffinity();
                 } else {
