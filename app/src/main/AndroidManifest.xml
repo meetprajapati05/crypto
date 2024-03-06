@@ -15,6 +15,12 @@
         android:theme="@style/Theme.MajorProject"
         tools:targetApi="31">
         <activity
+            android:name=".CommunityPostComment"
+            android:exported="false" />
+        <activity
+            android:name=".AddCommunity"
+            android:exported="false" />
+        <activity
             android:name=".SellPage"
             android:exported="false" />
         <activity

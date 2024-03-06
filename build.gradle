@@ -4,7 +4,12 @@ buildscript {
     }
     repositories {
         mavenCentral()
-        google()    
+        google()
+        // This is causing the issue, especially if it's defined in a subproject.
+        maven {
+            name 'MavenRepo'
+            url 'https://example.com/maven-repo'
+        }
     }
     dependencies {
         classpath "io.realm:realm-gradle-plugin:10.16.1"

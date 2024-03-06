@@ -2,9 +2,12 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/alata</item>
+        <item>@font/allerta_stencil</item>
         <item>@font/baloo_bhaijaan</item>
         <item>@font/basic</item>
+        <item>@font/berkshire_swash</item>
         <item>@font/coiny</item>
+        <item>@font/roboto_condensed_bold</item>
         <item>@font/roboto_medium</item>
     </array>
 </resources>

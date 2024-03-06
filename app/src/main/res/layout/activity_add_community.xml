@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddCommunity">
+
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarAddCommunity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/baseline_arrow_back_24">
+
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Community"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:textSize="24sp"
+            android:fontFamily="@font/coiny"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshAddCommunity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7sp">
+
+                <RelativeLayout
+                    android:id="@+id/layoutAddCommunityUploadPost"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/imgAndEtLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginEnd="10sp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardImageAddComunity"
+                            android:layout_width="60sp"
+                            android:layout_height="60sp"
+                            app:cardCornerRadius="60sp">
+
+                            <ImageView
+                                android:id="@+id/imgAddCommunityUserImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter"/>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <EditText
+                            android:id="@+id/etAddCommuntiDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="What is happening?!"
+                            android:textSize="22sp"
+                            android:layout_marginStart="8sp"
+                            android:background="@null"
+                            app:boxBackgroundMode="none"
+                            android:layout_marginTop="14sp"
+                            android:maxLength="150"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txtTotalTextCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/150"
+                        android:layout_below="@+id/imgAndEtLayout"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="10sp"/>
+
+                    <TextView
+                        android:id="@+id/txtTextCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_below="@+id/imgAndEtLayout"
+                        android:layout_toStartOf="@id/txtTotalTextCount" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardAddCommuntiyGetImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="250sp"
+                        android:layout_marginStart="70sp"
+                        android:visibility="gone"
+                        app:cardCornerRadius="20sp"
+                        android:layout_below="@id/txtTextCount"
+                        android:layout_marginEnd="10sp">
+
+                        <ImageView
+                            android:id="@+id/imgAddCommunityUploadFromGal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/image2"
+                            android:scaleType="fitXY"/>
+
+                        <ImageView
+                            android:id="@+id/btnAddCommunityRemoveImage"
+                            android:layout_width="30sp"
+                            android:layout_height="30sp"
+                            android:layout_gravity="end"
+                            android:layout_margin="8sp"
+                            android:src="@drawable/icon_close"/>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:id="@+id/viewAddCommuntiy"
+                        android:layout_width="match_parent"
+                        android:layout_height="2sp"
+                        android:layout_below="@id/cardAddCommuntiyGetImage"
+                        android:background="@color/grey"
+                        android:layout_marginStart="75sp"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginTop="10sp"/>
+
+                    <ImageView
+                        android:id="@+id/btnAddCommunityGalary"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:src="@drawable/icon_galary"
+                        android:layout_below="@+id/viewAddCommuntiy"
+                        android:layout_marginStart="80sp"
+                        android:layout_marginTop="9.5sp"/>
+
+                    <TextView
+                        android:id="@+id/msgPosts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8sp"
+                        android:layout_marginEnd="6sp"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="8sp"
+                        android:layout_below="@id/btnAddCommunityGalary"
+                        android:fontFamily="@font/allerta_stencil"
+                        android:text="Posts"
+                        android:textStyle="bold"
+                        android:textSize="20sp"  />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/viewAddCommuntiy"
+                        android:layout_marginTop="4sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="10sp">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnAddCommunityPost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45sp"
+                            android:text="Post"
+                            android:textColor="@color/white"
+                            android:background="@drawable/button_post_background"
+                            android:textAllCaps="false"
+                            android:visibility="gone"
+                            />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/progressAddCommunity"
+                            android:layout_width="50sp"
+                            android:layout_height="50sp"
+                            android:layout_centerInParent="true"
+                            app:lottie_colorFilter="@color/light_green"
+                            android:visibility="gone"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_rawRes="@raw/animation_for_buy_sell_loading" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/addCommunityRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/layoutAddCommunityUploadPost"
+                    android:layout_marginBottom="5sp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    />
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

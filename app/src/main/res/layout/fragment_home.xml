@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.HomeFragment"
+    android:id="@+id/homeDrawerLayout">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="top"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/drawable_home_menu"
+            android:id="@+id/btnHomeMenu"
+            android:background="@android:color/transparent"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/homeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:textSize="24sp"
+            android:fontFamily="@font/coiny"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationHome"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:text="Home Fragment"
-        android:textSize="30sp" />
+        app:menu="@menu/drawer_menu"
+        app:headerLayout="@layout/drawer_layout_header"
+        android:background="@color/white"
+        android:layout_gravity="start"
+        app:itemTextColor="@color/black"
+        app:dividerInsetStart="50sp"/>
 
-
-
-</RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

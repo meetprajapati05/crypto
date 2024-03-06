@@ -1,27 +1,24 @@
 package com.example.majorproject.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
@@ -45,7 +42,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 
@@ -97,7 +93,7 @@ public class MarketFragment extends Fragment {
 
         //Set api data on create fragment
         progressBar.setVisibility(View.VISIBLE);
-        setRecyclerViewVolley(page,type);
+        setRecyclerViewVolley(page,type,getContext());
 
         //Load next page data on first page data over
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -107,7 +103,7 @@ public class MarketFragment extends Fragment {
                     if(recyclerView.getAdapter()!=null) {
                         ++page;
                         progressLoadMore.setVisibility(View.VISIBLE);
-                        setRecyclerViewVolley(page, type);
+                        setRecyclerViewVolley(page, type,getContext());
                     }
                 }
             }
@@ -132,7 +128,7 @@ public class MarketFragment extends Fragment {
                 type="usd";
                 data.clear();
                 page=1;
-                setRecyclerViewVolley(page,type);
+                setRecyclerViewVolley(page,type,getContext());
             }
         });
         btnINR.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +141,7 @@ public class MarketFragment extends Fragment {
                 data.clear();
                 page=1;
                 type="inr";
-                setRecyclerView(page,type);
+                setRecyclerView(page,type,getContext());
             }
         });
         btnBTC.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +154,7 @@ public class MarketFragment extends Fragment {
                 progressLoadMore.setVisibility(View.INVISIBLE);
                 data.clear();
                 page=1;
-                setRecyclerView(page,type);
+                setRecyclerView(page,type,getContext());
             }
         });
         btnETH.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +167,7 @@ public class MarketFragment extends Fragment {
                 progressLoadMore.setVisibility(View.INVISIBLE);
                 data.clear();
                 page=1;
-                setRecyclerView(page,type);
+                setRecyclerView(page,type,getContext());
             }
         });
         btnDOT.setOnClickListener(new View.OnClickListener() {
@@ -184,17 +180,17 @@ public class MarketFragment extends Fragment {
                 progressLoadMore.setVisibility(View.INVISIBLE);
                 data.clear();
                 page=1;
-                setRecyclerView(page,type);
+                setRecyclerView(page,type,getContext());
             }
         });
 
         return view;
     }
 
-    private void setRecyclerView(int page, String type) {
+    private void setRecyclerView(int page, String type, Context context) {
         OkHttpClient okHttpClient = new OkHttpClient()
                 .newBuilder().build();
-        AndroidNetworking.initialize(getActivity(),okHttpClient);
+        AndroidNetworking.initialize(context,okHttpClient);
 
         AndroidNetworking.setParserFactory(new GsonParserFactory());
 
@@ -228,7 +224,7 @@ public class MarketFragment extends Fragment {
                             }
                         }
 
-                        adapter = new MarketAdapter(getContext(), data);
+                        adapter = new MarketAdapter(context, data);
                         progressBar.setVisibility(View.INVISIBLE);
                         progressLoadMore.setVisibility(View.INVISIBLE);
                         recyclerView.setAdapter(adapter);
@@ -241,7 +237,7 @@ public class MarketFragment extends Fragment {
                 });
     }
 
-    private void setRecyclerViewVolley(int page, String type) {
+    private void setRecyclerViewVolley(int page, String type, Context context) {
         String apiurl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency="+ type +"&order=market_cap_desc&per_page=100&page=" + page +"&sparkline=false";
         StringRequest request = new StringRequest(Request.Method.GET, apiurl, new Response.Listener<String>() {
             @Override
@@ -261,7 +257,7 @@ public class MarketFragment extends Fragment {
                         model.setId(apiData.getString("id"));
                         data.add(model);
                     }
-                    adapter = new MarketAdapter(getContext(), data);
+                    adapter = new MarketAdapter(context, data);
                     progressBar.setVisibility(View.INVISIBLE);
                     progressLoadMore.setVisibility(View.INVISIBLE);
                     recyclerView.setAdapter(adapter);
@@ -275,7 +271,7 @@ public class MarketFragment extends Fragment {
                 error.printStackTrace();
             }
         });
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(request);
     }
 
