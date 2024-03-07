@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.majorproject.AddCommunity;
+import com.example.majorproject.CurrencyConverter;
 import com.example.majorproject.News;
 import com.example.majorproject.R;
 import com.google.android.material.navigation.NavigationView;
@@ -54,7 +55,7 @@ public class HomeFragment extends Fragment {
                 int ItemId = item.getItemId();
 
                 if (ItemId==R.id.drawerOptHome){
-
+                   drawer.close();
                 }
                 if(ItemId== R.id.drawerOptCommunity){
                     startActivity(new Intent(getActivity(), AddCommunity.class));
@@ -62,7 +63,10 @@ public class HomeFragment extends Fragment {
                 if(ItemId== R.id.drawerOptNews){
                     startActivity(new Intent(getActivity(), News.class));
                 }
-                return false;
+                if(ItemId== R.id.drawerOptConverter){
+                    startActivity(new Intent(getActivity(), CurrencyConverter.class));
+                }
+                return true;
             }
         });
 

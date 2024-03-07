@@ -13,4 +13,8 @@
         android:title="NEWS"
         android:icon="@drawable/baseline_home_filled_24"/>
 
+    <item android:id="@+id/drawerOptConverter"
+        android:title="Currency Converter"
+        android:icon="@drawable/baseline_home_filled_24"/>
+
 </menu>
