@@ -9,4 +9,8 @@
         android:title="Community"
         android:icon="@drawable/baseline_home_filled_24"/>
 
+    <item android:id="@+id/drawerOptNews"
+        android:title="NEWS"
+        android:icon="@drawable/baseline_home_filled_24"/>
+
 </menu>

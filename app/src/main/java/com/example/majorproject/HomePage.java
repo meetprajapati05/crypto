@@ -1,18 +1,16 @@
 package com.example.majorproject;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.os.SharedMemory;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.majorproject.Fragment.HomeFragment;
 import com.example.majorproject.Fragment.MarketFragment;
@@ -30,7 +28,6 @@ import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
-import io.realm.mongodb.mongo.options.UpdateOptions;
 import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class HomePage extends AppCompatActivity {
@@ -98,7 +95,7 @@ public class HomePage extends AppCompatActivity {
                } else if (itemId==R.id.bottomOptPortfolio) {
                    setFragment(new PortfolioFragment());
                } else {
-                   setFragment(new MarketFragment   ());
+                   setFragment(new MarketFragment());
                }
                 return true;
             }
