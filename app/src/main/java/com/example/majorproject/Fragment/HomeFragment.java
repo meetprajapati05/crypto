@@ -1,6 +1,7 @@
 package com.example.majorproject.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -71,12 +72,12 @@ public class HomeFragment extends Fragment {
         });
 
         //Handel backpress method on this and onBackPress drawer is open then first close the drawer and second backpress fragment close
-        backPressed();
+        backPressed(requireActivity());
 
         return  view;
     }
 
-    private void backPressed(){
+    private void backPressed(Activity context){
         requireActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -84,7 +85,7 @@ public class HomeFragment extends Fragment {
                     drawer.close();
                 }else {
                     setEnabled(false);
-                    requireActivity().onBackPressed();
+                    context.onBackPressed();
                 }
             }
         });

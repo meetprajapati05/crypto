@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/SCREEN"
     tools:context=".AddCommunity">
 
 
@@ -74,6 +75,7 @@
                             android:layout_height="wrap_content"
                             android:hint="What is happening?!"
                             android:textSize="22sp"
+                            style="@style/TEXT"
                             android:layout_marginStart="8sp"
                             android:background="@null"
                             app:boxBackgroundMode="none"
@@ -89,6 +91,7 @@
                         android:layout_height="wrap_content"
                         android:text="/150"
                         android:layout_below="@+id/imgAndEtLayout"
+                        style="@style/TEXT"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="10sp"/>
 
@@ -97,6 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
+                        style="@style/TEXT"
                         android:layout_below="@+id/imgAndEtLayout"
                         android:layout_toStartOf="@id/txtTotalTextCount" />
 
@@ -152,6 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8sp"
                         android:layout_marginEnd="6sp"
+                        style="@style/TEXT"
                         android:layout_marginTop="5sp"
                         android:layout_marginBottom="8sp"
                         android:layout_below="@id/btnAddCommunityGalary"

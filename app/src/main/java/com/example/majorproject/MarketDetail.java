@@ -1,6 +1,5 @@
 package com.example.majorproject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,12 +12,11 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.majorproject.databinding.ActivityMarketDetailBinding;
 
 import org.bson.Document;
-
-import java.util.Collections;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
@@ -179,7 +177,14 @@ public class MarketDetail extends AppCompatActivity {
             }
         });
 
-        showChart(symbol,type,"Light");
+        String theme;
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO){
+            theme = "Light";
+        }else{
+            theme = "Dark";
+        }
+
+        showChart(symbol,type,theme);
 
 
     }

@@ -1,11 +1,6 @@
 package com.example.majorproject;
 
-import androidx.activity.OnBackPressedDispatcher;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,26 +11,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.majorproject.databinding.ActivityVerifyOtpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.recaptcha.Recaptcha;
-import com.google.android.recaptcha.RecaptchaAction;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.auth.internal.RecaptchaActivity;
 
 import org.bson.Document;
-import org.bson.codecs.configuration.CodecRegistries;
 
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
@@ -44,13 +37,13 @@ import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.result.InsertOneResult;
-import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class VerifyOtp extends AppCompatActivity {
     ActivityVerifyOtpBinding binding;
     String phone_no;
     String country_code, country_short_name;
     String number;
+    String userObjId;
 
     String name,email,password;
 
@@ -81,10 +74,11 @@ public class VerifyOtp extends AppCompatActivity {
         number = country_code+phone_no;
         country_short_name = getIntent().getStringExtra("country_short_name");
 
+        userObjId = getIntent().getStringExtra("_id");
+
         name = getIntent().getStringExtra("name");
         email = getIntent().getStringExtra("email");
         password = getIntent().getStringExtra("password");
-
 
         auth = FirebaseAuth.getInstance();
 
@@ -367,61 +361,84 @@ public class VerifyOtp extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        //set Intent method from home page
-                        app.getEmailPassword().registerUserAsync(email, password, new App.Callback<Void>() {
-                            @Override
-                            public void onResult(App.Result<Void> result) {
-                                if(result.isSuccess()){
+                        if(userObjId==null) {
+                            //set Intent method from home page
+                            app.getEmailPassword().registerUserAsync(email, password, new App.Callback<Void>() {
+                                @Override
+                                public void onResult(App.Result<Void> result) {
+                                    if (result.isSuccess()) {
 
-                                    if( name != null && email != null && password != null & phone_no != null) {
-                                        User user = app.currentUser();
-                                        mongoClient = user.getMongoClient(getString(R.string.MONGO_DB_SERVICE_NAME));
-                                        mongoDatabase = mongoClient.getDatabase(getString(R.string.MONGO_DATABASE_NAME));
-                                        MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
-
-                                        Document data = new Document(new Document("user_id", app.currentUser().getId())
-                                                .append("name", name)
-                                                .append("email", email)
-                                                .append("phone_no", phone_no)
-                                                .append("password", password)
-                                                .append("provider", user.getProviderType().name())
-                                                .append("img_url", null)
-                                                .append("balance", 10000.0)
-                                        );
-
-                                        collection.insertOne(data).getAsync(new App.Callback<InsertOneResult>() {
+                                        Credentials credentials = Credentials.emailPassword(email, password);
+                                        app.loginAsync(credentials, new App.Callback<User>() {
                                             @Override
-                                            public void onResult(App.Result<InsertOneResult> result) {
+                                            public void onResult(App.Result<User> result) {
                                                 if (result.isSuccess()) {
-                                                    Toast.makeText(VerifyOtp.this, "Sign Up Successfully", Toast.LENGTH_SHORT).show();
-                                                    binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
-                                                    Intent intent = new Intent(VerifyOtp.this, HomePage.class);
-                                                    intent.putExtra("user_id", user.getId());
-                                                    intent.putExtra("email",email);
-                                                    startActivity(intent);
-                                                    finishAffinity();
+                                                    if (name != null && email != null && password != null & phone_no != null) {
+                                                        // Retrieve the authenticated user
+                                                        User user = app.currentUser();
+
+                                                        if (user != null) {
+                                                            // User is authenticated, proceed with MongoDB operations
+
+                                                            mongoClient = app.currentUser().getMongoClient(getString(R.string.MONGO_DB_SERVICE_NAME));
+                                                            mongoDatabase = mongoClient.getDatabase(getString(R.string.MONGO_DATABASE_NAME));
+                                                            MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+
+
+                                                            Document data = new Document("user_id", user.getId())
+                                                                    .append("name", name)
+                                                                    .append("email", email)
+                                                                    .append("phone_no", phone_no)
+                                                                    .append("password", password)
+                                                                    .append("provider", user.getProviderType().name())
+                                                                    .append("img_url", null)
+                                                                    .append("balance", 10000.0);
+
+                                                            collection.insertOne(data).getAsync(new App.Callback<InsertOneResult>() {
+                                                                @Override
+                                                                public void onResult(App.Result<InsertOneResult> result) {
+                                                                    if (result.isSuccess()) {
+
+                                                                        // MongoDB insertion successful
+                                                                        Toast.makeText(VerifyOtp.this, "Sign Up Successfully", Toast.LENGTH_SHORT).show();
+                                                                        binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
+                                                                        Intent intent = new Intent(VerifyOtp.this, HomePage.class);
+                                                                        intent.putExtra("user_id", user.getId());
+                                                                        intent.putExtra("email", email);
+                                                                        startActivity(intent);
+                                                                        finishAffinity();
+                                                                    } else {
+                                                                        binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
+                                                                        binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
+                                                                        Log.e("VerifyOtpDatabaseErr", result.getError().toString());
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                    } else {
+                                                        binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
+                                                        binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
+                                                        Log.e("VerifyOtp:line_393", "Null value");
+                                                    }
                                                 } else {
                                                     binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
                                                     binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
-                                                    Log.e("VerifyOtpDatabaseErr", result.getError().toString());
+                                                    Log.e("ErrLoginVerifyOtp", result.getError().toString());
                                                 }
                                             }
                                         });
-                                    }else {
-                                        binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
+
+                                    } else {
+                                        binding.errOtpVerify.setVisibility(View.INVISIBLE);
                                         binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
-                                        Log.e("VerifyOtp:line_393","Null value");
+                                        binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
+                                        Log.e("RegisterEmail", result.getError().toString());
                                     }
-
-                                }else {
-                                    binding.errOtpVerify.setVisibility(View.INVISIBLE);
-                                    binding.btnVerifyOtpContinue.setVisibility(View.VISIBLE);
-                                    binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
-                                    Log.e("RegisterEmail", result.getError().toString());
                                 }
-                            }
-                        });
-
+                            });
+                        }else{
+                            onBackPressed();
+                        }
                     } else {
                         binding.errOtpVerify.setVisibility(View.INVISIBLE);
                         binding.errOtpVerify.setText("Invalid OTP!");
@@ -439,16 +456,7 @@ public class VerifyOtp extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!phone_no.isEmpty() && !country_short_name.isEmpty() && !name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-            Intent intentNumber = new Intent(getApplicationContext(), MobileNumber.class);
-            intentNumber.putExtra("country_short_name", country_short_name);
-            intentNumber.putExtra("phone_no", phone_no);
-            intentNumber.putExtra("name", name);
-            intentNumber.putExtra("email", email);
-            intentNumber.putExtra("password", password);
-            startActivity(intentNumber);
-        }else {
             super.onBackPressed();
-        }
+
     }
 }

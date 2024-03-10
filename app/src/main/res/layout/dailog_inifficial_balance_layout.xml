@@ -12,6 +12,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:cardCornerRadius="20sp"
         app:cardElevation="10sp"
+        style="@style/CARD"
         app:cardUseCompatPadding="true"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -31,6 +32,7 @@
             android:fontFamily="@font/basic"
             android:text="Insufficient Balance!"
             android:layout_gravity="bottom|center"
+            style="@style/TEXT"
             android:layout_marginBottom="82sp"
             android:textSize="30sp" />
 

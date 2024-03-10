@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="90sp"
         app:cardCornerRadius="20sp"
+        style="@style/CARD"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -32,6 +33,7 @@
                 android:text="Bitcoin"
                 android:textSize="20sp"
                 android:textColor="@color/black"
+                style="@style/TEXT"
                 android:textStyle="bold"
                 android:layout_toEndOf="@id/imageCrypto"
                 android:layout_toStartOf="@id/txtCryptoPrice"
@@ -47,6 +49,7 @@
                 android:layout_marginEnd="18sp"
                 android:layout_marginTop="8sp"
                 android:text="$"
+                style="@style/TEXT"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -58,6 +61,7 @@
                 android:layout_marginEnd="2sp"
                 android:layout_marginTop="8sp"
                 android:text="25000.00"
+                style="@style/TEXT"
                 android:layout_toLeftOf="@id/txtCryptoPriceSymbol"
                 android:textColor="@color/black"
                 android:textSize="20sp"

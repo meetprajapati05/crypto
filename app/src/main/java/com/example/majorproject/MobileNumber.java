@@ -1,17 +1,15 @@
 package com.example.majorproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.majorproject.databinding.ActivityMobileNumberBinding;
-import com.hbb20.CountryCodePicker;
 
 import io.realm.mongodb.App;
 import io.realm.mongodb.mongo.MongoClient;
@@ -21,6 +19,9 @@ import io.realm.mongodb.mongo.MongoDatabase;
 public class MobileNumber extends AppCompatActivity {
     ActivityMobileNumberBinding binding;
     String name, email, password, phone_no, country_name_code;
+
+    String phoneNO;
+    boolean editNo;
 
     App app;
     MongoDatabase mongoDatabase;
@@ -36,6 +37,7 @@ public class MobileNumber extends AppCompatActivity {
         name = getIntent().getStringExtra("name");
         email = getIntent().getStringExtra("email");
         password = getIntent().getStringExtra("password");
+
 
         //get data from VerifyOtp
         country_name_code = getIntent().getStringExtra("country_short_name");

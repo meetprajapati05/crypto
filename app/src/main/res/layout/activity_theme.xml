@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/SCREEN"
+    tools:context=".Theme">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarTheme"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:navigationIcon="@drawable/baseline_arrow_back_24">
+
+        <TextView
+            android:id="@+id/txtTitleTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:fontFamily="@font/coiny"
+            android:text="Theme"
+            style="@style/TEXT"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/btnLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_green"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:background="@color/light_grey"/>
+
+        <TextView
+            android:id="@+id/txtLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"
+            style="@style/TEXT"
+            android:layout_marginEnd="10sp"
+            android:layout_marginBottom="10sp"
+            android:textColor="@color/white"
+            android:text="Light"
+            android:textSize="26sp" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btnDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:layout_below="@id/btnLight">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:background="@color/light_grey"/>
+
+        <TextView
+            android:id="@+id/txtDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            style="@style/TEXT"
+            android:layout_marginTop="10sp"
+            android:layout_marginEnd="10sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="10sp"
+            android:text="Dark"
+            android:textSize="26sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:background="@color/light_grey"
+            android:layout_below="@+id/txtDark"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

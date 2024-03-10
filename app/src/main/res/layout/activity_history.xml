@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/SCREEN"
+    tools:context=".History">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarHistory"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <TextView
+                android:id="@+id/txtTitleHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:fontFamily="@font/coiny"
+                android:text="History"
+                style="@style/TEXT"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressHistory"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/sent_watch"
+        android:layout_width="120sp"
+        android:layout_height="120sp"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:id="@+id/layoutEmptyHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_gravity="center_vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieEmptyHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="250sp"
+                app:lottie_rawRes="@raw/emptylist" />
+
+            <TextView
+                android:id="@+id/msgNoHistoryTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lottieEmptyHistory"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/teko_semibold"
+                style="@style/TEXT"
+                android:text="No History Placed!"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/msgNoHistoryTitle"
+                android:layout_centerHorizontal="true"
+                style="@style/TEXT"
+                android:textAlignment="center"
+                android:fontFamily="@font/teko_semibold"
+                android:text="Oops! It seems like your crypto list is currently empty. Start exploring the exciting world of cryptocurrencies by adding your favorite ones. Happy investing!"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHistoryEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Market"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/button_post_background"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"/>
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/SCREEN"
     tools:context=".CurrencyConverter">
 
     <androidx.appcompat.widget.Toolbar
@@ -18,6 +19,7 @@
             android:id="@+id/txtTitleCurrencyConverter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TEXT"
             android:layout_gravity="center"
             android:background="@color/white"
             android:fontFamily="@font/coiny"
@@ -54,6 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    style="@style/TEXT"
                     android:paddingStart="6sp"
                     android:text="Convert To"
                     android:textColor="#000000" />
@@ -63,6 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    style="@style/TEXT"
                     android:paddingStart="6sp"
                     android:text="Convert From"
                     android:textColor="#000000" />
@@ -79,6 +83,7 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    style="@style/TEXT"
                     android:background="@android:drawable/editbox_background"
                     android:hint="Select Currency"
                     android:textColor="#000000"
@@ -89,6 +94,7 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    style="@style/TEXT"
                     android:background="@android:drawable/editbox_background"
                     android:hint="Select Currency"
                     android:textColor="#000000"
@@ -117,6 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingStart="6sp"
+                    style="@style/TEXT"
                     android:text="Amount To Convert"
                     android:textColor="#000000" />
 
@@ -125,6 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    style="@style/TEXT"
                     android:gravity="center"
                     android:text="Conversion Rate"
                     android:textColor="#000000" />
@@ -144,6 +152,7 @@
                     android:layout_weight="1"
                     android:inputType="number"
                     android:maxLines="1"
+                    style="@style/TEXT"
                     android:singleLine="true"
                     android:textColor="#000000"
                     android:textSize="14sp" />
@@ -153,6 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    style="@style/TEXT"
                     android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="20sp" />

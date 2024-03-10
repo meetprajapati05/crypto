@@ -21,7 +21,6 @@ public class EmailCheck extends AppCompatActivity {
     ActivityEmailCheckBinding binding;
     App app;
 
-    String APP_ID = "application-0-dbkcj";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +28,7 @@ public class EmailCheck extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Realm.init(this);
-        app = new App(new AppConfiguration.Builder(APP_ID).build());
+        app = new App(new AppConfiguration.Builder(getString(R.string.MONGO_APP_ID)).build());
 
         binding.btnEmailVerifyNext.setOnClickListener(new View.OnClickListener() {
             @Override

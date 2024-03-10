@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/SCREEN"
     tools:context=".SellPage">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -32,8 +33,10 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/imgSellPageCrypto"
         android:fontFamily="@font/alata"
+        style="@style/TEXT"
         android:textSize="23dp"
         android:textStyle="bold" />
+
     <TextView
         android:id="@+id/txtSellPageCryptoType"
         android:layout_width="wrap_content"
@@ -43,6 +46,7 @@
         android:layout_below="@+id/toolbar"
         android:layout_toRightOf="@+id/txtSellPageCryptoName"
         android:textSize="18dp"
+        style="@style/TEXT"
         android:textStyle="bold"
         android:fontFamily="@font/alata"
         />
@@ -55,8 +59,10 @@
         android:layout_below="@+id/txtSellPageCryptoName"
         android:layout_toRightOf="@+id/imgSellPageCrypto"
         android:textSize="20dp"
+        style="@style/TEXT"
         android:fontFamily="@font/alata"
         />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,6 +72,7 @@
         android:layout_marginTop="18dp"
         android:text="Limit Price"
         android:fontFamily="@font/alata"
+        style="@style/TEXT"
         android:layout_marginStart="25dp"
         />
     <TextView
@@ -77,9 +84,11 @@
         android:layout_toRightOf="@id/textview19"
         android:layout_marginTop="18dp"
         android:text="Quantity"
+        style="@style/TEXT"
         android:fontFamily="@font/alata"
         android:layout_marginStart="128dp"
         />
+
     <TextView
         android:id="@+id/txtSellPageCryptoInDeVal"
         android:layout_width="wrap_content"
@@ -89,6 +98,7 @@
         android:layout_below="@+id/txtSellPageCryptoName"
         android:layout_toRightOf="@+id/txtSellPageCryptoSymbol"
         android:textSize="18dp"
+        style="@style/TEXT"
         android:fontFamily="@font/alata"
         />
 
@@ -101,6 +111,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginEnd="20dp"
         android:text="value"
+        style="@style/TEXT"
         android:textSize="18dp"
         android:fontFamily="@font/alata"
         />
@@ -116,6 +127,7 @@
         android:layout_marginRight="23dp"
         android:fontFamily="@font/alata"
         android:textSize="20dp"
+        style="@style/TEXT"
         android:textStyle="bold" />
 
     <LinearLayout

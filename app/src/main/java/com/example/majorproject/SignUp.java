@@ -1,16 +1,16 @@
 package com.example.majorproject;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.majorproject.databinding.ActivitySignUpBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -23,21 +23,16 @@ import com.google.android.gms.tasks.Task;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.util.Objects;
-
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.AuthenticationListener;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
 import io.realm.mongodb.auth.GoogleAuthType;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
-import io.realm.mongodb.mongo.MongoNamespace;
 import io.realm.mongodb.mongo.result.InsertOneResult;
-import io.realm.mongodb.sync.SyncConfiguration;
 
 public class SignUp extends AppCompatActivity {
     ActivitySignUpBinding binding;
@@ -180,6 +175,8 @@ public class SignUp extends AppCompatActivity {
                         mongoDatabase = mongoClient.getDatabase(getString(R.string.MONGO_DATABASE_NAME));
                         MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
 
+                        new LogoutTask().execute();
+
                         Document  filterQuery = new Document().append("email", binding.etRegisterEmail.getText().toString());
                         collection.findOne(filterQuery).getAsync(new App.Callback<Document>() {
                             @Override
@@ -314,7 +311,7 @@ public class SignUp extends AppCompatActivity {
                 .append("phone_no", null)
                 .append("password", null)
                 .append("provider", user.getProviderType().name())
-                .append("img_url", Objects.requireNonNull(account.getPhotoUrl()).toString())
+                .append("img_url", account.getPhotoUrl())
                 .append("balance", 10000.0);
 
         collection.insertOne(data).getAsync(new App.Callback<InsertOneResult>() {
@@ -333,5 +330,31 @@ public class SignUp extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private class LogoutTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                // Move your logout logic here
+                app.currentUser().logOut();
+                return true; // Indicates success
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false; // Indicates failure
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // This method is called on the UI thread after doInBackground finishes
+            if (success) {
+                // Handle UI updates or post-logout actions here
+                Log.i("SignUpLogoutSuccess", "Logout successful");
+            } else {
+                // Handle failure or notify the user
+                Log.i("SignUpLogoutFailed", "Logout successful");
+            }
+        }
     }
 }

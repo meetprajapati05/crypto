@@ -27,6 +27,7 @@
         android:drawableStart="@drawable/icon_currency_search"
         android:drawablePadding="8sp"
         android:hint="Search here..."
+        style="@style/TEXT"
         android:paddingStart="10sp"
         android:textColor="@color/black"
         android:textSize="22sp"

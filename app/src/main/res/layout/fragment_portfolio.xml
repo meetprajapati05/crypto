@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/SCREEN"
     tools:context=".Fragment.PortfolioFragment">
     
     <com.google.android.material.appbar.AppBarLayout
@@ -11,10 +12,10 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/marketToolbar"
+            android:id="@+id/portfolioToolbar"
             android:layout_width="match_parent"
             android:background="@color/white"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <TextView
@@ -23,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="Portfolio"
                 android:textColor="@color/black"
+                style="@style/TEXT"
                 android:layout_gravity="center"
                 android:textSize="24sp"
                 android:fontFamily="@font/coiny" />

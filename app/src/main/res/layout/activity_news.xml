@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/SCREEN"
     tools:context=".News">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -26,6 +27,7 @@
                 android:background="@color/white"
                 android:fontFamily="@font/coiny"
                 android:text="NEWS"
+                style="@style/TEXT"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 

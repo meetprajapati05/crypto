@@ -1,19 +1,17 @@
 package com.example.majorproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.DeadObjectException;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -38,7 +36,6 @@ import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
-import io.realm.mongodb.mongo.iterable.FindIterable;
 import io.realm.mongodb.mongo.result.UpdateResult;
 import okhttp3.OkHttpClient;
 
@@ -406,7 +403,7 @@ public class SellPage extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
 
                         try {
-                            String coin_name = response.getString("name");
+                            String coin_name = response.getJSONObject("localization").getString("en");
                             String coin_symbol = response.getString("symbol");
 
                             JSONObject objImage = response.getJSONObject("image");

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/SCREEN"
     tools:context=".Fragment.WatchlistFragment">
     
     <com.google.android.material.appbar.AppBarLayout
@@ -23,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@color/white"
+                style="@style/TEXT"
                 android:fontFamily="@font/coiny"
                 android:text="Watchlist"
                 android:textColor="@color/black"

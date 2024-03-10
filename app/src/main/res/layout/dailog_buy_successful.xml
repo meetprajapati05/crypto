@@ -11,6 +11,7 @@
         android:layout_height="320dp"
         app:cardCornerRadius="20sp"
         app:cardElevation="10sp"
+        style="@style/CARD"
         app:cardUseCompatPadding="true"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -28,6 +29,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
+            style="@style/TEXT"
             android:fontFamily="@font/basic"
             android:text="Congratulations! Your recent coins buy successfully"
             android:textAlignment="center"

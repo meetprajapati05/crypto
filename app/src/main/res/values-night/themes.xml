@@ -4,4 +4,16 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="SCREEN">
+    </style>
+
+    <style name="TEXT">
+    </style>
+
+    <style name="CARD">
+    </style>
+
+    <style name="DRAWABLE">
+    </style>
 </resources>

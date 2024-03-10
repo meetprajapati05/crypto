@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:id="@+id/bottomSheetDrag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bottomSheetDrag"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="10sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile photo"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/btnRemoveImage"
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_remove_profile"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutTitle"
+        android:layout_margin="20sp">
+
+        <LinearLayout
+            android:id="@+id/btnAddImageFromCam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="60sp"
+                android:layout_height="60sp"
+                android:src="@drawable/icon_edit_profile_camera"
+                android:scaleType="centerInside"
+                android:background="@drawable/background_button_edit_profile_image"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Camera"
+                android:layout_gravity="center_horizontal"
+                android:textSize="17dp"
+                android:layout_marginTop="2sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnAddImageFromGal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="20sp">
+
+            <ImageView
+                android:layout_width="60sp"
+                android:layout_height="60sp"
+                android:src="@drawable/icon_edit_prodile_gallery"
+                android:scaleType="centerInside"
+                android:background="@drawable/background_button_edit_profile_image"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gallery"
+                android:layout_gravity="center_horizontal"
+                android:textSize="17dp"
+                android:layout_marginTop="2sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

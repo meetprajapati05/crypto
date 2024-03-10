@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.HomeFragment"
+    style="@style/SCREEN"
     android:id="@+id/homeDrawerLayout">
 
     <androidx.appcompat.widget.Toolbar
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="Home"
             android:textColor="@color/black"
+            style="@style/TEXT"
             android:layout_gravity="center_horizontal"
             android:textSize="24sp"
             android:fontFamily="@font/coiny"/>

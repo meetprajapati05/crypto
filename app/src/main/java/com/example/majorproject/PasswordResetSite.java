@@ -3,6 +3,7 @@ package com.example.majorproject;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class PasswordResetSite extends AppCompatActivity {
 
     boolean showCPass = false;
 
+    App app;
     Intent appLinkIntent;
     String appLinkAction;
     Uri data;
@@ -96,7 +98,7 @@ public class PasswordResetSite extends AppCompatActivity {
                     boolean isValid = checkPasswordValidation(binding.etResetPass.getText().toString(), binding.etResetCpass.getText().toString());
 
                     if(isValid){
-                        App app = new App(new AppConfiguration.Builder(getString(R.string.MONGO_APP_ID)).build());
+                        app = new App(new AppConfiguration.Builder(getString(R.string.MONGO_APP_ID)).build());
 
                         app.getEmailPassword().resetPasswordAsync(token, tokenId, binding.etResetPass.getText().toString(), new App.Callback<Void>() {
                             @Override
@@ -124,7 +126,7 @@ public class PasswordResetSite extends AppCompatActivity {
                                                         public void onResult(App.Result<Document> result) {
                                                             if(result.isSuccess()) {
                                                                 if (result.get() != null) {
-                                                                    Document filter = new Document("email",email);
+                                                                    Document filter = new Document("email",email).append("provider","EMAIL_PASSWORD");
                                                                     Document update = new Document("$set", new Document("password", binding.etResetPass.getText().toString()));
                                                                     
                                                                     collection.updateOne(filter, update).getAsync(new App.Callback<UpdateResult>() {
@@ -134,14 +136,23 @@ public class PasswordResetSite extends AppCompatActivity {
                                                                                 binding.btnResetPassword.setVisibility(View.VISIBLE);
                                                                                 binding.progressPasswordResetSite.setVisibility(View.INVISIBLE);
 
+                                                                                new LogoutTask().execute();
+
                                                                                 //Remove email form SharedPreferences
                                                                                 SharedPreferences preferences = getSharedPreferences("EmailVerify", MODE_PRIVATE);
                                                                                 SharedPreferences.Editor editor = preferences.edit();
                                                                                 editor.putString("email", null);
                                                                                 editor.apply();
 
-                                                                                Toast.makeText(PasswordResetSite.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
-                                                                                finishAffinity();
+                                                                                app.loginAsync(Credentials.emailPassword(email, binding.etResetCpass.getText().toString()), new App.Callback<User>() {
+                                                                                    @Override
+                                                                                    public void onResult(App.Result<User> result) {
+                                                                                        if(result.isSuccess()){
+                                                                                            Toast.makeText(PasswordResetSite.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
+                                                                                            finishAffinity();
+                                                                                        }
+                                                                                    }
+                                                                                });
                                                                             }else{
                                                                                 binding.btnResetPassword.setVisibility(View.VISIBLE);
                                                                                 binding.progressPasswordResetSite.setVisibility(View.INVISIBLE);
@@ -214,5 +225,30 @@ public class PasswordResetSite extends AppCompatActivity {
         return true;
     }
 
+    private class LogoutTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                // Move your logout logic here
+                app.currentUser().logOut();
+                return true; // Indicates success
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false; // Indicates failure
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // This method is called on the UI thread after doInBackground finishes
+            if (success) {
+                // Handle UI updates or post-logout actions here
+                Toast.makeText(PasswordResetSite.this, "Logout successful", Toast.LENGTH_SHORT).show();
+            } else {
+                // Handle failure or notify the user
+                Toast.makeText(PasswordResetSite.this, "Logout failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 }

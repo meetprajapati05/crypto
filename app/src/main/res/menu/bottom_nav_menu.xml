@@ -7,9 +7,9 @@
         android:title="Home"/>
 
     <item
-        android:id="@+id/bottomOptPortfolio"
-        android:title="Portfolio"
-        android:icon="@drawable/icon_portfolio"/>
+        android:id="@+id/bottomOptWatchlist"
+        android:icon="@drawable/icon_watchlist_bottom_nav"
+        android:title="Watchlist"/>
 
     <item
         android:id="@+id/bottomOptMarket"
@@ -17,8 +17,13 @@
         android:title="Market"/>
 
     <item
-        android:id="@+id/bottomOptWatchlist"
-        android:icon="@drawable/icon_watchlist_bottom_nav"
-        android:title="Watchlist"/>
+        android:id="@+id/bottomOptPortfolio"
+        android:title="Portfolio"
+        android:icon="@drawable/icon_portfolio"/>
+
+    <item
+        android:id="@+id/bottomOptProfile"
+        android:icon="@drawable/icon_profile"
+        android:title="Profile"/>
 
 </menu>

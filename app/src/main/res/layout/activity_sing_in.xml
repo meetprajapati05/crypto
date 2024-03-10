@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    style="@style/SCREEN"
     tools:context=".SingIn">
 
     <ScrollView
@@ -24,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign In"
+                style="@style/TEXT"
                 android:textSize="30sp"
                 android:textColor="@color/black"/>
 
@@ -31,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Please log in to your account"
+                style="@style/TEXT"
                 android:layout_marginTop="5sp"/>
 
             <EditText
@@ -222,6 +225,7 @@
                     android:layout_height="wrap_content"
                     android:text="Don't have an account?"
                     android:textColor="@color/black"
+                    style="@style/TEXT"
                     android:textSize="15dp"/>
 
                 <TextView

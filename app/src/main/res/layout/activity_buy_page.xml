@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/SCREEN"
     tools:context=".BuyPage">
 
     <RelativeLayout
@@ -14,6 +15,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/TEXT"
         app:navigationIcon="@drawable/baseline_arrow_back_24"
         app:title="Buy"
         />
@@ -33,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_marginStart="15dp"
+        style="@style/TEXT"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@+id/imgBuyPageCrypto"
         android:fontFamily="@font/alata"
@@ -43,6 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
+        style="@style/TEXT"
         android:layout_marginStart="5dp"
         android:layout_below="@+id/toolbar"
         android:layout_toRightOf="@+id/txtBuyPageCryptoName"
@@ -54,6 +58,7 @@
     <TextView
         android:id="@+id/txtBuyPageCryptoSymbol"
         android:layout_width="wrap_content"
+        style="@style/TEXT"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_below="@+id/txtBuyPageCryptoName"
@@ -66,6 +71,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textview19"
         android:layout_marginLeft="5dp"
+        style="@style/TEXT"
         android:layout_below="@id/txtBuyPageCryptoSymbol"
         android:layout_marginTop="18dp"
         android:text="Limit Price"
@@ -77,6 +83,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textview29"
         android:layout_marginLeft="5dp"
+        style="@style/TEXT"
         android:layout_below="@id/txtBuyPageCryptoSymbol"
         android:layout_toRightOf="@id/textview19"
         android:layout_marginTop="18dp"
@@ -90,6 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:layout_marginStart="13dp"
+        style="@style/TEXT"
         android:layout_below="@+id/txtBuyPageCryptoName"
         android:layout_toRightOf="@+id/txtBuyPageCryptoSymbol"
         android:textSize="18dp"
@@ -100,6 +108,7 @@
         android:id="@+id/text5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/TEXT"
         android:layout_marginTop="8dp"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentRight="true"
@@ -115,6 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text5"
         android:layout_marginTop="5dp"
+        style="@style/TEXT"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="20dp"
         android:textStyle="bold"
@@ -169,6 +179,7 @@
         android:layout_below="@id/buttonlayout"
         android:layout_marginTop="20dp"
         android:text="Leverage"
+        style="@style/TEXT"
         android:fontFamily="@font/alata"
         android:layout_marginStart="35dp"
         />
@@ -195,6 +206,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        style="@style/TEXT"
         android:text="1x"
         android:layout_below="@+id/seekbarBuyPageLaverage"
         android:textSize="23dp"
@@ -216,6 +228,7 @@
             android:layout_below="@id/buttonlayout"
             android:layout_marginTop="20dp"
             android:text="Set Profite:"
+            style="@style/TEXT"
             android:fontFamily="@font/alata"
             android:layout_marginStart="35dp"
             />
@@ -240,6 +253,7 @@
             android:layout_below="@id/buttonlayout"
             android:layout_marginTop="5dp"
             android:text="Est. PNL :"
+            style="@style/TEXT"
             android:fontFamily="@font/alata"
             android:layout_marginStart="35dp"
             android:textSize="13dp"
@@ -260,6 +274,7 @@
             android:layout_marginLeft="5dp"
             android:layout_below="@id/buttonlayout"
             android:layout_marginTop="20dp"
+            style="@style/TEXT"
             android:text="Stop loss:"
             android:fontFamily="@font/alata"
             android:layout_marginStart="35dp"
@@ -287,6 +302,7 @@
             android:layout_marginTop="5dp"
             android:text="Est. PNL :"
             android:fontFamily="@font/alata"
+            style="@style/TEXT"
             android:layout_marginStart="35dp"
             android:textSize="13dp"
             />
@@ -308,6 +324,7 @@
             android:fontFamily="@font/alata"
             android:text="Balance : "
             android:textSize="17dp"
+            style="@style/TEXT"
             android:textStyle="bold" />
 
         <TextView
@@ -316,6 +333,7 @@
             android:id="@+id/txtByPageBalance"
             android:layout_marginStart="5dp"
             android:textSize="17dp"
+            style="@style/TEXT"
             android:textStyle="bold"
             android:fontFamily="@font/alata"
             android:layout_toRightOf="@id/textview1"

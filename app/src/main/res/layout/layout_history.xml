@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/SCREEN"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/light_grey"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/CARD"
+        >
+
+        <TextView
+            android:id="@+id/historyCurrencyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bitcoin"
+            android:textColor="@color/black"
+            style="@style/TEXT"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10sp"
+            android:layout_marginStart="20sp"/>
+
+        <TextView
+            android:id="@+id/historyUserBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10000.00$"
+            android:textColor="@color/black"
+            style="@style/TEXT"
+            android:textSize="20sp"
+            android:layout_gravity="end"
+            android:layout_marginTop="10sp"
+            android:layout_marginEnd="20sp"/>
+
+        <TextView
+            android:id="@+id/historyDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11 Sep,2023 13:22:27"
+            android:layout_marginStart="20sp"
+            android:layout_marginBottom="10sp"
+            android:layout_marginTop="50sp"/>
+
+        <TextView
+            android:id="@+id/historyActionMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_gravity="end"
+            android:text="275.02$"
+            android:layout_marginEnd="20sp"
+            android:layout_marginTop="50sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginBottom="10sp"
+            android:layout_marginTop="85sp">
+
+            <TextView
+                android:id="@+id/msgHistoryLeverage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leverage : "
+                style="@style/TEXT"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/historyLeverage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                style="@style/TEXT"
+                android:layout_toEndOf="@id/msgHistoryLeverage"
+                android:text="5x"/>
+
+            <TextView
+                android:id="@+id/msgHistoryQuntity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity : "
+                style="@style/TEXT"
+                android:layout_toStartOf="@id/historyQuntity"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/historyQuntity"
+                android:layout_width="wrap_content"
+                style="@style/TEXT"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_alignParentEnd="true"
+                android:text="1"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

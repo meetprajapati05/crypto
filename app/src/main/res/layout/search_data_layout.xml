@@ -8,6 +8,7 @@
         android:id="@+id/searchLayoutCard"
         android:layout_width="match_parent"
         android:layout_height="100sp"
+        style="@style/CARD"
         app:cardCornerRadius="20sp"
         app:cardUseCompatPadding="true">
 
@@ -31,6 +32,7 @@
                 android:layout_height="30sp"
                 android:text="Bitcoin"
                 android:textSize="22sp"
+                style="@style/TEXT"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_toEndOf="@id/imageCryptoSearch"
@@ -56,6 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
+                style="@style/TEXT"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/black"

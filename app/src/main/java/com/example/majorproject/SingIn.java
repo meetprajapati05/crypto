@@ -1,8 +1,5 @@
 package com.example.majorproject;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,28 +9,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.majorproject.databinding.ActivitySingInBinding;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
-
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
-
-import java.util.Objects;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
-import io.realm.mongodb.auth.GoogleAuthType;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
@@ -164,7 +158,7 @@ public class SingIn extends AppCompatActivity {
     private void setGoogleAuthWithMongoDB(GoogleSignInAccount account) {
 
         String authCode = account.getServerAuthCode();
-        Credentials googleCredentials = Credentials.google(authCode, GoogleAuthType.AUTH_CODE);
+        Credentials googleCredentials = Credentials.google(authCode);
 
             app.loginAsync(googleCredentials, new App.Callback<User>() {
                 @Override
@@ -274,7 +268,7 @@ public class SingIn extends AppCompatActivity {
         userData.append("phone_no", null);
         userData.append("password", null);
         userData.append("provider", user.getProviderType().name());
-        userData.append("img_url", Objects.requireNonNull(account.getPhotoUrl()).toString());
+        userData.append("img_url", account.getPhotoUrl());
         userData.append("balance", 10000.0);
 
         collection.insertOne(userData).getAsync(new App.Callback<InsertOneResult>() {

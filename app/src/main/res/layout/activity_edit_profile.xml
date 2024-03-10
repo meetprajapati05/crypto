@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditProfile">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:navigationIcon="@drawable/baseline_arrow_back_24">
+
+        <TextView
+            android:id="@+id/txtTitleEditProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:fontFamily="@font/coiny"
+            android:text="Profile"
+            style="@style/TEXT"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbarEditProfile"
+            android:layout_above="@+id/layoutBtnEditProfileUpdate"
+            >
+
+            <RelativeLayout
+                android:id="@+id/layoutLighBackground"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:background="@color/light_green"
+                android:alpha="0.2"/>
+
+            <RelativeLayout
+                android:id="@+id/layoutEditProfileUserImage"
+                android:layout_width="120sp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25sp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEditProfileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="120sp">
+
+                    <ImageView
+                        android:id="@+id/imgEditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    app:cardCornerRadius="35sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="3sp"
+                    app:cardBackgroundColor="@android:color/transparent" >
+
+                    <ImageView
+                        android:id="@+id/btnEditProfileEditImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:rotation="90"
+                        android:src="@drawable/icon_edit_profile"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtEditProfileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/layoutEditProfileUserImage"
+                android:fontFamily="@font/teko_semibold"
+                android:textSize="25sp"
+                android:textColor="@color/light_green"
+                android:layout_marginTop="8sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/layoutLighBackground"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/nameTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20sp"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:paddingStart="4sp"
+                        android:text="YOUR NAME"
+                        android:textColor="@color/light_green"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etEditProfileName"
+                        android:layout_width="match_parent"
+                        android:layout_height="55sp"
+                        android:layout_below="@id/nameTitle"
+                        android:layout_marginStart="20sp"
+                        android:layout_marginEnd="20sp"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/emailTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/etEditProfileName"
+                        android:layout_marginStart="20sp"
+                        android:layout_marginTop="10sp"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:paddingStart="4sp"
+                        android:text="YOUR EMAIL"
+                        android:textColor="@color/light_green"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etEditProfileEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="55sp"
+                        android:layout_below="@id/emailTitle"
+                        android:layout_marginStart="20sp"
+                        android:layout_marginEnd="20sp"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutBtnEditProfileUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="55sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginBottom="20sp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEditProfileUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_post_background"
+            android:text="Update"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/progressUpdateProfileButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_colorFilter="@color/light_green"
+            app:lottie_rawRes="@raw/animation_for_buy_sell_loading"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
