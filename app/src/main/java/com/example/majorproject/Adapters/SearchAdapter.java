@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.majorproject.CalanderHistory;
 import com.example.majorproject.MarketDetail;
 import com.example.majorproject.Models.CryptoDataModel;
 import com.example.majorproject.R;
@@ -24,13 +25,15 @@ import java.util.ArrayList;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     Context context;
     ArrayList<CryptoDataModel> data;
+    String previousActivity;
 
     int lastPostition = -1;
 
 
-    public SearchAdapter(Context context, ArrayList<CryptoDataModel> data) {
+    public SearchAdapter(Context context, ArrayList<CryptoDataModel> data, String previousActivity) {
         this.context = context;
         this.data = data;
+        this.previousActivity = previousActivity;
     }
 
     @NonNull
@@ -58,12 +61,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.searchCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MarketDetail.class);
-                intent.putExtra("name",data.get(position).getName());
-                intent.putExtra("symbol",data.get(position).getSymbol());
-                intent.putExtra("type",data.get(position).getType());
-                intent.putExtra("id",data.get(position).getId());
-                context.startActivity(intent);
+                if(previousActivity==null) {
+                    Intent intent = new Intent(context, MarketDetail.class);
+                    intent.putExtra("name", data.get(position).getName());
+                    intent.putExtra("symbol", data.get(position).getSymbol());
+                    intent.putExtra("type", data.get(position).getType());
+                    intent.putExtra("id", data.get(position).getId());
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(context, CalanderHistory.class);
+                    intent.putExtra("id", data.get(position).getId());
+                    context.startActivity(intent);
+                }
             }
         });
 

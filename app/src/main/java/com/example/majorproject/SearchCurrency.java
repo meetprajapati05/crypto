@@ -1,23 +1,18 @@
 package com.example.majorproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.gsonparserfactory.GsonParserFactory;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.example.majorproject.Adapters.MarketAdapter;
 import com.example.majorproject.Adapters.SearchAdapter;
 import com.example.majorproject.Models.CryptoDataModel;
 import com.example.majorproject.databinding.ActivitySearchCurrencyBinding;
@@ -26,22 +21,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Map;
 
 import okhttp3.OkHttpClient;
 
 public class SearchCurrency extends AppCompatActivity {
     ActivitySearchCurrencyBinding binding;
     ArrayList<CryptoDataModel> data;
+    String previousActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySearchCurrencyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        previousActivity = getIntent().getStringExtra("passTo");
         data = new ArrayList<>();
 
         binding.btnSearchBack.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +103,7 @@ public class SearchCurrency extends AppCompatActivity {
                                 model.setType("usd");
                                 data.add(model);
                             }
-                            SearchAdapter adapter = new SearchAdapter(SearchCurrency.this, data);
+                            SearchAdapter adapter = new SearchAdapter(SearchCurrency.this, data, previousActivity);
                             binding.searchLodingAnimation.setVisibility(View.INVISIBLE);
                             binding.searchRecycler.setAdapter(adapter);
 

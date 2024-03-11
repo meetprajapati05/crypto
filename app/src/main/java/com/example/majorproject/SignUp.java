@@ -311,7 +311,7 @@ public class SignUp extends AppCompatActivity {
                 .append("phone_no", null)
                 .append("password", null)
                 .append("provider", user.getProviderType().name())
-                .append("img_url", account.getPhotoUrl())
+                .append("img_url",  account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : null)
                 .append("balance", 10000.0);
 
         collection.insertOne(data).getAsync(new App.Callback<InsertOneResult>() {

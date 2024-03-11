@@ -17,4 +17,8 @@
         android:title="Currency Converter"
         android:icon="@drawable/icon_currency_converter"/>
 
+    <item android:id="@+id/drawerOptCalander"
+        android:title="Calander"
+        android:icon="@drawable/icon_currency_converter"/>
+
 </menu>

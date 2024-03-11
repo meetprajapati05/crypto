@@ -81,4 +81,7 @@ dependencies {
     //Convert alphabate in latter
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
+    //Calander history bottom sheet api calling
+    implementation ("com.squareup.okhttp3:okhttp:4.9.1")
+
 }

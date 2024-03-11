@@ -19,6 +19,7 @@ import com.example.majorproject.AddCommunity;
 import com.example.majorproject.CurrencyConverter;
 import com.example.majorproject.News;
 import com.example.majorproject.R;
+import com.example.majorproject.SearchCurrency;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeFragment extends Fragment {
@@ -66,6 +67,9 @@ public class HomeFragment extends Fragment {
                 }
                 if(ItemId== R.id.drawerOptConverter){
                     startActivity(new Intent(getActivity(), CurrencyConverter.class));
+                }
+                if(ItemId == R.id.drawerOptCalander){
+                    startActivity(new Intent(getActivity(), SearchCurrency.class).putExtra("passTo", "Calander"));
                 }
                 return true;
             }
