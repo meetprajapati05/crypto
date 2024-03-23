@@ -43,7 +43,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), SearchCurrency.class));
+                startActivity(new Intent(getContext(), SearchCurrency.class).putExtra("passTo","calander"));
             }
         });
         return binding.getRoot();

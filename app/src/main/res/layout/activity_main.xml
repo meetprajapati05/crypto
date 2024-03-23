@@ -7,17 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Splace Screen for Major Project"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        style="@style/TEXT"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/split_screen_animation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

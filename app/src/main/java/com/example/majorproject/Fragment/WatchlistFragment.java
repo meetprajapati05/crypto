@@ -3,25 +3,16 @@ package com.example.majorproject.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.airbnb.lottie.LottieAnimationView;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
@@ -30,7 +21,6 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.majorproject.Adapters.MarketAdapter;
 import com.example.majorproject.Models.CryptoDataModel;
 import com.example.majorproject.R;
-import com.google.android.recaptcha.Recaptcha;
 
 import org.bson.Document;
 import org.json.JSONArray;
@@ -39,7 +29,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
@@ -89,7 +78,7 @@ public class WatchlistFragment extends Fragment {
 
         //Call setWatchlistRecycler() that set and find watchlist data
         progressBar.setVisibility(View.VISIBLE);
-        setWatchlistRecycler();
+        setWatchlistRecycler(getContext());
 
 
 
@@ -99,14 +88,63 @@ public class WatchlistFragment extends Fragment {
             public void onRefresh() {
                 recyclerView.setAdapter(null);
                 progressBar.setVisibility(View.VISIBLE);
-                setWatchlistRecycler();
+                setWatchlistRecycler(getContext());
                 refresh.setRefreshing(false);
             }
         });
 
         return view;
     }
-    public void setWatchlistRecycler(){
+    public void filterApiWithWatchlistData(String coins, Context context){
+        OkHttpClient okHttpClient = new OkHttpClient()
+                .newBuilder().build();
+
+        AndroidNetworking.initialize(context,okHttpClient);
+
+        AndroidNetworking.setParserFactory(new GsonParserFactory());
+
+        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=&sparkline=false&locale=en")
+                .addQueryParameter("ids",coins)
+                .setTag("Watchlist")
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        for (int i=0; i< response.length(); i++){
+                            try {
+                                JSONObject apiData = response.getJSONObject(i);
+
+                                CryptoDataModel model = new CryptoDataModel();
+                                model.setName(apiData.getString("name"));
+                                model.setSymbol(apiData.getString("symbol"));
+                                model.setImage(apiData.getString("image"));
+                                model.setCurrent_price(apiData.getDouble("current_price"));
+                                model.setPrice_change_percentage_24h(apiData.getDouble("price_change_percentage_24h"));
+                                model.setType("usd");
+                                model.setId(apiData.getString("id"));
+                                data.add(model);
+
+                            } catch (JSONException e) {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                throw new RuntimeException(e);
+                            }
+                        }
+
+                        adapter = new MarketAdapter(getContext(), data);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        recyclerView.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Log.e("ErrWatchlistApi", anError.getErrorBody());
+                    }
+                });
+    }
+
+    public void setWatchlistRecycler(Context context){
 
         SharedPreferences preferences = getContext().getSharedPreferences("MajorProject", Context.MODE_PRIVATE);
         String email = preferences.getString("email",null);
@@ -138,7 +176,7 @@ public class WatchlistFragment extends Fragment {
                                             }
                                         }
                                         if (coins != null) {
-                                            filterApiWithWatchlistData(coins);
+                                            filterApiWithWatchlistData(coins, context);
                                         }
                                     }
                                 } else {
@@ -212,55 +250,6 @@ public class WatchlistFragment extends Fragment {
         });
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);*/
-    }
-
-    public void filterApiWithWatchlistData(String coins){
-        OkHttpClient okHttpClient = new OkHttpClient()
-                .newBuilder().build();
-
-        AndroidNetworking.initialize(getContext(),okHttpClient);
-
-        AndroidNetworking.setParserFactory(new GsonParserFactory());
-
-        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=&sparkline=false&locale=en")
-                .addQueryParameter("ids",coins)
-                .setTag("Watchlist")
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i=0; i< response.length(); i++){
-                            try {
-                                JSONObject apiData = response.getJSONObject(i);
-
-                                CryptoDataModel model = new CryptoDataModel();
-                                model.setName(apiData.getString("name"));
-                                model.setSymbol(apiData.getString("symbol"));
-                                model.setImage(apiData.getString("image"));
-                                model.setCurrent_price(apiData.getDouble("current_price"));
-                                model.setPrice_change_percentage_24h(apiData.getDouble("price_change_percentage_24h"));
-                                model.setType("usd");
-                                model.setId(apiData.getString("id"));
-                                data.add(model);
-
-                            } catch (JSONException e) {
-                                progressBar.setVisibility(View.INVISIBLE);
-                                throw new RuntimeException(e);
-                            }
-                        }
-
-                        adapter = new MarketAdapter(getContext(), data);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        recyclerView.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Log.e("ErrWatchlistApi", anError.getErrorBody());
-                    }
-                });
     }
 
   /*  public void filterApiWithWatchlistData(String coin_name){

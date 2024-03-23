@@ -40,6 +40,7 @@ public class News extends AppCompatActivity {
         binding.refreshNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                binding.recyclerNews.setAdapter(null);
                 setNews();
                 binding.refreshNews.setRefreshing(false);
             }

@@ -46,4 +46,304 @@
         app:itemTextColor="@color/black"
         app:dividerInsetStart="50sp"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:scrollbars="none"
+        android:scrollbarSize="0sp"
+        android:scrollbarStyle="insideOverlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/layoutGlobalMarket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+               <!-- <TextView
+                    android:id="@+id/lblGlobalMarket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Global Market:"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>-->
+
+                <TextView
+                    android:id="@+id/txtGlobleMarketCap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:scrollHorizontally="true"
+                    android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardImages"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                app:cardCornerRadius="20sp"
+                android:layout_below="@id/layoutGlobalMarket"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/home_page_card_background"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Balance"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginStart="10sp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="24sp">
+
+                    <TextView
+                        android:id="@+id/txtHomeBalance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$0"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/txtHomeBalancePoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=".00"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginStart="10sp"/>
+
+                    <TextView
+                        android:id="@+id/txtHomeName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10sp"
+                        android:layout_marginBottom="10sp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:id="@+id/btnHomeAddMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_below="@id/cardImages"
+                android:background="@drawable/button_post_background"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/homeAddIcon"
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10sp"
+                    android:src="@drawable/baseline_add_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Balance"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10sp"
+                    android:layout_marginStart="5sp"
+                    android:layout_toEndOf="@id/homeAddIcon"/>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblWatchlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Watchlist"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_below="@+id/btnHomeAddMoney"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="10sp"/>
+
+            <RelativeLayout
+                android:id="@+id/layoutHomeWatchlist"
+                android:layout_width="match_parent"
+                android:layout_height="160sp"
+                android:layout_below="@id/lblWatchlist">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerHomeWatchlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/msgHomeWatchlistEmpty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Watchlist is empty!"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/truculenta"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:textSize="20sp" />
+
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/progressHomeWatchlist"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    app:lottie_rawRes="@raw/recyclerview_progress_2"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutHomeLblTrending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutHomeWatchlist"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp">
+
+                <TextView
+                    android:id="@+id/lblTreanding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trending"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/btnHomeTrendingSeeAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View all market"
+                    android:textSize="16sp"
+                    android:textColor="@color/light_green"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutHomeTrending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutHomeLblTrending">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerHomeTreanding"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/progressHomeTreanding"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    app:lottie_rawRes="@raw/recyclerview_progress_2"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutLblNews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:layout_below="@+id/layoutHomeTrending">
+
+                <TextView
+                    android:id="@+id/lblNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="News"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/btnHomeNewsSeeAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View all"
+                    android:textSize="16sp"
+                    android:textColor="@color/light_green"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutLblNews"
+                android:layout_marginBottom="?attr/actionBarSize">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerHomeNews"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/progressHomeNews"
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    app:lottie_rawRes="@raw/recyclerview_progress_2"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
 </androidx.drawerlayout.widget.DrawerLayout>

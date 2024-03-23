@@ -313,7 +313,7 @@ public class SellPage extends AppCompatActivity {
                     binding.btnSellPageSell.setVisibility(View.VISIBLE);
                     binding.btnSellProgress.setVisibility(View.INVISIBLE);
                     Dialog dialogSell = new Dialog(SellPage.this);
-                    dialogSell.setContentView(R.layout.dailog_buy_successful);
+                    dialogSell.setContentView(R.layout.dailog_sell_successfull);
                     dialogSell.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialogSell.getWindow().setBackgroundDrawable(null);
 

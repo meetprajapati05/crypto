@@ -270,6 +270,7 @@ public class SingIn extends AppCompatActivity {
         userData.append("provider", user.getProviderType().name());
         userData.append("img_url",  account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : null);
         userData.append("balance", 10000.0);
+        userData.append("user_block", false);
 
         collection.insertOne(userData).getAsync(new App.Callback<InsertOneResult>() {
             @Override

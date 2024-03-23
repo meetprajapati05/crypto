@@ -392,7 +392,8 @@ public class VerifyOtp extends AppCompatActivity {
                                                                     .append("password", password)
                                                                     .append("provider", user.getProviderType().name())
                                                                     .append("img_url", null)
-                                                                    .append("balance", 10000.0);
+                                                                    .append("balance", 10000.0)
+                                                                    .append("user_block",false);
 
                                                             collection.insertOne(data).getAsync(new App.Callback<InsertOneResult>() {
                                                                 @Override

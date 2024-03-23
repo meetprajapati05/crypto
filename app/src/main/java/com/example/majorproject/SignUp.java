@@ -312,7 +312,8 @@ public class SignUp extends AppCompatActivity {
                 .append("password", null)
                 .append("provider", user.getProviderType().name())
                 .append("img_url",  account.getPhotoUrl() != null ? account.getPhotoUrl().toString() : null)
-                .append("balance", 10000.0);
+                .append("balance", 10000.0)
+                .append("user_block", false);
 
         collection.insertOne(data).getAsync(new App.Callback<InsertOneResult>() {
             @Override

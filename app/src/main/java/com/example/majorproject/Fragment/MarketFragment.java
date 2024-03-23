@@ -194,8 +194,9 @@ public class MarketFragment extends Fragment {
 
         AndroidNetworking.setParserFactory(new GsonParserFactory());
 
-        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=&order=market_cap_desc&per_page=&page=&sparkline=false")
+        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?x_cg_demo_api_key=&vs_currency=&order=market_cap_desc&per_page=&page=&sparkline=false")
                 .addQueryParameter("vs_currency", type)
+                .addQueryParameter("x_cg_demo_api_key",getString(R.string.COINGECKO_API_KEY))
                 .addQueryParameter("per_page","100")
                 .addQueryParameter("page", String.valueOf(page))
                 .setTag("Market")
@@ -238,7 +239,7 @@ public class MarketFragment extends Fragment {
     }
 
     private void setRecyclerViewVolley(int page, String type, Context context) {
-        String apiurl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency="+ type +"&order=market_cap_desc&per_page=100&page=" + page +"&sparkline=false";
+        String apiurl = "https://api.coingecko.com/api/v3/coins/markets?x_cg_demo_api_key="+getString(R.string.COINGECKO_API_KEY)+"&vs_currency="+ type +"&order=market_cap_desc&per_page=100&page=" + page +"&sparkline=false";
         StringRequest request = new StringRequest(Request.Method.GET, apiurl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

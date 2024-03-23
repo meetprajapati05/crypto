@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/drawerOptHome"
-        android:title="Home"
-        android:icon="@drawable/baseline_home_filled_24"/>
+    <group android:checkableBehavior="single">
 
-    <item android:id="@+id/drawerOptCommunity"
-        android:title="Community"
-        android:icon="@drawable/icon_community"/>
+        <item
+            android:id="@+id/drawerOptHome"
+            android:title="Home"
+            android:icon="@drawable/baseline_home_filled_24" />
 
-    <item android:id="@+id/drawerOptNews"
-        android:title="NEWS"
-        android:icon="@drawable/icon_news"/>
+        <item
+            android:id="@+id/drawerOptCommunity"
+            android:title="Community"
+            android:icon="@drawable/icon_community" />
 
-    <item android:id="@+id/drawerOptConverter"
-        android:title="Currency Converter"
-        android:icon="@drawable/icon_currency_converter"/>
+        <item
+            android:id="@+id/drawerOptNews"
+            android:title="NEWS"
+            android:icon="@drawable/icon_news" />
 
-    <item android:id="@+id/drawerOptCalander"
-        android:title="Calander"
-        android:icon="@drawable/icon_currency_converter"/>
+        <item
+            android:id="@+id/drawerOptConverter"
+            android:title="Currency Converter"
+            android:icon="@drawable/icon_currency_converter" />
+
+        <item
+            android:id="@+id/drawerOptCalander"
+            android:title="Calander"
+            android:icon="@drawable/baseline_calendar_month_24" />
+
+    </group>
 
 </menu>

@@ -9,9 +9,7 @@
     <string name="MONGO_DATABASE_NAME">MajorProjrctDB</string>
     <string name="MONGO_DB_USER_COLLECTION">User</string>
     <string name="MONGO_DB_COMMUNITY_COLLECTION">Community</string>
-    <string name="CLOUDINARY_NAME">dzoj43jvi</string>
-    <string name="CLOUDINARY_API_KEY">955468243224164</string>
-    <string name="CLOUDINARY_API_SECRET">h-Cf5DQMp0W4o-DUFOYFtBu_ez4</string>
+    <string name="COINGECKO_API_KEY">CG-As1qQdoujrWrAJEDYnxRNEWg</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

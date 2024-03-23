@@ -81,7 +81,7 @@
                 <TextView
                     android:id="@+id/convert_to_dropdown_menu"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     style="@style/TEXT"
                     android:background="@android:drawable/editbox_background"
@@ -92,7 +92,7 @@
                 <TextView
                     android:id="@+id/convert_from_dropdown_menu"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     style="@style/TEXT"
                     android:background="@android:drawable/editbox_background"
@@ -151,7 +151,9 @@
                     android:layout_height="50sp"
                     android:layout_weight="1"
                     android:inputType="number"
+                    android:text="1"
                     android:maxLines="1"
+                    android:textAlignment="center"
                     style="@style/TEXT"
                     android:singleLine="true"
                     android:textColor="#000000"

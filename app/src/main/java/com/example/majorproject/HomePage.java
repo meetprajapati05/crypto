@@ -206,4 +206,13 @@ public class HomePage extends AppCompatActivity {
                     }
                 });
     }
+
+    @Override
+    public void onBackPressed() {
+        if(binding.bottomNavView.getSelectedItemId()!=R.id.bottomOptHome){
+            binding.bottomNavView.setSelectedItemId(R.id.bottomOptHome);
+        }else{
+            super.onBackPressed();
+        }
+    }
 }

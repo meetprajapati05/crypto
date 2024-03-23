@@ -23,7 +23,6 @@ import com.example.majorproject.EditProfile;
 import com.example.majorproject.History;
 import com.example.majorproject.R;
 import com.example.majorproject.SingIn;
-import com.example.majorproject.Theme;
 import com.example.majorproject.VerifyEmailPassword;
 import com.example.majorproject.databinding.FragmentProfileBinding;
 
@@ -93,11 +92,15 @@ public class ProfileFragment extends Fragment {
                                 //logout of mongoauth auth
                                 new LogoutTask().execute();
 
-                                //remove sharedPrefresnceEmail
-                                SharedPreferences removeLogin = getContext().getSharedPreferences("MajorProject",Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = removeLogin.edit();
-                                editor.putString("email",null);
+                                SharedPreferences preferences = getContext().getSharedPreferences("MajorProject", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.clear(); // Clear all data from this SharedPreferences
                                 editor.apply();
+
+                                SharedPreferences preferencesWatchlist = getContext().getSharedPreferences("Watchlist", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editorWatchlist = preferencesWatchlist.edit();
+                                editorWatchlist.clear(); // Clear all data from this SharedPreferences
+                                editorWatchlist.apply();
 
                                 //passintent on mainScreen
                                 Intent iSignIn = new Intent(getContext(), SingIn.class);
@@ -164,13 +167,23 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //Wallet button
+       /* binding.btnProfileWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Wallet.class);
+                intent.putExtra("_id", userObjId);
+                startActivity(intent);
+            }
+        });*/
+
         //Theme button
-        binding.btnProfileTheme.setOnClickListener(new View.OnClickListener() {
+      /*  binding.btnProfileTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), Theme.class));
             }
-        });
+        });*/
 
         //Contect Support
         binding.btnProfileContectSupport.setOnClickListener(new View.OnClickListener() {
