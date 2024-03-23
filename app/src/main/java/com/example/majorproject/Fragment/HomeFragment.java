@@ -95,9 +95,9 @@ public class HomeFragment extends Fragment {
 
         // Init realm and app and clicnt and database
         Realm.init(getContext());
-        app = new App(new AppConfiguration.Builder(getString(R.string.MONGO_APP_ID)).build());
-        client = app.currentUser().getMongoClient(getString(R.string.MONGO_DB_SERVICE_NAME));
-        database = client.getDatabase(getString(R.string.MONGO_DATABASE_NAME));
+        app = new App(new AppConfiguration.Builder(getContext().getString(R.string.MONGO_APP_ID)).build());
+        client = app.currentUser().getMongoClient(getContext().getString(R.string.MONGO_DB_SERVICE_NAME));
+        database = client.getDatabase(getContext().getString(R.string.MONGO_DATABASE_NAME));
 
         setGlobleMarketCap(getContext());
 
@@ -181,7 +181,7 @@ public class HomeFragment extends Fragment {
 
     private void setBalance(Context context){
 
-        MongoCollection<Document> collection = database.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+        MongoCollection<Document> collection = database.getCollection(context.getString(R.string.MONGO_DB_USER_COLLECTION));
 
         collection.findOne(new Document("user_id", app.currentUser().getId().toString())).getAsync(new App.Callback<Document>() {
             @SuppressLint("SetTextI18n")
@@ -234,7 +234,8 @@ public class HomeFragment extends Fragment {
 
         AndroidNetworking.setParserFactory(new GsonParserFactory());
 
-        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=&sparkline=false&locale=en")
+        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?x_cg_demo_api_key=&vs_currency=usd&ids=&sparkline=false&locale=en")
+                .addQueryParameter("x_cg_demo_api_key", context.getString(R.string.COINGECKO_API_KEY))
                 .addQueryParameter("ids",coins)
                 .setTag("Watchlist")
                 .setPriority(Priority.HIGH)
@@ -283,7 +284,7 @@ public class HomeFragment extends Fragment {
 
         binding.progressHomeWatchlist.setVisibility(View.VISIBLE);
 
-        MongoCollection<Document> collection = database.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+        MongoCollection<Document> collection = database.getCollection(context.getString(R.string.MONGO_DB_USER_COLLECTION));
 
 
         Document document = new Document("user_id", app.currentUser().getId().toString());
@@ -338,7 +339,7 @@ public class HomeFragment extends Fragment {
         AndroidNetworking.setParserFactory(new GsonParserFactory());
 
         AndroidNetworking.get("https://api.coingecko.com/api/v3/search/trending?x_cg_demo_api_key=")
-                .addQueryParameter("x_cg_demo_api_key", getString(R.string.COINGECKO_API_KEY))
+                .addQueryParameter("x_cg_demo_api_key", context.getString(R.string.COINGECKO_API_KEY))
                 .setTag("Trending")
                 .setPriority(Priority.HIGH)
                 .build()
@@ -475,7 +476,7 @@ public class HomeFragment extends Fragment {
         AndroidNetworking.setParserFactory(new GsonParserFactory());
 
         AndroidNetworking.get("https://api.coingecko.com/api/v3/global?x_cg_demo_api_key=")
-                .addQueryParameter("x_cg_demo_api_key", getString(R.string.COINGECKO_API_KEY))
+                .addQueryParameter("x_cg_demo_api_key", context.getString(R.string.COINGECKO_API_KEY))
                 .setTag("Trending")
                 .setPriority(Priority.HIGH)
                 .build()
@@ -556,10 +557,17 @@ public class HomeFragment extends Fragment {
                             String[] currencies = {"BTC", "ETH", "USDT", "BNB", "SOL"};
                             String[] dominanceValues = {domainceBtc, domainceEth, domainceUsdt, domainceBnb, domainceSol};
                             for (int i = 0; i < currencies.length; i++) {
-                                builder.append(currencies[i] + " ");
+                                SpannableString currenciesString = new SpannableString(currencies[i]);
+                                currenciesString.setSpan(new ForegroundColorSpan(Color.BLACK), 0, currenciesString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                currenciesString.setSpan(new StyleSpan(Typeface.BOLD), 0, currenciesString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                builder.append(currenciesString + " ");
+
                                 SpannableString dominanceString = new SpannableString(String.format("%.2f", Double.parseDouble(dominanceValues[i])) + "% ");
-                                dominanceString.setSpan(new ForegroundColorSpan(Color.BLACK), 0, dominanceString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                                dominanceString.setSpan(new StyleSpan(Typeface.BOLD), 0, dominanceString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                if(Double.parseDouble(dominanceValues[i])>=0) {
+                                    dominanceString.setSpan(new ForegroundColorSpan(Color.GREEN), 0, dominanceString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                }else{
+                                    dominanceString.setSpan(new ForegroundColorSpan(Color.RED), 0, dominanceString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                }
                                 builder.append(dominanceString);
                             }
 

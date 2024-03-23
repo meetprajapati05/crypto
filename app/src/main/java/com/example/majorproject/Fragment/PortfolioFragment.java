@@ -1,18 +1,19 @@
 package com.example.majorproject.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
+
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.androidnetworking.AndroidNetworking;
@@ -20,11 +21,11 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.gsonparserfactory.GsonParserFactory;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.example.majorproject.Adapters.MarketAdapter;
 import com.example.majorproject.Adapters.PortfolioAdapter;
 import com.example.majorproject.Models.CryptoDataModel;
 import com.example.majorproject.Models.PortfolioModel;
 import com.example.majorproject.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.bson.Document;
 import org.json.JSONArray;
@@ -32,9 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
@@ -43,13 +42,15 @@ import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
-import io.realm.mongodb.sync.Progress;
 import okhttp3.OkHttpClient;
 
 public class PortfolioFragment extends Fragment {
 
     RecyclerView recyclerView;
     LottieAnimationView progressBar;
+    RelativeLayout layoutEmptyPortfolio;
+    AppCompatButton btnViewMarket;
+    LottieAnimationView lottieEmptyPortfolioAnim;
 
     PortfolioAdapter adapter;
     SwipeRefreshLayout refresh;
@@ -62,6 +63,7 @@ public class PortfolioFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,6 +75,9 @@ public class PortfolioFragment extends Fragment {
         refresh = v.findViewById(R.id.portfolioRefresh);
         cryptoData = new ArrayList<>();
         portfolioData = new ArrayList<>();
+        layoutEmptyPortfolio = v.findViewById(R.id.layoutEmptyPortfolio);
+        lottieEmptyPortfolioAnim = v.findViewById(R.id.lottieEmptyPortfolio);
+        btnViewMarket = v.findViewById(R.id.btnPortfolioEmpty);
 
         SharedPreferences preferences = getContext().getSharedPreferences("MajorProject", Context.MODE_PRIVATE);
         email = preferences.getString("email",null);
@@ -92,17 +97,25 @@ public class PortfolioFragment extends Fragment {
             }
         });
 
+        //set button view
+        btnViewMarket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavView);
+                bottomNavigationView.setSelectedItemId(R.id.bottomOptMarket);
+            }
+        });
 
         return v;
     }
 
     private void getPortfolioData(String email, Context context) {
         Realm.init(context);
-        App app = new App(new AppConfiguration.Builder(getString(R.string.MONGO_APP_ID)).build());
+        App app = new App(new AppConfiguration.Builder(context.getString(R.string.MONGO_APP_ID)).build());
         User user = app.currentUser();
-        MongoClient mongoClient = user.getMongoClient(getString(R.string.MONGO_DB_SERVICE_NAME));
-        MongoDatabase mongoDatabase = mongoClient.getDatabase(getString(R.string.MONGO_DATABASE_NAME));
-        MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+        MongoClient mongoClient = user.getMongoClient(context.getString(R.string.MONGO_DB_SERVICE_NAME));
+        MongoDatabase mongoDatabase = mongoClient.getDatabase(context.getString(R.string.MONGO_DATABASE_NAME));
+        MongoCollection<Document> collection = mongoDatabase.getCollection(context.getString(R.string.MONGO_DB_USER_COLLECTION));
 
         Document filter = new Document("user_id", user.getId()).append("email",email);
 
@@ -114,6 +127,7 @@ public class PortfolioFragment extends Fragment {
                         if(result.get()!=null){
                             List<Document> portfolios = result.get().getList("portfolio",Document.class);
                             if(portfolios!=null){
+                                layoutEmptyPortfolio.setVisibility(View.INVISIBLE);
                                 for(Document portfolioItem : portfolios){
                                     PortfolioModel model = new PortfolioModel();
                                     model.setCoin_id(portfolioItem.getString("coin_id"));
@@ -131,10 +145,13 @@ public class PortfolioFragment extends Fragment {
 
                                     coins = coins + "," + portfolioItem.getString("coin_id");
                                 }
-                                setRecycleView(coins, context);
-                            }
-                            else{
-                                progressBar.setVisibility(View.INVISIBLE);
+                                if(coins!=null) {
+                                    setRecycleView(coins, context);
+                                }else{
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    layoutEmptyPortfolio.setVisibility(View.VISIBLE);
+                                    lottieEmptyPortfolioAnim.playAnimation();
+                                }
                             }
                         }
                     }else{
@@ -155,7 +172,8 @@ public class PortfolioFragment extends Fragment {
 
         AndroidNetworking.setParserFactory(new GsonParserFactory());
 
-        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=&sparkline=false&locale=en")
+        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?x_cg_demo_api_key=&vs_currency=usd&ids=&sparkline=false&locale=en")
+                .addQueryParameter("x_cg_demo_api_key",context.getString(R.string.COINGECKO_API_KEY))
                 .addQueryParameter("ids",coins)
                 .setTag("Watchlist")
                 .setPriority(Priority.HIGH)

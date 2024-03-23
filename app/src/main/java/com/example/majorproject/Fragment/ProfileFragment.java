@@ -57,9 +57,9 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
 
         Realm.init(getContext());
-        app = new App(new AppConfiguration.Builder(getString(R.string.MONGO_APP_ID)).build());
-        client = app.currentUser().getMongoClient(getString(R.string.MONGO_DB_SERVICE_NAME));
-        database = client.getDatabase(getString(R.string.MONGO_DATABASE_NAME));
+        app = new App(new AppConfiguration.Builder(getContext().getString(R.string.MONGO_APP_ID)).build());
+        client = app.currentUser().getMongoClient(getContext().getString(R.string.MONGO_DB_SERVICE_NAME));
+        database = client.getDatabase(getContext().getString(R.string.MONGO_DATABASE_NAME));
 
         SharedPreferences preferences = getActivity().getSharedPreferences("MajorProject", Context.MODE_PRIVATE);
         email = preferences.getString("email",null);
@@ -134,7 +134,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setProfile(Context context) {
-        MongoCollection<Document> collection = database.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+        MongoCollection<Document> collection = database.getCollection(context.getString(R.string.MONGO_DB_USER_COLLECTION));
 
         Document filter = new Document("user_id", app.currentUser().getId()).append("email", email);
         collection.findOne(filter).getAsync(new App.Callback<Document>() {

@@ -60,4 +60,67 @@
         android:layout_gravity="center"
         android:visibility="invisible" />
 
+    <RelativeLayout
+        android:id="@+id/layoutEmptyWatchlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:layout_gravity="center_vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieEmptyWatchlist"
+                android:layout_width="wrap_content"
+                android:layout_height="250sp"
+                app:lottie_rawRes="@raw/emptylist" />
+
+            <TextView
+                android:id="@+id/msgNoWatchlistTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lottieEmptyWatchlist"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/teko_semibold"
+                style="@style/TEXT"
+                android:text="No Watchlist Placed!"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/msgNoWatchlistTitle"
+                android:layout_centerHorizontal="true"
+                style="@style/TEXT"
+                android:textAlignment="center"
+                android:fontFamily="@font/teko_semibold"
+                android:text="Oops! It seems like the list is currently empty. There are no items to display at the moment. Feel free to add some items to get started!"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnWatchlistEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Market"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/button_post_background"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"/>
+
+    </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

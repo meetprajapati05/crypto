@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -21,6 +23,7 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.majorproject.Adapters.MarketAdapter;
 import com.example.majorproject.Models.CryptoDataModel;
 import com.example.majorproject.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.bson.Document;
 import org.json.JSONArray;
@@ -44,6 +47,9 @@ public class WatchlistFragment extends Fragment {
 
     RecyclerView recyclerView;
     LottieAnimationView progressBar;
+    RelativeLayout emptyListLayout;
+    LottieAnimationView emptyListAnim;
+    AppCompatButton btnViewMarket;
     ArrayList<CryptoDataModel> data;
     MarketAdapter adapter;
     App app;
@@ -68,13 +74,16 @@ public class WatchlistFragment extends Fragment {
         progressBar = view.findViewById(R.id.watchlistLoadingAnimation);
         refresh = view.findViewById(R.id.watchlistRefresh);
         data = new ArrayList<>();
+        emptyListLayout = view.findViewById(R.id.layoutEmptyWatchlist);
+        btnViewMarket = view.findViewById(R.id.btnWatchlistEmpty);
+        emptyListAnim = view.findViewById(R.id.lottieEmptyWatchlist);
 
         //Initializing Realm and app and user and Mongo client and database
         Realm.init(getContext());
-        app = new App(new AppConfiguration.Builder(getString(R.string.MONGO_APP_ID)).build());
+        app = new App(new AppConfiguration.Builder(getContext().getString(R.string.MONGO_APP_ID)).build());
         user = app.currentUser();
-        mongoClient = user.getMongoClient(getString(R.string.MONGO_DB_SERVICE_NAME));
-        mongoDatabase = mongoClient.getDatabase(getString(R.string.MONGO_DATABASE_NAME ));
+        mongoClient = user.getMongoClient(getContext().getString(R.string.MONGO_DB_SERVICE_NAME));
+        mongoDatabase = mongoClient.getDatabase(getContext().getString(R.string.MONGO_DATABASE_NAME ));
 
         //Call setWatchlistRecycler() that set and find watchlist data
         progressBar.setVisibility(View.VISIBLE);
@@ -93,6 +102,15 @@ public class WatchlistFragment extends Fragment {
             }
         });
 
+        //set button view
+        btnViewMarket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavView);
+                bottomNavigationView.setSelectedItemId(R.id.bottomOptMarket);
+            }
+        });
+
         return view;
     }
     public void filterApiWithWatchlistData(String coins, Context context){
@@ -103,7 +121,8 @@ public class WatchlistFragment extends Fragment {
 
         AndroidNetworking.setParserFactory(new GsonParserFactory());
 
-        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=&sparkline=false&locale=en")
+        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/markets?x_cg_demo_api_key=&vs_currency=usd&ids=&sparkline=false&locale=en")
+                .addQueryParameter("x_cg_demo_api_key", context.getString(R.string.COINGECKO_API_KEY))
                 .addQueryParameter("ids",coins)
                 .setTag("Watchlist")
                 .setPriority(Priority.HIGH)
@@ -149,7 +168,7 @@ public class WatchlistFragment extends Fragment {
         SharedPreferences preferences = getContext().getSharedPreferences("MajorProject", Context.MODE_PRIVATE);
         String email = preferences.getString("email",null);
 
-        MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+        MongoCollection<Document> collection = mongoDatabase.getCollection(context.getString(R.string.MONGO_DB_USER_COLLECTION));
 
 
         if(email!=null) {
@@ -164,6 +183,7 @@ public class WatchlistFragment extends Fragment {
                                     data.clear();
                                     List<Document> watchlist = result.get().getList("watchlist", Document.class);
                                     if (watchlist != null) {
+                                        emptyListLayout.setVisibility(View.GONE);
                                         for (Document watchlistItem : watchlist) {
                                             String coin_name = watchlistItem.getString("coin_name");
                                             String coin_symbol = watchlistItem.getString("coin_symbol");
@@ -177,10 +197,12 @@ public class WatchlistFragment extends Fragment {
                                         }
                                         if (coins != null) {
                                             filterApiWithWatchlistData(coins, context);
+                                        }else {
+                                            emptyListLayout.setVisibility(View.VISIBLE);
+                                            progressBar.setVisibility(View.GONE);
+                                            emptyListAnim.playAnimation();
                                         }
                                     }
-                                } else {
-
                                 }
                             } else {
                                 Log.e("ErrWatchlistDatabase", result.getError().toString());
