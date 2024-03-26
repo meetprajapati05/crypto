@@ -218,7 +218,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Watchlist is empty!"
+                    android:text="No Watchlist Placed!"
                     android:textColor="@color/black"
                     android:fontFamily="@font/truculenta"
                     android:textStyle="bold"

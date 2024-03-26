@@ -359,7 +359,8 @@ public class BuyPage extends AppCompatActivity {
 
         AndroidNetworking.initialize(BuyPage.this,client);
 
-        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/{id}")
+        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/{id}?x_cg_demo_api_key=")
+                .addQueryParameter("x_cg_demo_api_key",getString(R.string.COINGECKO_API_KEY))
                 .addPathParameter("id", coin_id)
                 .setTag("BuyPageDetails")
                 .setPriority(Priority.HIGH)

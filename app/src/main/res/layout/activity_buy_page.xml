@@ -41,6 +41,7 @@
         android:fontFamily="@font/alata"
         android:textSize="23dp"
         android:textStyle="bold" />
+
     <TextView
         android:id="@+id/txtBuyPageCryptoType"
         android:layout_width="wrap_content"

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.MarketDetailDetailsFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgMarketDetailCrypto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:maxWidth="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp" />
+
+        <TextView
+            android:id="@+id/txtMarketDetailName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            style="@style/TEXT"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@+id/imgMarketDetailCrypto"
+            android:fontFamily="@font/alata"
+            android:textSize="23dp"
+            android:textStyle="bold" />
+
+        <!-- <TextView
+             android:id="@+id/txtMarketDetailCryptoType"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="21dp"
+             style="@style/TEXT"
+             android:layout_marginStart="5dp"
+             android:layout_toRightOf="@+id/txtMarketDetailName"
+             android:textSize="18dp"
+             android:textStyle="bold"
+             android:fontFamily="@font/alata"
+             />-->
+
+        <TextView
+            android:id="@+id/txtMarketDetailCryptoSymbol"
+            android:layout_width="wrap_content"
+            style="@style/TEXT"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_below="@+id/txtMarketDetailName"
+            android:layout_toRightOf="@+id/imgMarketDetailCrypto"
+            android:textSize="20dp"
+            android:fontFamily="@font/alata"
+            />
+
+        <TextView
+            android:id="@+id/txtMarketDetailCryptoInDeVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="5dp"
+            style="@style/TEXT"
+            android:layout_below="@+id/txtMarketDetailName"
+            android:layout_toRightOf="@+id/txtMarketDetailCryptoSymbol"
+            android:textSize="18dp"
+            android:fontFamily="@font/alata"
+            />
+
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TEXT"
+            android:layout_marginTop="14dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="10dp"
+            android:text="value"
+            android:textSize="18dp"
+            android:fontFamily="@font/alata"
+            />
+
+        <TextView
+            android:id="@+id/txtMarketDetailCryptoValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text5"
+            android:layout_marginTop="5dp"
+            style="@style/TEXT"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="10dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:fontFamily="@font/alata"
+            />
+
+        <TextView
+            android:id="@+id/lblPriceConverter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgMarketDetailCrypto"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="10sp"
+            android:fontFamily="@font/teko_semibold"
+            android:text="Price Converter"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/layoutMarketDetailsconverter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/lblPriceConverter"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/background_detail_converter"
+                android:layout_height="80sp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgDetailConverter"
+                    android:layout_width="60sp"
+                    android:layout_height="60sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10sp"/>
+
+                <TextView
+                    android:id="@+id/txtDetailCoinName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:layout_toStartOf="@id/etDetailCoin"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/imgDetailConverter"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginStart="5sp"/>
+
+                <TextView
+                    android:id="@+id/txtDetailCoinSymbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_below="@id/txtDetailCoinName"
+                    android:layout_toEndOf="@id/imgDetailConverter"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginStart="5sp"/>
+
+
+                <EditText
+                    android:id="@+id/etDetailCoin"
+                    android:layout_width="90sp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="10sp"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10sp"
+                    android:inputType="number"
+                    android:layout_marginEnd="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/edittext_background" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:layout_margin="5sp"
+                android:src="@drawable/baseline_currency_exchange_24"
+                android:layout_gravity="center_horizontal"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80sp"
+                android:background="@drawable/background_detail_converter">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgDetailConverterCurrency"
+                    android:layout_width="60sp"
+                    android:layout_height="60sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10sp"/>
+
+                <TextView
+                    android:id="@+id/txtDetailCurrencyName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:textColor="@color/black"
+                    android:layout_toStartOf="@id/etDetailCurrency"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/imgDetailConverterCurrency"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginStart="5sp"/>
+
+                <TextView
+                    android:id="@+id/txtDetailCurrencySymbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_below="@id/txtDetailCurrencyName"
+                    android:layout_toEndOf="@id/imgDetailConverterCurrency"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginStart="5sp"/>
+
+
+                <EditText
+                    android:id="@+id/etDetailCurrency"
+                    android:layout_width="90sp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginEnd="10sp"
+                    android:editable="false"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/edittext_background" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblPriceLiveData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutMarketDetailsconverter"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginEnd="10sp"
+            android:fontFamily="@font/teko_semibold"
+            android:text="Price Live Data"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtMarketDetailPriceLive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblPriceLiveData"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:textSize="18sp"
+            android:fontFamily="@font/basic"/>
+
+        <LinearLayout
+            android:id="@+id/layoutMarketDetailsDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtMarketDetailPriceLive"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:layout_marginEnd="7sp"
+                android:layout_marginBottom="8sp"
+                android:layout_marginStart="7sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volume"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/teko_semibold"
+                    android:textSize="15sp"
+                    android:padding="7sp"/>
+
+                <TextView
+                    android:id="@+id/textVolume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/basic"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:padding="7sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="2sp"
+                android:background="@color/grey"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:layout_marginEnd="7sp"
+                android:layout_marginBottom="8sp"
+                android:layout_marginStart="7sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last 24h Range"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/teko_semibold"
+                    android:textSize="15sp"
+                    android:padding="7sp"/>
+
+                <TextView
+                    android:id="@+id/textLast24hRange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/basic"
+                    android:textSize="15sp"
+                    android:padding="7sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="2sp"
+                android:background="@color/grey"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="8sp"
+                android:layout_marginEnd="7sp"
+                android:layout_marginStart="7sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Time High"
+                    android:textColor="@color/black"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/teko_semibold"
+                    android:textSize="15sp"
+                    android:padding="7sp"/>
+
+                <TextView
+                    android:id="@+id/textAth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/basic"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:padding="7sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="2sp"
+                android:background="@color/grey"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:layout_marginEnd="7sp"
+                android:layout_marginStart="7sp"
+                android:layout_marginBottom="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Time Low"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/teko_semibold"
+                    android:padding="7sp"/>
+
+                <TextView
+                    android:id="@+id/textAtl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/basic"
+                    android:textSize="15sp"
+                    android:padding="7sp"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblPriceDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutMarketDetailsDetail"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:fontFamily="@font/teko_semibold"
+            android:text="Description"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtMarketDetailDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblPriceDescription"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:textSize="18sp"
+            android:fontFamily="@font/basic"/>
+
+    </RelativeLayout>
+
+</ScrollView>

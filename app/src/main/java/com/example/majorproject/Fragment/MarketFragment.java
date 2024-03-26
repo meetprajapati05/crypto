@@ -175,7 +175,7 @@ public class MarketFragment extends Fragment {
             public void onClick(View view) {
                 setButtonColorOnClicked(btnDOT);
                 recyclerView.setAdapter(null);
-                type="dot";
+                type="eur";
                 progressBar.setVisibility(View.VISIBLE);
                 progressLoadMore.setVisibility(View.INVISIBLE);
                 data.clear();

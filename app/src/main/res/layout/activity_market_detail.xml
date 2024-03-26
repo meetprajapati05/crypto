@@ -10,6 +10,7 @@
    <androidx.appcompat.widget.Toolbar
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
+       android:background="@color/white"
        android:elevation="6sp">
 
        <ImageView
@@ -60,14 +61,60 @@
 
    </androidx.appcompat.widget.Toolbar>
 
-    <WebView
-        android:id="@+id/marketDetailChart"
+    <LinearLayout
+        android:id="@+id/layoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMarketDetailChart"
+            android:layout_width="70sp"
+            android:layout_height="40sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:background="@drawable/market_selected_button_background"
+            android:text="Chart"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMarketDeatilDetails"
+            android:layout_width="70sp"
+            android:layout_height="40sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:background="@drawable/market_unselected_button_backgroug"
+            android:text="Detail"
+            android:textColor="@color/light_green"
+            android:textSize="12dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMarketDeatilInvest"
+            android:layout_width="70sp"
+            android:layout_height="40sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:background="@drawable/market_unselected_button_backgroug"
+            android:text="Hold"
+            android:textColor="@color/light_green"
+            android:textSize="12dp" />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/framMarketDEtailFragments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="65sp" />
+        android:layout_below="@id/layoutButton"
+        android:layout_above="@id/layoutMarketDetailBuySell"/>
 
     <LinearLayout
+        android:id="@+id/layoutMarketDetailBuySell"
         android:layout_width="match_parent"
         android:layout_height="65sp"
         android:layout_alignParentBottom="true">
@@ -98,6 +145,5 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
-
 
 </RelativeLayout>

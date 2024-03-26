@@ -9,11 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ViewAnimator;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -24,10 +21,7 @@ import com.example.majorproject.MarketDetail;
 import com.example.majorproject.Models.CryptoDataModel;
 import com.example.majorproject.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -88,8 +82,8 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
             holder.txtPriceSymbol.setText("₿");
         }else if (Objects.equals(data.get(position).getType(), "eth")){
             holder.txtPriceSymbol.setText("Ξ");
-        }else if (Objects.equals(data.get(position).getType(), "dot")){
-            holder.txtPriceSymbol.setText(".");
+        }else if (Objects.equals(data.get(position).getType(), "eur")){
+            holder.txtPriceSymbol.setText("€");
         }else{
             holder.txtPriceSymbol.setText("$");
         }

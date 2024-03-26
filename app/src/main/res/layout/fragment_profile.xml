@@ -110,7 +110,6 @@
                     android:layout_height="1sp"
                     android:background="@color/light_grey"/>
 
-<!--
                 <RelativeLayout
                     android:id="@+id/btnProfileWallet"
                     android:layout_width="match_parent"
@@ -150,12 +149,12 @@
                         android:src="@drawable/icon_profile_next" />
 
                 </RelativeLayout>
--->
 
                 <View
                     android:id="@+id/viewHistoryAbove"
                     android:layout_width="match_parent"
                     android:layout_height="1sp"
+                    android:layout_below="@id/btnProfileWallet"
                     android:background="@color/light_grey"/>
 
                 <RelativeLayout
@@ -249,11 +248,11 @@
                     android:id="@+id/viewThemeAbove"
                     android:layout_width="match_parent"
                     android:layout_height="1sp"
-                    android:layout_below="@id/btnProfileChangePassword"
+                    android:layout_below="@id/btnProfileContectSupport"
                     android:background="@color/light_grey"/>
 
-              <!--  <RelativeLayout
-                    android:id="@+id/btnProfileTheme"
+                <RelativeLayout
+                    android:id="@+id/btnProfileDeleteAccount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/viewThemeAbove"
@@ -272,7 +271,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Theme"
+                        android:text="Delete Account"
                         android:textSize="15sp"
                         style="@style/TEXT"
                         android:layout_toEndOf="@+id/iconTheme"
@@ -293,7 +292,7 @@
 
                 </RelativeLayout>
 
-              -->  <View
+                <View
                     android:id="@+id/viewContectSupportAbove"
                     android:layout_width="match_parent"
                     android:layout_height="1sp"
@@ -346,7 +345,7 @@
                     android:id="@+id/viewLogoutAbove"
                     android:layout_width="match_parent"
                     android:layout_height="1sp"
-                    android:layout_below="@id/btnProfileContectSupport"
+                    android:layout_below="@id/btnProfileDeleteAccount"
                     android:background="@color/light_grey"/>
 
                 <RelativeLayout

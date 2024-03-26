@@ -1,22 +1,29 @@
 package com.example.majorproject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.majorproject.Fragment.MarketDetailChartFragment;
+import com.example.majorproject.Fragment.MarketDetailDetailsFragment;
+import com.example.majorproject.Fragment.MarketDetailInvestFragment;
 import com.example.majorproject.databinding.ActivityMarketDetailBinding;
 
 import org.bson.Document;
+
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
@@ -37,6 +44,8 @@ public class MarketDetail extends AppCompatActivity {
     MongoDatabase database;
     MongoCollection<Document> collection;
     String email;
+    boolean buy = false;
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +105,52 @@ public class MarketDetail extends AppCompatActivity {
                     }
                 }
             });
+        }
+
+        //set button sell invisible then coin not buy
+
+        collection.findOne(new Document("user_id", user.getId()).append("email",email)).getAsync(new App.Callback<Document>() {
+            @Override
+            public void onResult(App.Result<Document> result) {
+                if(result.get()!=null){
+                    List<Document> porfolios = result.get().getList("portfolio", Document.class);
+                    if(porfolios!=null) {
+                        for (Document porfolio : porfolios) {
+                            if(porfolio.getString("coin_id").toString().equals(coin_id)) {
+                              buy = true;
+                            }
+                        }
+                        if(!buy) {
+                            binding.btnMarketDetailSell.setVisibility(View.GONE);
+                            binding.btnMarketDeatilInvest.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }
+        });
+
+        //Hide buy sell button then that is not usd
+        if(!type.equals("usd")){
+            binding.btnMarketDetailBuy.setVisibility(View.GONE);
+            binding.btnMarketDetailSell.setVisibility(View.GONE);
+
+            binding.btnMarketDeatilInvest.setVisibility(View.GONE);
+          /* TypedValue typedValue = new TypedValue();
+            getTheme().resolveAttribute(androidx.appcompat.R.attr.actionBarSize, typedValue, true);
+            int actionBarHeight = TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics());*/
+
+            // Convert -65sp to pixels
+            float scale = getResources().getDisplayMetrics().scaledDensity;
+            int marginInPixels = (int) (-65 * scale + 0.5f);
+
+            // Get existing layout params
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.framMarketDEtailFragments.getLayoutParams();
+
+            // Set bottom margin
+            layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin, layoutParams.rightMargin, marginInPixels);
+
+            // Apply the modified layout params
+            binding.framMarketDEtailFragments.setLayoutParams(layoutParams);
         }
 
         //Back button
@@ -177,32 +232,52 @@ public class MarketDetail extends AppCompatActivity {
             }
         });
 
-        String theme;
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO){
-            theme = "Light";
-        }else{
-            theme = "Dark";
-        }
+        setFragment(new MarketDetailChartFragment(symbol, type));
 
-        showChart(symbol,type,theme);
-
-
-    }
-
-    public void showChart(String symbol,String type,String theme){
-        String chartUrl = "https://s.tradingview.com/widgetembed/?frameElementId=tradingview_76d87&symbol="+ symbol + type +"&interval=D&hidesidetoolbar=1&hidetoptoolbar=1&symboledit=1&saveimage=1&toolbarbg=FFFFFF&studies=[]&hideideas=1&theme="+ theme +"&style=1&timezone=Etc%2FUTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=coinmarketcap.com&utm_medium=widget&utm_campaign=chart";
-        WebSettings webSettings = binding.marketDetailChart.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        binding.marketDetailChart.clearFormData();
-        binding.marketDetailChart.loadUrl(chartUrl);
-        binding.marketDetailChart.setWebContentsDebuggingEnabled(true);
-        binding.marketDetailChart.setWebViewClient(new WebViewClient(){
+        binding.btnMarketDetailChart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                view.loadUrl(request.toString());
-                return super.shouldOverrideUrlLoading(view, request);
+            public void onClick(View view) {
+                setButtonColorOnClicked(binding.btnMarketDetailChart);
+                setFragment(new MarketDetailChartFragment(symbol, type));
             }
         });
 
+        binding.btnMarketDeatilDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setButtonColorOnClicked(binding.btnMarketDeatilDetails);
+                setFragment(new MarketDetailDetailsFragment(coin_id, type));
+            }
+        });
+
+        binding.btnMarketDeatilInvest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setButtonColorOnClicked(binding.btnMarketDeatilInvest);
+                setFragment(new MarketDetailInvestFragment(coin_id, type));
+            }
+        });
+
+    }
+
+    @SuppressLint("ResourceAsColor")
+    public void setButtonColorOnClicked(Button clickedButton){
+        //Set all button background unselected
+        binding.btnMarketDetailChart.setBackgroundResource(R.drawable.market_unselected_button_backgroug);
+        binding.btnMarketDetailChart.setTextColor(ContextCompat.getColor(MarketDetail.this,R.color.light_green));
+        binding.btnMarketDeatilDetails.setBackgroundResource(R.drawable.market_unselected_button_backgroug);
+        binding.btnMarketDeatilDetails.setTextColor(ContextCompat.getColor(MarketDetail.this,R.color.light_green));
+        binding.btnMarketDeatilInvest.setBackgroundResource(R.drawable.market_unselected_button_backgroug);
+        binding.btnMarketDeatilInvest.setTextColor(ContextCompat.getColor(MarketDetail.this,R.color.light_green));
+
+        clickedButton.setBackgroundResource(R.drawable.market_selected_button_background);
+        clickedButton.setTextColor(ContextCompat.getColor(MarketDetail.this,R.color.white));
+    }
+
+    private void setFragment(Fragment fragment){
+        FragmentManager fm =getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.framMarketDEtailFragments, fragment);
+        ft.commit();
     }
 }

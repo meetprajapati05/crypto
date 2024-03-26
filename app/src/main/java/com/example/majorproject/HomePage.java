@@ -121,7 +121,7 @@ public class HomePage extends AppCompatActivity {
         binding.bottomNavView.setSelectedItemId(R.id.bottomOptHome);
     }
 
-    public void setFragment(Fragment fragment){
+    private void setFragment(Fragment fragment){
             FragmentManager fm =getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.frameLayout, fragment);

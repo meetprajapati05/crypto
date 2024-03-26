@@ -24,6 +24,7 @@ import com.example.majorproject.History;
 import com.example.majorproject.R;
 import com.example.majorproject.SingIn;
 import com.example.majorproject.VerifyEmailPassword;
+import com.example.majorproject.Wallet;
 import com.example.majorproject.databinding.FragmentProfileBinding;
 
 import org.bson.Document;
@@ -168,22 +169,22 @@ public class ProfileFragment extends Fragment {
         });
 
         //Wallet button
-       /* binding.btnProfileWallet.setOnClickListener(new View.OnClickListener() {
+        binding.btnProfileWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), Wallet.class);
                 intent.putExtra("_id", userObjId);
                 startActivity(intent);
             }
-        });*/
+        });
 
-        //Theme button
-      /*  binding.btnProfileTheme.setOnClickListener(new View.OnClickListener() {
+        //Delete account button
+        binding.btnProfileDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), Theme.class));
+
             }
-        });*/
+        });
 
         //Contect Support
         binding.btnProfileContectSupport.setOnClickListener(new View.OnClickListener() {
