@@ -2,6 +2,7 @@ package com.example.majorproject;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -44,10 +45,14 @@ public class BuyPage extends AppCompatActivity {
     ActivityBuyPageBinding binding;
     String user_email;
     String coin_id;
+    String coin_name;
+    String type;
+    String symbol;
     App app;
     User user;
     MongoClient mongoClient;
     MongoDatabase mongoDatabase;
+    String previous;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,10 @@ public class BuyPage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         coin_id = getIntent().getStringExtra("id").toString();
+        previous = getIntent().getStringExtra("previous");
+        coin_name = getIntent().getStringExtra("name");
+        type = getIntent().getStringExtra("type");
+        symbol = getIntent().getStringExtra("symbol");
 
         SharedPreferences preferences = getSharedPreferences("MajorProject",MODE_PRIVATE);
         user_email = preferences.getString("email",null);
@@ -284,6 +293,7 @@ public class BuyPage extends AppCompatActivity {
                 .append("money_flow", invest)
                 .append("user_balance", available_balance)
                 .append("purchase_leverage_in-x", leverage)
+                .append("purchase_time_price", coin_value)
         ));
 
         collection.updateOne(filter, data).getAsync(new App.Callback<UpdateResult>() {
@@ -371,7 +381,7 @@ public class BuyPage extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
 
                         try {
-                            String coin_name = response.getJSONObject("localization").getString("en");
+                            coin_name = response.getJSONObject("localization").getString("en");
                             String coin_symbol = response.getString("symbol");
 
                             JSONObject objImage = response.getJSONObject("image");
@@ -436,5 +446,20 @@ public class BuyPage extends AppCompatActivity {
 
         binding.etBuyPageSetProfit.setText("");
         binding.etBuyPageStopLoss.setText("");
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(previous!=null) {
+            Intent intent = new Intent(BuyPage.this, MarketDetail.class);
+            intent.putExtra("name",coin_name);
+            intent.putExtra("symbol",symbol);
+            intent.putExtra("type",type);
+            intent.putExtra("id",coin_id);
+            startActivity(intent);
+            finish();
+        }else{
+            super.onBackPressed();
+        }
     }
 }

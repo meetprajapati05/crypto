@@ -23,6 +23,10 @@ public class MarketDetailChartFragment extends Fragment {
         this.type = type;
     }
 
+    public MarketDetailChartFragment(){
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -167,6 +167,10 @@ public class MarketDetail extends AppCompatActivity {
             public void onClick(View view) {
                 Intent iBuy = new Intent(getApplicationContext(),BuyPage.class);
                 iBuy.putExtra("id",coin_id);
+                iBuy.putExtra("name",name);
+                iBuy.putExtra("symbol",symbol);
+                iBuy.putExtra("type",type);
+                iBuy.putExtra("previous","market");
                 startActivity(iBuy);
             }
         });
@@ -179,6 +183,10 @@ public class MarketDetail extends AppCompatActivity {
                    ;Intent iSell = new Intent(getApplicationContext(), SellPage.class);
                     iSell.putExtra("id", coin_id);
                     iSell.putExtra("purchase_date_and_time", coin_purchase_date_and_time);
+                    iSell.putExtra("name",name);
+                    iSell.putExtra("symbol",symbol);
+                    iSell.putExtra("type",type);
+                    iSell.putExtra("previous","market");
                     startActivity(iSell);
                 }else{
                     Intent iSell = new Intent(getApplicationContext(), SellPage.class);

@@ -181,22 +181,35 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
                     binding.txtWalletCurrentBalance.setText("$"+balanceInInt);
                     binding.txtWalletCurrentBalancePoint.setText("."+pointVal);
 
-                    List<Document> historys = result.get().getList("history", Document.class);
-                    if(historys!=null){
+                    List<Document> portfolios = result.get().getList("portfolio", Document.class);
+                    if(portfolios!=null){
                         double investVal = 0.0;
-                        double reciveVal = 0.0;
-                        for(Document history : historys){
-                            if(history.getString("action").equals("Buy")){
-                                investVal = investVal + history.getDouble("money_flow");
-                            } else if (history.getString("action").equals("Sell")) {
-                                reciveVal = reciveVal + history.getDouble("money_flow");
-                            }
+                        for(Document portfolio : portfolios){
+                            investVal = investVal + portfolio.getDouble("purchase_value");
                         }
                         binding.txtWalletInvestBalance.setText(String.format("%.2f",investVal)+"$");
+                    }
+                    else {
+                        binding.txtWalletInvestBalance.setText(0.00 + "$");
+                    }
+
+                    List<Document> historys = result.get().getList("history", Document.class);
+                    if(historys!=null){
+                        double reciveVal = 0.0;
+                        for(Document history : historys){
+                            if (history.getString("action").equals("Sell")) {
+                                double sellPrice = history.getDouble("money_flow");
+                                double sell_time_price = history.getDouble("purchase_time_price");
+                                int leverage = history.getInteger("purchase_leverage_in-x");
+                                int quantity = history.getInteger("coin_quntity");
+                                double purchace =  (sell_time_price / leverage) * quantity;
+                                double reciveSingleValue = sellPrice - purchace;
+                                reciveVal = reciveVal + reciveSingleValue;
+                            }
+                        }
                         binding.txtWalletReciveBalance.setText(String.format("%.2f",reciveVal)+"$");
                     }
                     else{
-                        binding.txtWalletInvestBalance.setText(0.00+"$");
                         binding.txtWalletReciveBalance.setText(0.00+"$");
                     }
                 }
@@ -234,7 +247,7 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
                             @Override
                             public void onResult(App.Result<UpdateResult> result) {
                                 if(result.isSuccess()){
-                                    addDataToMongoDb(s, paymentData, user_id);
+                                    addDataToMongoDb(s, paymentData);
                                 }else{
                                     Log.e("ErrWalletUpdateBalance", result.getError().toString());
                                 }
@@ -248,14 +261,14 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
         });
     }
 
-    private void addDataToMongoDb(String s, PaymentData paymentData, String user_id) {
+    private void addDataToMongoDb(String s, PaymentData paymentData) {
 
             MongoCollection<Document> collection = database.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
 
             Document filter = new Document("_id", new ObjectId(userObjId));
 
             Document data = new Document("$push", new Document("payment_transaction", new Document(
-                    new Document("user_id", user_id)
+                    new Document("user_id", app.currentUser().getId())
                     .append("payment_id", paymentData.getPaymentId())
                     .append("payment_external_wallet", paymentData.getExternalWallet())
                     .append("signature", paymentData.getSignature())
@@ -264,6 +277,7 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
                     .append("payment_date_and_time",getDateTime())
                     .append("pay_money", payableVal)
                     .append("add_balance", payableDollar)
+                    .append("status", "Success")
             )));
 
             collection.updateOne(filter,data).getAsync(new App.Callback<UpdateResult>() {
@@ -276,7 +290,6 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
                     }
                 }
             });
-
     }
 
     private String getDateTime() {
@@ -294,6 +307,33 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
     @Override
     public void onPaymentError(int i, String s, PaymentData paymentData) {
         Log.e("ErrPaymentError", "Payment has canceled by "+ s);
+        MongoCollection<Document> collection = database.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+
+        Document filter = new Document("_id", new ObjectId(userObjId));
+
+        Document data = new Document("$push", new Document("payment_transaction", new Document(
+                new Document("user_id", app.currentUser().getId())
+                        .append("payment_id", paymentData.getPaymentId())
+                        .append("payment_external_wallet", paymentData.getExternalWallet())
+                        .append("signature", paymentData.getSignature())
+                        .append("payable_mobile_no", paymentData.getUserContact())
+                        .append("payable_email", paymentData.getUserEmail())
+                        .append("payment_date_and_time",getDateTime())
+                        .append("pay_money", payableVal)
+                        .append("add_balance", payableDollar)
+                        .append("status", "Failed")
+        )));
+
+        collection.updateOne(filter,data).getAsync(new App.Callback<UpdateResult>() {
+            @Override
+            public void onResult(App.Result<UpdateResult> result) {
+                if(result.isSuccess()){
+
+                }else{
+                    Log.e("ErrWalletSetPaymentTransactionFailed", result.getError().toString());
+                }
+            }
+        });
     }
 
     @Override

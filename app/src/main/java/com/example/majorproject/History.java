@@ -81,10 +81,16 @@ public class History extends AppCompatActivity {
 
                             data.add(model);
                         }
-                        binding.layoutEmptyHistory.setVisibility(View.GONE);
-                        binding.progressHistory.setVisibility(View.GONE);
-                        HistoryAdapter adapter = new HistoryAdapter(History.this, data);
-                        binding.recyclerHistory.setAdapter(adapter);
+                        if(!data.isEmpty()) {
+                            binding.layoutEmptyHistory.setVisibility(View.GONE);
+                            binding.progressHistory.setVisibility(View.GONE);
+                            HistoryAdapter adapter = new HistoryAdapter(History.this, data);
+                            binding.recyclerHistory.setAdapter(adapter);
+                        }else{
+                            binding.layoutEmptyHistory.setVisibility(View.VISIBLE);
+                            binding.lottieEmptyHistory.playAnimation();
+                            binding.progressHistory.setVisibility(View.GONE);
+                        }
                     }else{
                         binding.layoutEmptyHistory.setVisibility(View.VISIBLE);
                         binding.lottieEmptyHistory.playAnimation();

@@ -140,6 +140,9 @@ public class MarketDetailInvestFragment extends Fragment {
                                 model.setPurchase_leverage_in(porfolio.getInteger("purchase_leverage_in"));
 
                                 data.add(model);
+                            }else{
+                                binding.msgNoHolderTitle.setVisibility(View.VISIBLE);
+                                binding.progressHolder.setVisibility(View.GONE);
                             }
                         }
                         if(data.size()!=0) {

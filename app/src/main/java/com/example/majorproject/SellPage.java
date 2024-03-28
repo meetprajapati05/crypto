@@ -2,6 +2,7 @@ package com.example.majorproject;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ import okhttp3.OkHttpClient;
 
 public class SellPage extends AppCompatActivity {
     ActivitySellPageBinding binding;
-    String coin_id;
+    String coin_id,previous,symbol,type,coin_name;
     String coin_purchase_date_time;
     String user_email;
     Integer quantity;
@@ -52,6 +53,7 @@ public class SellPage extends AppCompatActivity {
     MongoDatabase mongoDatabase;
 
 
+    double purchase_time_coin_price1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,10 @@ public class SellPage extends AppCompatActivity {
 
         coin_id = getIntent().getStringExtra("id").toString();
         coin_purchase_date_time = getIntent().getStringExtra("purchase_date_and_time");
+        previous = getIntent().getStringExtra("previous");
+        coin_name = getIntent().getStringExtra("name");
+        type = getIntent().getStringExtra("type");
+        symbol = getIntent().getStringExtra("symbol");
 
         SharedPreferences preferences = getSharedPreferences("MajorProject",MODE_PRIVATE);
         user_email = preferences.getString("email",null);
@@ -80,8 +86,6 @@ public class SellPage extends AppCompatActivity {
 
         //set balance textview
         setBalance();
-
-
 
         //Set back button
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -129,30 +133,57 @@ public class SellPage extends AppCompatActivity {
         binding.btnSellPageSell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int BuyQuantity = Integer.parseInt(binding.txtSellPageQuantity.getText().toString());
-                int sellQuantity = Integer.parseInt(binding.etSellPageQuantity.getText().toString());
-                if(BuyQuantity==sellQuantity){
-                    binding.btnSellPageSell.setVisibility(View.INVISIBLE);
-                    binding.btnSellProgress.setVisibility(View.VISIBLE);
-                    removePortfolio();
-                } else if (BuyQuantity < sellQuantity) {
-                    Dialog dialog = new Dialog(SellPage.this);
-                    dialog.setContentView(R.layout.dailog_insuffician_coin);
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    dialog.getWindow().setBackgroundDrawable(null);
-                    dialog.findViewById(R.id.dailogInsufficientButton).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.cancel();
-                        }
-                    });
 
-                    dialog.show();
-                } else{
-                    binding.btnSellPageSell.setVisibility(View.INVISIBLE);
-                    binding.btnSellProgress.setVisibility(View.VISIBLE);
-                    setRemoveSellQuantity();
-                }
+                MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+
+                Document filter = new Document(new Document("user_id", user.getId()).append("email",user_email).append("portfolio.coin_id",coin_id).append("portfolio.purchase_date_and_time", binding.txtSellPageDateTime.getText().toString()));
+
+                collection.find(filter).first().getAsync(new App.Callback<Document>() {
+                    @Override
+                    public void onResult(App.Result<Document> result) {
+                        if (result.isSuccess()) {
+                            Document document = result.get();
+
+                            if (document != null) {
+                                List<Document> portfolios = document.getList("portfolio", Document.class);
+
+                                for (Document portfolioData : portfolios) {
+                                    if (coin_id.equals(portfolioData.get("coin_id", String.class))
+                                            && binding.txtSellPageDateTime.getText().toString().equals(portfolioData.get("purchase_date_and_time", String.class))) {
+
+
+                                        int BuyQuantity = Integer.parseInt(binding.txtSellPageQuantity.getText().toString());
+                                        int sellQuantity = Integer.parseInt(binding.etSellPageQuantity.getText().toString());
+                                        if(BuyQuantity==sellQuantity){
+                                            binding.btnSellPageSell.setVisibility(View.INVISIBLE);
+                                            binding.btnSellProgress.setVisibility(View.VISIBLE);
+                                            removePortfolio(portfolioData.getDouble("purchase_time_coin_price"));
+                                        } else if (BuyQuantity < sellQuantity) {
+                                            Dialog dialog = new Dialog(SellPage.this);
+                                            dialog.setContentView(R.layout.dailog_insuffician_coin);
+                                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                            dialog.getWindow().setBackgroundDrawable(null);
+                                            dialog.findViewById(R.id.dailogInsufficientButton).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+
+                                            dialog.show();
+                                        } else{
+                                            binding.btnSellPageSell.setVisibility(View.INVISIBLE);
+                                            binding.btnSellProgress.setVisibility(View.VISIBLE);
+                                            setRemoveSellQuantity();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+
             }
         });
 
@@ -176,12 +207,16 @@ public class SellPage extends AppCompatActivity {
                             if (coin_id.equals(portfolioData.get("coin_id", String.class))
                                     && binding.txtSellPageDateTime.getText().toString().equals(portfolioData.get("purchase_date_and_time", String.class))) {
 
+
+
                                 int quantity = portfolioData.getInteger("coin_quantity");
                                 int leverage = portfolioData.getInteger("purchase_leverage_in");
                                 double purchase_val = portfolioData.getDouble("purchase_value").doubleValue();
                                 double purchase_time_coin_price = portfolioData.getDouble("purchase_time_coin_price");
 
-                                 double sellingOfOldValue = purchase_time_coin_price / leverage * quantity;
+
+
+                                double sellingOfOldValue = purchase_time_coin_price / leverage * quantity;
 
                                 int selllQuantity = Integer.parseInt(binding.etSellPageQuantity.getText().toString());
                                 double sellingOfNewValue = purchase_time_coin_price / leverage * selllQuantity;
@@ -202,7 +237,7 @@ public class SellPage extends AppCompatActivity {
                                     @Override
                                     public void onResult(App.Result<UpdateResult> result) {
                                         if(result.isSuccess()){
-                                            updateBalance();
+                                            updateBalance(purchase_time_coin_price);
                                         }else{
                                             binding.btnSellPageSell.setVisibility(View.VISIBLE);
                                             binding.btnSellProgress.setVisibility(View.INVISIBLE);
@@ -224,27 +259,28 @@ public class SellPage extends AppCompatActivity {
 
     }
 
-    private void removePortfolio() {
+    private void removePortfolio(double purchase_time_coin_price) {
+
         MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
         Document filterUser = new Document("user_id",user.getId()).append("email",user_email);
         Document deleteData = new Document("$pull", new Document("portfolio",new Document("coin_id",coin_id).append("purchase_date_and_time", binding.txtSellPageDateTime.getText().toString())));
 
-        collection.updateOne(filterUser,deleteData).getAsync(new App.Callback<UpdateResult>() {
+
+        collection.updateOne(filterUser, deleteData).getAsync(new App.Callback<UpdateResult>() {
             @Override
             public void onResult(App.Result<UpdateResult> result) {
-                if(result.isSuccess()){
-                    updateBalance();
-                }else{
+                if (result.isSuccess()) {
+                    updateBalance(purchase_time_coin_price);
+                } else {
                     binding.btnSellPageSell.setVisibility(View.VISIBLE);
                     binding.btnSellProgress.setVisibility(View.INVISIBLE);
                     Log.e("ErrSellPortfolioRemove", result.getError().toString());
                 }
             }
         });
-
     }
 
-    private void updateBalance() {
+    private void updateBalance(double purchce_time_coin_price) {
         MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
 
         collection.find(new Document("user_id", user.getId()).append("email", user_email)).first().getAsync(new App.Callback<Document>() {
@@ -260,7 +296,7 @@ public class SellPage extends AppCompatActivity {
                             @Override
                             public void onResult(App.Result<UpdateResult> result) {
                                 if(result.isSuccess()){
-                                    addDataOnHistory();
+                                    addDataOnHistory(purchce_time_coin_price);
                                 }else{
                                     binding.btnSellPageSell.setVisibility(View.VISIBLE);
                                     binding.btnSellProgress.setVisibility(View.INVISIBLE);
@@ -278,7 +314,7 @@ public class SellPage extends AppCompatActivity {
         });
     }
 
-    private void addDataOnHistory() {
+    private void addDataOnHistory(double purchce_time_coin_price) {
         String action = "Sell";
         String date_time = getDateTime();
         Double coin_value = Double.valueOf(binding.txtSellPageCryptoValue.getText().toString().replace("$", ""));
@@ -304,6 +340,7 @@ public class SellPage extends AppCompatActivity {
                 .append("money_flow", invest)
                 .append("user_balance", available_balance)
                 .append("purchase_leverage_in-x", leverage)
+                .append("purchase_time_price", purchce_time_coin_price)
         ));
 
         collection.updateOne(filter, data).getAsync(new App.Callback<UpdateResult>() {
@@ -521,11 +558,29 @@ public class SellPage extends AppCompatActivity {
                                 Double balance = result.get().getDouble("balance");
                                 //Set Balance
                                 binding.txtSellPageBalance.setText(String.format("%.2f",balance)+" $");
+
+
                             }
                         }else{
                             Log.e("ErrBuyPageBalance", result.getError().toString());
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (previous!=null) {
+            Intent intent = new Intent(SellPage.this, MarketDetail.class);
+            intent.putExtra("name", coin_name);
+            intent.putExtra("symbol", symbol);
+            intent.putExtra("type", type);
+            intent.putExtra("id", coin_id);
+            startActivity(intent);
+            finish();
+        } else {
+            super.onBackPressed();
+
+        }
     }
 }
