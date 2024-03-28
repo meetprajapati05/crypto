@@ -316,6 +316,9 @@ public class HomeFragment extends Fragment {
                                         binding.progressHomeWatchlist.setVisibility(View.GONE);
                                         binding.msgHomeWatchlistEmpty.setVisibility(View.VISIBLE);
                                     }
+                                }else {
+                                    binding.progressHomeWatchlist.setVisibility(View.GONE);
+                                    binding.msgHomeWatchlistEmpty.setVisibility(View.VISIBLE);
                                 }
                             }
                         } else {

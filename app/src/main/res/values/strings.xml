@@ -5,11 +5,16 @@
 -->
     <string name="SERVER_CLIENT_ID">180978515786-dltnh8dd2m1gdrkj025of18orc3aj8ct.apps.googleusercontent.com</string>
     <string name="MONGO_APP_ID">application-0-dbkcj</string>
+    <string name="MONGO_PROJECT_ID">65a85719f664ca273df60f3c</string>
     <string name="MONGO_DB_SERVICE_NAME">mongodb-atlas</string>
     <string name="MONGO_DATABASE_NAME">MajorProjrctDB</string>
     <string name="MONGO_DB_USER_COLLECTION">User</string>
+    <string name="MONGO_DB_DELETE_USER_COLLECTION">DeletedUser</string>
     <string name="MONGO_DB_COMMUNITY_COLLECTION">Community</string>
     <string name="COINGECKO_API_KEY">CG-As1qQdoujrWrAJEDYnxRNEWg</string>
+
+    <string name="RAZORPAY_API_ID">rzp_test_9ECt4aSMhOpMGm</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

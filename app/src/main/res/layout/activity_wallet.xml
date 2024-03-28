@@ -32,10 +32,15 @@
         android:layout_width="match_parent"
         android:id="@+id/cardWalletViewBalance"
         android:layout_height="200sp"
-        app:cardBackgroundColor="@color/light_green"
         app:cardCornerRadius="20sp"
         app:cardUseCompatPadding="true"
         android:layout_below="@id/toolbarWallet">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/wallet_card_background"
+            android:scaleType="fitXY"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -127,7 +132,7 @@
     <RelativeLayout
         android:id="@+id/btnWalletAddMoney"
         android:layout_width="wrap_content"
-        android:layout_height="55sp"
+        android:layout_height="40sp"
         android:background="@drawable/button_add_money_background"
         android:layout_marginStart="10sp"
         android:layout_marginEnd="10sp"
@@ -161,13 +166,14 @@
         android:layout_height="200sp"
         android:layout_below="@id/btnWalletAddMoney"
         android:visibility="gone"
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="20sp"
         android:layout_marginStart="10sp"
         android:layout_marginEnd="10sp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10sp"
             >
 
             <androidx.appcompat.widget.AppCompatButton
@@ -178,6 +184,8 @@
                 android:textSize="18sp"
                 android:textColor="@color/light_green"
                 android:layout_weight="1"
+                android:layout_marginEnd="2sp"
+                android:layout_marginStart="4sp"
                 android:background="@drawable/market_unselected_button_backgroug"/>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -187,6 +195,8 @@
                 android:layout_weight="1"
                 android:text="500$ - 50₹"
                 android:textSize="18sp"
+                android:layout_marginStart="2sp"
+                android:layout_marginEnd="4sp"
                 android:textColor="@color/light_green"
                 android:background="@drawable/market_unselected_button_backgroug"/>
 
@@ -199,16 +209,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="10₹"
-        android:visibility="gone"
         android:layout_above="@id/btnWalletPay"
         android:layout_centerHorizontal="true"
         android:textSize="22sp"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:layout_marginBottom="10sp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnWalletPay"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Pay"
         android:textAllCaps="false"
@@ -216,6 +226,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
+        android:layout_margin="10sp"
         android:textSize="18sp"
         android:background="@drawable/button_post_background"
         android:layout_marginBottom="10sp"/>

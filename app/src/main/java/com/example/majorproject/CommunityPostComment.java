@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -323,6 +324,14 @@ public class CommunityPostComment extends AppCompatActivity {
                         }
                         binding.msgNoCommentYet.setVisibility(View.GONE);
                         binding.msgStartConversion.setVisibility(View.GONE);
+
+                        LinearLayoutManager manager = new LinearLayoutManager(CommunityPostComment.this){
+                            @Override
+                            public boolean canScrollVertically() {
+                                return false;
+                            }
+                        };
+                        binding.commentRecycler.setLayoutManager(manager);
                         PostCommentAdapter adapter = new PostCommentAdapter(CommunityPostComment.this, data);
                         binding.commentRecycler.setAdapter(adapter);
                     }else{

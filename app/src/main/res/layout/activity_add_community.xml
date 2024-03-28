@@ -205,7 +205,6 @@
                     android:layout_height="match_parent"
                     android:layout_below="@id/layoutAddCommunityUploadPost"
                     android:layout_marginBottom="5sp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     />
 
             </RelativeLayout>

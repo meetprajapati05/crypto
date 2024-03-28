@@ -202,6 +202,10 @@ public class WatchlistFragment extends Fragment {
                                             progressBar.setVisibility(View.GONE);
                                             emptyListAnim.playAnimation();
                                         }
+                                    }else {
+                                        emptyListLayout.setVisibility(View.VISIBLE);
+                                        progressBar.setVisibility(View.GONE);
+                                        emptyListAnim.playAnimation();
                                     }
                                 }
                             } else {

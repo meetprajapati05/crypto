@@ -5,6 +5,7 @@ plugins {
 apply plugin: "realm-android"
 apply plugin: 'com.android.application'
 
+
 android {
     namespace 'com.example.majorproject'
     compileSdk 34
@@ -84,5 +85,8 @@ dependencies {
 
     //Calander history bottom sheet api calling
     implementation ("com.squareup.okhttp3:okhttp:4.9.1")
+
+    //Razorpay integration
+    implementation 'com.razorpay:checkout:1.6.33'
 
 }

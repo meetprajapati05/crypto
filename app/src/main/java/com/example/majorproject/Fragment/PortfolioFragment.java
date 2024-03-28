@@ -152,6 +152,10 @@ public class PortfolioFragment extends Fragment {
                                     layoutEmptyPortfolio.setVisibility(View.VISIBLE);
                                     lottieEmptyPortfolioAnim.playAnimation();
                                 }
+                            }else{
+                                progressBar.setVisibility(View.INVISIBLE);
+                                layoutEmptyPortfolio.setVisibility(View.VISIBLE);
+                                lottieEmptyPortfolioAnim.playAnimation();
                             }
                         }
                     }else{

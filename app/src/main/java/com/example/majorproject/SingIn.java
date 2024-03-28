@@ -1,6 +1,7 @@
 package com.example.majorproject;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -221,36 +222,74 @@ public class SingIn extends AppCompatActivity {
     //Email password SignIn Method
     private void emailPasswordSingIn(){
 
-        Credentials credentials = Credentials.emailPassword(binding.etLoginEmail.getText().toString() , binding.etLoginPass.getText().toString());
-
-        app.loginAsync(credentials, new App.Callback<User>() {
+        app.loginAsync(Credentials.emailPassword("emailaddresscheck1@gmail.com", "EmailAddressVerify"), new App.Callback<User>() {
             @Override
             public void onResult(App.Result<User> result) {
                 if(result.isSuccess()){
-                    binding.btnLoginSignIn.setVisibility(View.VISIBLE);
-                    binding.progressLoginSignIn.setVisibility(View.INVISIBLE);
+                    MongoClient client = app.currentUser().getMongoClient(getString(R.string.MONGO_DB_SERVICE_NAME));
+                    MongoDatabase database = client.getDatabase(getString(R.string.MONGO_DATABASE_NAME));
+                    MongoCollection<Document> collection = database.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
 
-                    //get user
-                    User user = app.currentUser();
-                    Toast.makeText(SingIn.this, "Sign In Successfully", Toast.LENGTH_SHORT).show();
+                    collection.find(new Document("email", binding.etLoginEmail.getText().toString()).append("password", binding.etLoginPass.getText().toString())).first().getAsync(new App.Callback<Document>() {
+                        @Override
+                        public void onResult(App.Result<Document> result) {
+                            if(result.get()!=null){
+                                binding.errLoginPass.setVisibility(View.INVISIBLE);
 
-                    //Pass to home page
-                    Intent iSignIn = new Intent(SingIn.this, HomePage.class);
-                    iSignIn.putExtra("user_id", user.getId());
-                    iSignIn.putExtra("email", binding.etLoginEmail.getText().toString());
-                    iSignIn.putExtra("signIn",true);
-                    iSignIn.putExtra("pass",binding.etLoginPass.getText().toString());
-                    startActivity(iSignIn);
-                    finishAffinity();
+                                boolean user_block = result.get().getBoolean("user_block");
+                                if(user_block){
+                                    binding.errLoginPass.setText("This account has been blocked by admin");
+                                    binding.errLoginPass.setVisibility(View.VISIBLE);
+                                    binding.btnLoginSignIn.setVisibility(View.VISIBLE);
+                                    binding.progressLoginSignIn.setVisibility(View.INVISIBLE);
+                                }else{
 
-                }else{
-                    binding.btnLoginSignIn.setVisibility(View.VISIBLE);
-                    binding.progressLoginSignIn.setVisibility(View.INVISIBLE);
-                    binding.errLoginPass.setText(result.getError().getErrorMessage());
-                    binding.errLoginPass.setVisibility(View.VISIBLE);
+                                    new LogoutTask().execute();
+
+                                    Credentials credentials = Credentials.emailPassword(binding.etLoginEmail.getText().toString() , binding.etLoginPass.getText().toString());
+
+                                    app.loginAsync(credentials, new App.Callback<User>() {
+                                        @Override
+                                        public void onResult(App.Result<User> result) {
+                                            if(result.isSuccess()){
+                                                binding.btnLoginSignIn.setVisibility(View.VISIBLE);
+                                                binding.progressLoginSignIn.setVisibility(View.INVISIBLE);
+
+                                                //get user
+                                                User user = app.currentUser();
+                                                Toast.makeText(SingIn.this, "Sign In Successfully", Toast.LENGTH_SHORT).show();
+
+                                                //Pass to home page
+                                                Intent iSignIn = new Intent(SingIn.this, HomePage.class);
+                                                iSignIn.putExtra("user_id", user.getId());
+                                                iSignIn.putExtra("email", binding.etLoginEmail.getText().toString());
+                                                iSignIn.putExtra("signIn",true);
+                                                iSignIn.putExtra("pass",binding.etLoginPass.getText().toString());
+                                                startActivity(iSignIn);
+                                                finishAffinity();
+
+                                            }else{
+                                                binding.btnLoginSignIn.setVisibility(View.VISIBLE);
+                                                binding.progressLoginSignIn.setVisibility(View.INVISIBLE);
+                                                binding.errLoginPass.setText(result.getError().getErrorMessage());
+                                                binding.errLoginPass.setVisibility(View.VISIBLE);
+                                            }
+                                        }
+                                    });
+                                }
+
+                            }else{
+                                binding.errLoginPass.setText("Invalid email & password");
+                                binding.errLoginPass.setVisibility(View.VISIBLE);
+                                binding.btnLoginSignIn.setVisibility(View.VISIBLE);
+                                binding.progressLoginSignIn.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
                 }
             }
         });
+
     }
 
     //Google SignUp User detail store in MongoDB User Collection
@@ -334,5 +373,32 @@ public class SingIn extends AppCompatActivity {
     //Button btnLoginForgotPass click event
     public void btnLoginForgotPass(View view) {
         startActivity(new Intent(SingIn.this, EmailCheck.class));
+    }
+
+    //Logout task
+    private class LogoutTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                // Move your logout logic here
+                app.currentUser().logOut();
+                return true; // Indicates success
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false; // Indicates failure
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            // This method is called on the UI thread after doInBackground finishes
+            if (success) {
+                // Handle UI updates or post-logout actions here
+                Log.i("SignInLogoutSuccess", "Logout successful");
+            } else {
+                // Handle failure or notify the user
+                Log.i("SignInLogoutFailed", "Logout unsuccessful");
+            }
+        }
     }
 }

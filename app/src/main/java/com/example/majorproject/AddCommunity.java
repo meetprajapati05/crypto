@@ -13,6 +13,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -411,6 +412,13 @@ public class AddCommunity extends AppCompatActivity {
                             }
                         }
                     }
+                    LinearLayoutManager manager = new LinearLayoutManager(this){
+                        @Override
+                        public boolean canScrollVertically() {
+                            return false;
+                        }
+                    };
+                    binding.addCommunityRecycler.setLayoutManager(manager);
                     PostRecyclerAdapter adapter = new PostRecyclerAdapter(AddCommunity.this,data);
                     binding.addCommunityRecycler.setAdapter(adapter);
                 }else{

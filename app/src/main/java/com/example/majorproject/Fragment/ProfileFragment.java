@@ -21,6 +21,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.example.majorproject.EditProfile;
 import com.example.majorproject.History;
+import com.example.majorproject.Models.UserModel;
 import com.example.majorproject.R;
 import com.example.majorproject.SingIn;
 import com.example.majorproject.VerifyEmailPassword;
@@ -28,6 +29,7 @@ import com.example.majorproject.Wallet;
 import com.example.majorproject.databinding.FragmentProfileBinding;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.Objects;
 
@@ -37,6 +39,8 @@ import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
+import io.realm.mongodb.mongo.result.DeleteResult;
+import io.realm.mongodb.mongo.result.InsertOneResult;
 
 public class ProfileFragment extends Fragment {
 
@@ -183,6 +187,79 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Delete Account");
+                builder.setMessage("Deleting your account will delete your access and all your information on Coin Galaxy application. Are you sure you want to continue?");
+                builder.setIcon(R.drawable.icon_delete);
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        MongoCollection<Document> collectionUser = database.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+
+                        collectionUser.findOne(new Document("_id", new ObjectId(userObjId))).getAsync(new App.Callback<Document>() {
+                            @Override
+                            public void onResult(App.Result<Document> result) {
+                                if(result.get()!=null){
+                                    UserModel userData = new UserModel();
+                                    userData.set_id(result.get().getString("user_id"));
+                                    userData.setName(result.get().getString("name"));
+                                    userData.setEmail(result.get().getString("email"));
+                                    userData.setMobile(result.get().getString("phone_no"));
+                                    userData.setPassword(result.get().getString("password"));
+                                    userData.setProvider(result.get().getString("provider"));
+                                    userData.setImage(result.get().getString("img_url"));
+                                    userData.setBalance(result.get().getDouble("balance"));
+
+                                    if(userData!=null){
+                                        collectionUser.deleteOne(new Document("_id", result.get().getObjectId("_id"))).getAsync(new App.Callback<DeleteResult>() {
+                                            @Override
+                                            public void onResult(App.Result<DeleteResult> result) {
+                                                if(result.isSuccess()){
+                                                    MongoCollection<Document> collectionDeleteUser = database.getCollection(getString(R.string.MONGO_DB_DELETE_USER_COLLECTION));
+
+                                                    Document document = new Document("user_id", userData.get_id())
+                                                            .append("name", userData.getName())
+                                                            .append("email", userData.getEmail())
+                                                            .append("phone_no", userData.getMobile())
+                                                            .append("password", userData.getPassword())
+                                                            .append("provider", userData.getProvider())
+                                                            .append("img_url", userData.getImage())
+                                                            .append("balance", userData.getBalance());
+
+                                                    collectionDeleteUser.insertOne(document).getAsync(new App.Callback<InsertOneResult>() {
+                                                        @Override
+                                                        public void onResult(App.Result<InsertOneResult> result) {
+                                                            if(result.isSuccess()){
+
+                                                                new DeleteUserTask(context, app).execute();
+
+                                                            }else{
+                                                                Log.e("ErrInsertDeleteUser", result.getError().toString());
+                                                            }
+                                                        }
+                                                    });
+                                                }else{
+                                                    Log.e("ErrDeleteUser", result.getError().toString());
+                                                }
+                                            }
+                                        });
+                                    }
+                                }else{
+                                    Log.e("ErrFindDeleteAccount", "User not find in database user collection.");
+                                }
+                            }
+                        });
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
@@ -199,7 +276,6 @@ public class ProfileFragment extends Fragment {
                 Intent chooserIntent = Intent.createChooser(intent, "Share email");
 
                 startActivity(chooserIntent);
-
             }
         });
 
@@ -235,6 +311,51 @@ public class ProfileFragment extends Fragment {
             } else {
                 // Handle failure or notify the user
                 Toast.makeText(requireContext(), "Logout failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public class DeleteUserTask extends AsyncTask<Void, Void, Boolean> {
+        private Context mContext;
+        private App mApp;
+
+        public DeleteUserTask(Context context, App app) {
+            mContext = context;
+            mApp = app;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try {
+                mApp.removeUser(mApp.currentUser());
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if (success) {
+                SharedPreferences preferences = mContext.getSharedPreferences("MajorProject", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear(); // Clear all data from this SharedPreferences
+                editor.apply();
+
+                SharedPreferences preferencesWatchlist = mContext.getSharedPreferences("Watchlist", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorWatchlist = preferencesWatchlist.edit();
+                editorWatchlist.clear(); // Clear all data from this SharedPreferences
+                editorWatchlist.apply();
+
+                //pass intent on mainScreen
+                Toast.makeText(mContext, "Your account has been deleted.", Toast.LENGTH_SHORT).show();
+                Intent iSignIn = new Intent(mContext, SingIn.class);
+                mContext.startActivity(iSignIn);
+                requireActivity().finishAffinity();
+            } else {
+                // Failed to remove user
+                System.err.println("Failed to remove user");
             }
         }
     }
