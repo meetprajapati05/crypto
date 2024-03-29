@@ -1,12 +1,15 @@
 package com.example.majorproject;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -154,7 +157,7 @@ public class SignUp extends AppCompatActivity {
         return true;
     }
     public void btnRegisterSingIn(View view) {
-        startActivity(new Intent(getApplicationContext(), SingIn.class));
+        startActivity(new Intent(getApplicationContext(), SingIn.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 
     public void btnRegisterNext(View view) {
@@ -271,12 +274,7 @@ public class SignUp extends AppCompatActivity {
 
                                     Toast.makeText(SignUp.this, "Google SignUp Successfully ", Toast.LENGTH_SHORT).show();
 
-                                    //Pass next activity
-                                    Intent iHome = new Intent(SignUp.this, HomePage.class);
-                                    iHome.putExtra("user_id", user.getId());
-                                    iHome.putExtra("email", user.getProfile().getEmail());
-                                    startActivity(iHome);
-                                    finishAffinity();
+                                    checkBlockGoogleAccount(app.currentUser());
                                 }else{
                                     binding.btnRegisterGoogle.setVisibility(View.VISIBLE);
                                     binding.progressRegisterGoogle.setVisibility(View.INVISIBLE);
@@ -297,6 +295,62 @@ public class SignUp extends AppCompatActivity {
             }
         });
     }
+
+    private void checkBlockGoogleAccount(User user) {
+
+        MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+
+        collection.findOne(new Document("user_id", user.getId())).getAsync(new App.Callback<Document>() {
+            @Override
+            public void onResult(App.Result<Document> result) {
+                if(result.get()!=null){
+                    boolean isBlock =  result.get().getBoolean("user_block");
+                    if(!isBlock){
+                        //Pass next activity
+                        Intent iHome = new Intent(SignUp.this, HomePage.class);
+                        iHome.putExtra("user_id", user.getId());
+                        iHome.putExtra("email", user.getProfile().getEmail());
+                        startActivity(iHome);
+                        finishAffinity();
+                    }else{
+                        Dialog dialog = new Dialog(SignUp.this);
+                        dialog.setContentView(R.layout.dailog_warning_block_user);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().setBackgroundDrawable(null);
+
+                        dialog.findViewById(R.id.btnBlockDialogContect).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                                intent.setData(Uri.parse("mailto:")); // Use this line to set the mailto: data scheme
+                                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"developerpandav16@gmail.com"});
+
+                                Intent chooserIntent = Intent.createChooser(intent, "Share email");
+
+                                startActivity(chooserIntent);
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.findViewById(R.id.btnBlockDialogCancel).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.show();
+
+                        new LogoutTask().execute();
+
+                        binding.btnRegisterGoogle.setVisibility(View.VISIBLE);
+                        binding.progressRegisterGoogle.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
+    }
+
     public void addGoogleUserInDatabase(User user){
         mongoClient = user.getMongoClient(getString(R.string.MONGO_DB_SERVICE_NAME));
         mongoDatabase = mongoClient.getDatabase(getString(R.string.MONGO_DATABASE_NAME));
@@ -324,6 +378,7 @@ public class SignUp extends AppCompatActivity {
                     Intent intent = new Intent(SignUp.this, HomePage.class);
                     intent.putExtra("user_id", user.getId());
                     intent.putExtra("email",user.getProfile().getEmail());
+                    intent.putExtra("first", true);
                     startActivity(intent);
                     finishAffinity();
                 } else {

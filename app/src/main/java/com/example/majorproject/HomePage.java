@@ -1,11 +1,14 @@
 package com.example.majorproject;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +46,7 @@ public class HomePage extends AppCompatActivity {
     String priviousPage;
     App app;
     MongoCollection<Document> collection;
+    boolean first;
 
     boolean isEditGoogleAuth;
 
@@ -62,6 +66,7 @@ public class HomePage extends AppCompatActivity {
         priviousPage = getIntent().getStringExtra("priviousActivity");
         userObjId = getIntent().getStringExtra("_id");
         signIn = getIntent().getBooleanExtra("signIn",false);
+        first = getIntent().getBooleanExtra("first", false);
 
         isEditGoogleAuth = getIntent().getBooleanExtra("isGoogleAuth", false);
 
@@ -93,6 +98,23 @@ public class HomePage extends AppCompatActivity {
                     }
                 }
             });
+        }
+
+        //it check sign up then show dialog
+        if(first){
+            Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.dailog_bonus);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(null);
+
+            dialog.findViewById(R.id.btnDailogOkay).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
+
+            dialog.show();
         }
 
         //set bottom navigation view  select item event

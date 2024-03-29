@@ -1,6 +1,8 @@
 package com.example.majorproject;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +10,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -23,6 +26,8 @@ import com.google.android.gms.tasks.Task;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+
+import java.util.Objects;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
@@ -183,12 +188,7 @@ public class SingIn extends AppCompatActivity {
 
                                         Toast.makeText(SingIn.this, "Google SignUp Successfully ", Toast.LENGTH_SHORT).show();
 
-                                        //Pass next activity
-                                        Intent iHome = new Intent(SingIn.this, HomePage.class);
-                                        iHome.putExtra("user_id", user.getId());
-                                        iHome.putExtra("email",user.getProfile().getEmail());
-                                        startActivity(iHome);
-                                        finishAffinity();
+                                        checkBlockGoogleAccount(Objects.requireNonNull(app.currentUser()));
                                     }else{
                                         binding.btnLoginGoogle.setVisibility(View.VISIBLE);
                                         binding.progressLoginGoogleSingIn.setVisibility(View.INVISIBLE);
@@ -238,8 +238,35 @@ public class SingIn extends AppCompatActivity {
 
                                 boolean user_block = result.get().getBoolean("user_block");
                                 if(user_block){
-                                    binding.errLoginPass.setText("This account has been blocked by admin");
-                                    binding.errLoginPass.setVisibility(View.VISIBLE);
+
+                                    Dialog dialog = new Dialog(SingIn.this);
+                                    dialog.setContentView(R.layout.dailog_warning_block_user);
+                                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                    dialog.getWindow().setBackgroundDrawable(null);
+
+                                    dialog.findViewById(R.id.btnBlockDialogContect).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent = new Intent(Intent.ACTION_SENDTO);
+                                            intent.setData(Uri.parse("mailto:")); // Use this line to set the mailto: data scheme
+                                            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"developerpandav16@gmail.com"});
+
+                                            Intent chooserIntent = Intent.createChooser(intent, "Share email");
+
+                                            startActivity(chooserIntent);
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                                    dialog.findViewById(R.id.btnBlockDialogCancel).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                                    dialog.show();
+
                                     binding.btnLoginSignIn.setVisibility(View.VISIBLE);
                                     binding.progressLoginSignIn.setVisibility(View.INVISIBLE);
                                 }else{
@@ -321,6 +348,7 @@ public class SingIn extends AppCompatActivity {
                     Intent iGoogleSignUp = new Intent(SingIn.this, HomePage.class);
                     iGoogleSignUp.putExtra("user_id", user.getId());
                     iGoogleSignUp.putExtra("email", user.getProfile().getEmail());
+                    iGoogleSignUp.putExtra("first", true);
                     startActivity(iGoogleSignUp);
                     finishAffinity();
                 } else {
@@ -343,6 +371,61 @@ public class SingIn extends AppCompatActivity {
             binding.btnLoginSignIn.setVisibility(View.VISIBLE);
             binding.progressLoginSignIn.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void checkBlockGoogleAccount(User user) {
+
+        MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
+
+        collection.findOne(new Document("user_id", user.getId())).getAsync(new App.Callback<Document>() {
+            @Override
+            public void onResult(App.Result<Document> result) {
+                if(result.get()!=null){
+                    boolean isBlock =  result.get().getBoolean("user_block");
+                    if(!isBlock){
+                        //Pass next activity
+                        Intent iHome = new Intent(SingIn.this, HomePage.class);
+                        iHome.putExtra("user_id", user.getId());
+                        iHome.putExtra("email", user.getProfile().getEmail());
+                        startActivity(iHome);
+                        finishAffinity();
+                    }else{
+                        Dialog dialog = new Dialog(SingIn.this);
+                        dialog.setContentView(R.layout.dailog_warning_block_user);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().setBackgroundDrawable(null);
+
+                        dialog.findViewById(R.id.btnBlockDialogContect).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                                intent.setData(Uri.parse("mailto:")); // Use this line to set the mailto: data scheme
+                                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"developerpandav16@gmail.com"});
+
+                                Intent chooserIntent = Intent.createChooser(intent, "Share email");
+
+                                startActivity(chooserIntent);
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.findViewById(R.id.btnBlockDialogCancel).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.show();
+
+                        new LogoutTask().execute();
+
+                        binding.btnLoginGoogle.setVisibility(View.VISIBLE);
+                        binding.progressLoginGoogleSingIn.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
     }
 
     //Check validation Method. That calling in btnLoginSignIn click event

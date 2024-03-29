@@ -120,10 +120,10 @@ public class MarketDetail extends AppCompatActivity {
                               buy = true;
                             }
                         }
-                        if(!buy) {
-                            binding.btnMarketDetailSell.setVisibility(View.GONE);
-                            binding.btnMarketDeatilInvest.setVisibility(View.GONE);
-                        }
+                    }
+                    if(!buy) {
+                        binding.btnMarketDetailSell.setVisibility(View.GONE);
+                        binding.btnMarketDeatilInvest.setVisibility(View.GONE);
                     }
                 }
             }
@@ -172,6 +172,7 @@ public class MarketDetail extends AppCompatActivity {
                 iBuy.putExtra("type",type);
                 iBuy.putExtra("previous","market");
                 startActivity(iBuy);
+                finish();
             }
         });
 
@@ -188,10 +189,13 @@ public class MarketDetail extends AppCompatActivity {
                     iSell.putExtra("type",type);
                     iSell.putExtra("previous","market");
                     startActivity(iSell);
+                    finish();
                 }else{
                     Intent iSell = new Intent(getApplicationContext(), SellPage.class);
                     iSell.putExtra("id", coin_id);
+                    iSell.putExtra("previous","market");
                     startActivity(iSell);
+                    finish();
                 }
             }
         });

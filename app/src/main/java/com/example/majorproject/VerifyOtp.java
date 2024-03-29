@@ -406,6 +406,7 @@ public class VerifyOtp extends AppCompatActivity {
                                                                         Intent intent = new Intent(VerifyOtp.this, HomePage.class);
                                                                         intent.putExtra("user_id", user.getId());
                                                                         intent.putExtra("email", email);
+                                                                        intent.putExtra("first", true);
                                                                         startActivity(intent);
                                                                         finishAffinity();
                                                                     } else {
