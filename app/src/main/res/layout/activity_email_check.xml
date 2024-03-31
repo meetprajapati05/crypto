@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/SCREEN"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".EmailCheck">
 
@@ -20,7 +21,7 @@
             android:layout_marginTop="20sp"
             android:layout_marginEnd="20sp"
             style="@style/TEXT"
-            android:fontFamily="@font/roboto_medium"
+            android:fontFamily="@font/kanit_semibold"
             android:text="Verify your email"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -28,14 +29,15 @@
 
         <TextView
             android:id="@+id/textView3"
+            style="@style/TEXT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textVerifyEmail"
             android:layout_marginStart="20sp"
             android:layout_marginTop="5sp"
-            style="@style/TEXT"
             android:layout_marginEnd="20sp"
-            android:text="Enter your email so we can send you the forgot password email"
+            android:fontFamily="@font/lato_bold"
+            android:text="Enter your email so we can send you the forgot password email."
             android:textAlignment="center" />
 
         <RelativeLayout
@@ -83,6 +85,7 @@
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="20sp"
             android:background="@drawable/button_background"
+            android:backgroundTint="@color/light_green"
             android:text="Next"
             android:textAllCaps="false"
             android:textColor="@color/white" />

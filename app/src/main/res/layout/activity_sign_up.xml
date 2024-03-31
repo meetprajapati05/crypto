@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/SCREEN"
+    android:background="@color/white"
     tools:context=".SignUp">
 
     <ScrollView
@@ -26,12 +27,14 @@
                 android:text="Sign Up"
                 android:textSize="30sp"
                 style="@style/TEXT"
+                android:fontFamily="@font/kanit_semibold"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create an account to continue"
+                android:fontFamily="@font/lato_bold"
                 style="@style/TEXT"
                 android:layout_marginTop="5sp"/>
 
@@ -177,6 +180,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/button_background"
+                    android:backgroundTint="@color/light_green"
                     android:text="Next"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -284,7 +288,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sing In"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_green"
                     android:paddingStart="5dp"
                     android:textSize="15dp"
                     android:textStyle="bold"

@@ -59,5 +59,12 @@ public class CalanderHistory extends AppCompatActivity {
             }
 
         });
+
+        binding.toolbarCalendar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 }

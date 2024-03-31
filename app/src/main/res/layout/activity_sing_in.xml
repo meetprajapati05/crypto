@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/white"
     style="@style/SCREEN"
     tools:context=".SingIn">
 
@@ -27,6 +28,7 @@
                 android:text="Sign In"
                 style="@style/TEXT"
                 android:textSize="30sp"
+                android:fontFamily="@font/kanit_semibold"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -34,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Please log in to your account"
                 style="@style/TEXT"
+                android:fontFamily="@font/lato_bold"
                 android:layout_marginTop="5sp"/>
 
             <EditText
@@ -111,7 +114,7 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="20dp"
                 android:onClick="btnLoginForgotPass"
-                android:textColor="@color/light_blue"
+                android:textColor="@color/light_green"
                 />
 
             <RelativeLayout
@@ -233,7 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sing Up"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_green"
                     android:paddingStart="5dp"
                     android:textSize="15dp"
                     android:textStyle="bold"/>

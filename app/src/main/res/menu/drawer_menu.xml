@@ -15,7 +15,7 @@
 
         <item
             android:id="@+id/drawerOptNews"
-            android:title="NEWS"
+            android:title="News"
             android:icon="@drawable/icon_news" />
 
         <item

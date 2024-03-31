@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/SCREEN"
+    android:background="@color/white"
     tools:context=".CurrencyConverter">
 
     <androidx.appcompat.widget.Toolbar
@@ -22,12 +23,19 @@
             style="@style/TEXT"
             android:layout_gravity="center"
             android:background="@color/white"
-            android:fontFamily="@font/coiny"
+            android:fontFamily="@font/merriweather_bold"
             android:text="Currency Converter"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
     </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/light_green"
+        android:alpha="0.2"
+        android:layout_below="@id/toolbarCurrencyConverter"/>
 
     <LinearLayout
         android:id="@+id/master_linear_layout"

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Wallet">
 
     <androidx.appcompat.widget.Toolbar
@@ -20,13 +21,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/white"
-            android:fontFamily="@font/coiny"
+            android:fontFamily="@font/merriweather_bold"
             android:text="Wallet"
             style="@style/TEXT"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
     </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/light_green"
+        android:alpha="0.2"
+        android:layout_marginTop="?attr/actionBarSize"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

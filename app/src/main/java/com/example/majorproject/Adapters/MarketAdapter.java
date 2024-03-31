@@ -109,7 +109,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView imgCrypto;
+        ImageView imgCrypto;
         ImageView imgInDeVal;
         TextView txtName, txtPrice, txtPriceSymbol, txtSymbol, txtInDeVal;
         CardView marketCard;
@@ -130,7 +130,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.ViewHolder
 
     public void setAnimation(View viewType, int position){
         if(position>lastPosition){
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
             viewType.startAnimation(animation);
             lastPosition=position;
         }

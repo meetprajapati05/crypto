@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.HomeFragment"
     style="@style/SCREEN"
+    android:background="@color/white"
     android:id="@+id/homeDrawerLayout">
 
     <androidx.appcompat.widget.Toolbar
@@ -31,9 +32,12 @@
             style="@style/TEXT"
             android:layout_gravity="center_horizontal"
             android:textSize="24sp"
-            android:fontFamily="@font/coiny"/>
+            android:fontFamily="@font/merriweather_bold"/>
+
 
     </androidx.appcompat.widget.Toolbar>
+
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationHome"
@@ -45,6 +49,20 @@
         android:layout_gravity="start"
         app:itemTextColor="@color/black"
         app:dividerInsetStart="50sp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:background="@color/light_green"
+            android:alpha="0.2"/>
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -198,6 +216,7 @@
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
+                android:fontFamily="@font/kanit_semibold"
                 android:layout_below="@+id/btnHomeAddMoney"
                 android:layout_marginStart="10sp"
                 android:layout_marginTop="10sp"/>
@@ -253,6 +272,7 @@
                     android:text="Trending"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/kanit_semibold"
                     android:textColor="@color/black"/>
 
                 <TextView
@@ -305,6 +325,7 @@
                     android:text="News"
                     android:textStyle="bold"
                     android:textSize="20sp"
+                    android:fontFamily="@font/kanit_semibold"
                     android:textColor="@color/black"/>
 
                 <TextView

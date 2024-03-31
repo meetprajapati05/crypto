@@ -2,10 +2,11 @@ package com.example.majorproject.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import java.util.Locale;
 public class NewsRescyclerAdapter extends RecyclerView.Adapter<NewsRescyclerAdapter.ViewHolder> {
     Context context;
     ArrayList<NewsModel> data = new ArrayList<>();
+    int lastPosition = -1;
 
     public NewsRescyclerAdapter(Context context, ArrayList<NewsModel> data) {
         this.context = context;
@@ -68,6 +70,7 @@ public class NewsRescyclerAdapter extends RecyclerView.Adapter<NewsRescyclerAdap
             }
         });
 
+        setAnimation(holder.itemView, position);
     }
 
     @Override
@@ -87,6 +90,14 @@ public class NewsRescyclerAdapter extends RecyclerView.Adapter<NewsRescyclerAdap
             txtNewsTag = itemView.findViewById(R.id.txtNewsTags);
             txtNewsTiming = itemView.findViewById(R.id.txtNewsPublish);
             btnNewsLayout = itemView.findViewById(R.id.layoutNews);
+        }
+    }
+
+    public  void  setAnimation(View viewType, int position){
+        if(position>lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+            viewType.setAnimation(animation);
+            lastPosition = position;
         }
     }
 }

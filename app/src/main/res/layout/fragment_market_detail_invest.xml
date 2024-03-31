@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     tools:context=".Fragment.MarketDetailInvestFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,7 @@
         android:id="@+id/progressHolder"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/sent_watch"
+        app:lottie_rawRes="@raw/recyclerview_progress_2"
         android:layout_width="120sp"
         android:layout_height="120sp"
         android:layout_gravity="center"

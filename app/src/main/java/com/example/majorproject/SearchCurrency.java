@@ -35,10 +35,13 @@ public class SearchCurrency extends AppCompatActivity {
         binding = ActivitySearchCurrencyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //set focus in edittable search
+        binding.etSearchView.requestFocus();
+
         previousActivity = getIntent().getStringExtra("passTo");
         data = new ArrayList<>();
 
-        binding.btnSearchBack.setOnClickListener(new View.OnClickListener() {
+        binding.toolbarSearch.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
@@ -80,8 +83,9 @@ public class SearchCurrency extends AppCompatActivity {
 
         AndroidNetworking.setParserFactory(new GsonParserFactory());
 
-        AndroidNetworking.get("https://api.coingecko.com/api/v3/search?query=")
+        AndroidNetworking.get("https://api.coingecko.com/api/v3/search?x_cg_demo_api_key=&query=")
                 .addQueryParameter("query", charSequnce.toString())
+                .addQueryParameter("x_cg_demo_api_key", getString(R.string.COINGECKO_API_KEY))
                 .setTag("Market")
                 .setPriority(Priority.HIGH)
                 .build()

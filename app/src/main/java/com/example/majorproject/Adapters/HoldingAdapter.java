@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +25,7 @@ public class HoldingAdapter extends RecyclerView.Adapter<HoldingAdapter.ViewHold
     Context context;
     ArrayList<HistoryModel> data;
     double currentPrice;
-
+    int lastPosition = -1;
     public HoldingAdapter(Context context, ArrayList<HistoryModel> data,double currentPrice) {
         this.context = context;
         this.data = data;
@@ -64,6 +66,8 @@ public class HoldingAdapter extends RecyclerView.Adapter<HoldingAdapter.ViewHold
                 context.startActivity(iSell);
             }
         });
+
+        setAnimation(holder.itemView, position);
     }
 
     @Override
@@ -83,6 +87,14 @@ public class HoldingAdapter extends RecyclerView.Adapter<HoldingAdapter.ViewHold
             Leverage = itemView.findViewById(R.id.holdingLeverage);
             Quantity = itemView.findViewById(R.id.holdingQuantity);
             card = itemView.findViewById(R.id.layoutHoldingClick);
+        }
+    }
+
+    public  void  setAnimation(View viewType, int position){
+        if(position>lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+            viewType.setAnimation(animation);
+            lastPosition = position;
         }
     }
 }

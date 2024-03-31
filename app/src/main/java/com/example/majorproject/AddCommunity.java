@@ -361,6 +361,8 @@ public class AddCommunity extends AppCompatActivity {
     public void setCommunityRecycler() {
         data.clear();
 
+        binding.progressAddCommunityRecycler.setVisibility(View.VISIBLE);
+
         MongoCollection<Document> collection = mongoDatabase.getCollection(getString(R.string.MONGO_DB_COMMUNITY_COLLECTION));
 
         Document filter = new Document("post_block", false);
@@ -399,6 +401,7 @@ public class AddCommunity extends AppCompatActivity {
                             data.add(model);
                         }else{
                             Log.e("postNull", "Posts is null");
+                            binding.progressAddCommunityRecycler.setVisibility(View.GONE);
                         }
                     }
                     for(int i=0;i<data.size();i++){
@@ -419,12 +422,15 @@ public class AddCommunity extends AppCompatActivity {
                         }
                     };
                     binding.addCommunityRecycler.setLayoutManager(manager);
+                    binding.progressAddCommunityRecycler.setVisibility(View.GONE);
                     PostRecyclerAdapter adapter = new PostRecyclerAdapter(AddCommunity.this,data);
                     binding.addCommunityRecycler.setAdapter(adapter);
                 }else{
+                    binding.progressAddCommunityRecycler.setVisibility(View.GONE);
                     Log.e("CollectionIsNull", "Collection is null");
                 }
             }else{
+                binding.progressAddCommunityRecycler.setVisibility(View.GONE);
                 Log.e("ErrGetPostData",task.getError().toString());
             }
         });

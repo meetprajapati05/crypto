@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.ViewHo
 
     Context context;
     ArrayList<NewsModel> data = new ArrayList<>();
+    int lastPosition = -1;
 
     public NewsHomeAdapter(Context context, ArrayList<NewsModel> data) {
         this.context = context;
@@ -52,6 +55,9 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
+
+        setAnimation(holder.itemView, lastPosition);
+
     }
 
     @Override
@@ -70,6 +76,14 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.ViewHo
             txtNewsTag = itemView.findViewById(R.id.txtNewsTags);
             txtNewsTiming = itemView.findViewById(R.id.txtNewsPublish);
             btnNewsLayout = itemView.findViewById(R.id.layoutNews);
+        }
+    }
+
+    public void setAnimation(View viewType, int position){
+        if(position>lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+            viewType.setAnimation(animation);
+            lastPosition = position;
         }
     }
 }

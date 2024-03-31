@@ -5,11 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/SCREEN"
+    android:background="@color/white"
     tools:context=".Fragment.PortfolioFragment">
-    
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/portfolioToolbar"
@@ -27,17 +25,23 @@
                 style="@style/TEXT"
                 android:layout_gravity="center"
                 android:textSize="24sp"
-                android:fontFamily="@font/coiny" />
+                android:fontFamily="@font/merriweather_bold" />
 
         </androidx.appcompat.widget.Toolbar>
-        
-    </com.google.android.material.appbar.AppBarLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/light_green"
+        android:alpha="0.2"
+        android:layout_marginTop="?attr/actionBarSize"/>
 
    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
        android:id="@+id/portfolioRefresh"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+       android:layout_marginTop="?attr/actionBarSize"
+       android:layout_marginBottom="?attr/actionBarSize">
        
        <androidx.recyclerview.widget.RecyclerView
            android:id="@+id/portfolioRecycler"
@@ -51,7 +55,7 @@
         android:id="@+id/portfolioLoadingAnimation"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/sent_watch"
+        app:lottie_rawRes="@raw/recyclerview_progress_2"
         android:layout_width="120sp"
         android:layout_height="120sp"
         android:layout_gravity="center"

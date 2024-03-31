@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     Context context;
     ArrayList<HistoryModel> data;
+    int lastPosition = -1;
 
     public HistoryAdapter(Context context, ArrayList<HistoryModel> data) {
         this.context = context;
@@ -49,6 +52,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
         holder.Leverage.setText(data.get(position).getPurchase_leverage_in()+"x");
         holder.Quantity.setText(String.valueOf(data.get(position).getCoin_quntity()));
+
+        setAnimation(holder.itemView, position);
     }
 
     @Override
@@ -66,6 +71,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             ActionMoney = itemView.findViewById(R.id.historyActionMoney);
             Leverage = itemView.findViewById(R.id.historyLeverage);
             Quantity = itemView.findViewById(R.id.historyQuntity);
+        }
+    }
+
+    public  void  setAnimation(View viewType, int position){
+        if(position>lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+            viewType.setAnimation(animation);
+            lastPosition = position;
         }
     }
 }

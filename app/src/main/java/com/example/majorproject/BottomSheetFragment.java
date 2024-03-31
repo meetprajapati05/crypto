@@ -2,7 +2,6 @@ package com.example.majorproject;
 
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,13 +36,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         binding = FragmentBottomSheetBinding.inflate(inflater, container, false);
         id = requireActivity().getIntent().getStringExtra("id");
-        Toast.makeText(getContext(),"Id:"+id+"\nDate:"+dateEdt,Toast.LENGTH_SHORT).show();
         new APICallTask().execute();
 
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), SearchCurrency.class).putExtra("passTo","calander"));
+                requireActivity().onBackPressed();
             }
         });
         return binding.getRoot();
@@ -54,15 +52,16 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         @Override
         protected String doInBackground(Void... voids) {
-            try{
+            try {
                 OkHttpClient client = new OkHttpClient();
-                String apiUrl = "https://api.coingecko.com/api/v3/coins/" + id + "/history?date=" + dateEdt;
+                String apiUrl = "https://api.coingecko.com/api/v3/coins/" + id + "/history?x_cg_demo_api_key=" + requireContext().getString(R.string.COINGECKO_API_KEY) + "&date=" + dateEdt;
                 Request request = new Request.Builder()
-                    .url(apiUrl)
-                    .build();
+                        .url(apiUrl)
+                        .build();
 
                 Response response = client.newCall(request).execute();
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     return response.body().string();
                 }
             } catch (IOException e) {
@@ -87,6 +86,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 showError("API request failed");
             }
         }
+
         @SuppressLint("SetTextI18n")
         private void updateUIFromCoinData(JSONObject coinData) throws JSONException {
             String id = coinData.getString("id");
@@ -96,12 +96,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             double marketCap = coinData.getJSONObject("market_data").getJSONObject("market_cap").getDouble("usd");
             double totalVolume = coinData.getJSONObject("market_data").getJSONObject("total_volume").getDouble("usd");
 
-            binding.txtCryptoId.setText( id.toString());
             binding.txtCryptoName.setText(name);
-            binding.txtCryptoSymbol.setText(symbol);
-            binding.txtCryptoPrice.setText(formatCurrency(currentPrice)+"$");
-            binding.txtmarketcap.setText(formatCurrency(marketCap));
-            binding.txtvolume.setText(formatCurrency(totalVolume));
+            //  binding.txtCryptoSymbol.setText(symbol);
+            binding.txtCryptoPrice.setText(formatCurrency(currentPrice));
+            binding.txtmarketcap.setText(formatCurrency(marketCap) + "$");
+            binding.txtvolume.setText(formatCurrency(totalVolume) + "$");
 
             Glide.with(getContext())
                     .load(coinData.getJSONObject("image").getString("small"))
@@ -113,10 +112,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             // Example: NumberFormat.getCurrencyInstance().format(value)
             return String.format("%.2f", value);  // Example: Two decimal places
         }
+
         private void showError(String message) {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
         }
-
     }
-
 }

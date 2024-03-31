@@ -16,15 +16,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageCrypto"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardImage"
                 android:layout_width="60sp"
                 android:layout_height="60sp"
+                app:cardCornerRadius="60sp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="8sp"
-                app:civ_border_color="@color/light_green"
-                app:civ_border_width="3sp"
-                app:civ_border_overlay="true"/>
+                android:layout_marginStart="8sp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageCrypto"
+                    android:scaleType="fitCenter"/>
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/txtCryptoName"
@@ -35,7 +41,7 @@
                 android:textColor="@color/black"
                 style="@style/TEXT"
                 android:textStyle="bold"
-                android:layout_toEndOf="@id/imageCrypto"
+                android:layout_toEndOf="@id/cardImage"
                 android:layout_toStartOf="@id/txtCryptoPrice"
                 android:layout_marginTop="8sp"
                 android:layout_marginEnd="4sp"
@@ -75,7 +81,7 @@
                 android:layout_marginStart="10sp"
                 android:layout_marginEnd="6sp"
                 android:layout_marginBottom="8sp"
-                android:layout_toEndOf="@id/imageCrypto"
+                android:layout_toEndOf="@id/cardImage"
                 android:text="btc"
                 android:textStyle="bold" />
 

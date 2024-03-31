@@ -4,13 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +29,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
     Context context;
     ArrayList<CryptoDataModel> cryptoDataModels;
     ArrayList<PortfolioModel> portfolioModels;
+    int lastPosition=-1;
 
     public PortfolioAdapter(Context context, ArrayList<CryptoDataModel> cryptoDataModels, ArrayList<PortfolioModel> portfolioModels) {
         this.context = context;
@@ -96,6 +97,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             }
         });
 
+        setAnimation(holder.itemView, position);
 
     }
 
@@ -123,6 +125,14 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
             bottomClick = itemView.findViewById(R.id.bottomDetailLayout);
             upperClick = itemView.findViewById(R.id.topDetailLayout);
+        }
+    }
+
+    public  void  setAnimation(View viewType, int position){
+        if(position>lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+            viewType.setAnimation(animation);
+            lastPosition = position;
         }
     }
 }

@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
@@ -106,6 +107,20 @@ public class MarketFragment extends Fragment {
                         setRecyclerViewVolley(page, type,getContext());
                     }
                 }
+            }
+        });
+
+        // refresh market
+        SwipeRefreshLayout refreshLayout = view.findViewById(R.id.marketRefresh);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                data.clear();
+                recyclerView.setAdapter(null);
+                page=1;
+                setRecyclerView(page, type, getContext());
+                progressBar.setVisibility(View.VISIBLE);
+                refreshLayout.setRefreshing(false);
             }
         });
 

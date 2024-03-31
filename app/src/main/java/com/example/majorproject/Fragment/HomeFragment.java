@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -70,6 +72,7 @@ import okhttp3.OkHttpClient;
 public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
+    private double backPressedTime;
     ArrayList<CryptoDataModel> data;
     ArrayList<CryptoDataModel> trendinData;
     ArrayList<NewsModel>  newsData;
@@ -149,7 +152,17 @@ public class HomeFragment extends Fragment {
                 if(ItemId == R.id.drawerOptCalander){
                     startActivity(new Intent(getActivity(), SearchCurrency.class).putExtra("passTo", "Calander"));
                 }
-                return true;
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(ItemId!=R.id.drawerOptHome){
+                            binding.homeDrawerLayout.close();
+                        }
+                    }
+                },1000);
+
+                return false;
             }
         });
 
@@ -219,8 +232,13 @@ public class HomeFragment extends Fragment {
                 if(binding.homeDrawerLayout.isOpen()){
                     binding.homeDrawerLayout.close();
                 }else {
-                    setEnabled(false);
-                    context.onBackPressed();
+                    if (backPressedTime + 2000 > System.currentTimeMillis()) {
+                        setEnabled(false);
+                        context.onBackPressed();
+                    } else {
+                        Toast.makeText(context, "Press again to exit", Toast.LENGTH_SHORT).show();
+                    }
+                    backPressedTime = System.currentTimeMillis();
                 }
             }
         });
@@ -582,14 +600,10 @@ public class HomeFragment extends Fragment {
                         }
 
                     }
-
                     @Override
                     public void onError(ANError anError) {
 
                     }
                 });
-
-
-
     }
 }

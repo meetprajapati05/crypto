@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/SCREEN"
+    android:background="@color/white"
     tools:context=".MarketDetail">
 
    <androidx.appcompat.widget.Toolbar
@@ -28,7 +29,7 @@
                android:id="@+id/marketTitleSymbol"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:fontFamily="@font/coiny"
+               android:fontFamily="@font/merriweather_bold"
                android:text="BTC"
                style="@style/TEXT"
                android:textColor="@color/black"
@@ -40,7 +41,7 @@
                android:layout_height="wrap_content"
                android:layout_marginTop="8sp"
                android:layout_toEndOf="@id/marketTitleSymbol"
-               android:fontFamily="@font/coiny"
+               android:fontFamily="@font/merriweather_bold"
                android:paddingStart="3sp"
                android:text="USD"
                style="@style/TEXT"
@@ -60,6 +61,13 @@
            app:useMaterialThemeColors="false"/>
 
    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/light_green"
+        android:alpha="0.2"
+        android:layout_marginTop="?attr/actionBarSize"/>
 
     <LinearLayout
         android:id="@+id/layoutButton"
@@ -106,10 +114,18 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/light_green"
+        android:alpha="0.2"
+        android:layout_below="@id/layoutButton"/>
+
     <FrameLayout
         android:id="@+id/framMarketDEtailFragments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="1sp"
         android:layout_below="@id/layoutButton"
         android:layout_above="@id/layoutMarketDetailBuySell"/>
 

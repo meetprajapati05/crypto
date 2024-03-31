@@ -4,149 +4,168 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     tools:context=".BottomSheetFragment"
     >
+
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:id="@+id/bottomSheetDragHistory"
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:fontFamily="@font/merriweather_bold"
         android:text="History"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/bottomSheetDragHistory" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewMarket"
-        android:layout_width="0dp"
-        android:layout_height="160dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="5dp"
-        app:cardCornerRadius="20sp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <RelativeLayout
+        android:id="@+id/layoutHistoryDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/imageCryptoCard"
+            android:layout_width="80sp"
+            android:layout_height="80sp"
+            app:cardCornerRadius="80sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8sp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/imageCrypto"
                 android:layout_width="80sp"
-                android:layout_height="80sp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8sp"
-                app:civ_border_color="@color/light_green"
-                app:civ_border_overlay="true"
-                app:civ_border_width="3sp" />
+                android:layout_height="80sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/layoutHistoryDetailCryptoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageCryptoCard"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10sp">
 
             <TextView
                 android:id="@+id/txtCryptoName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="30sp"
-                android:layout_marginStart="10sp"
-                android:layout_marginTop="8sp"
-                android:layout_marginEnd="4sp"
-                android:layout_toStartOf="@id/txtCryptoPrice"
-                android:layout_toEndOf="@id/imageCrypto"
-                android:text="Bitcoin"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtCryptoPriceSymbol"
+          <!--  <TextView
+                android:id="@+id/txtCryptoSymbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="8sp"
-                android:layout_marginEnd="18sp"
-                android:text="$"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="2dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="2sp"
+                android:text="btc"
+                android:textStyle="bold" />-->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutHistoryDetailCryptoPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutHistoryDetailCryptoName"
+            android:layout_marginTop="8sp"
+            android:layout_centerHorizontal="true">
 
             <TextView
                 android:id="@+id/txtCryptoPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8sp"
-                android:layout_marginEnd="2sp"
-                android:layout_toLeftOf="@id/txtCryptoPriceSymbol"
-                android:text="25000.00"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+
             <TextView
-                android:id="@+id/txtCryptoSymbol"
+                android:id="@+id/txtCryptoPriceSymbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="9dp"
-                android:layout_marginEnd="4sp"
-                android:layout_marginBottom="47dp"
-                android:layout_toEndOf="@id/imageCrypto"
-                android:text="btc"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtCryptoId"
-                android:layout_width="wrap_content"
-                android:layout_height="30sp"
-                android:layout_alignStart="@+id/txtCryptoSymbol"
-                android:layout_alignBottom="@+id/txtCryptoSymbol"
-                android:layout_marginStart="-3dp"
-                android:layout_marginTop="6sp"
-                android:layout_marginEnd="-197dp"
-                android:layout_marginBottom="-47dp"
-                android:layout_toStartOf="@id/txtCryptoPrice"
-                android:text="Id"
+                android:text="$"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutHistoryDetailCryptoVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutHistoryDetailCryptoPrice"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Volume : "
+                android:textSize="16sp"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/txtmarketcap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="29dp"
-                android:layout_marginBottom="48dp"
-                android:text="0.25%"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutHistoryDetailCryptoMarketCap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutHistoryDetailCryptoVolume"
+            android:layout_marginTop="8sp"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Market cap: "
+                android:textSize="16sp"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/txtvolume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="8dp"
-                android:text="0.25%"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
-        </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
+    </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="20sp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_post_background"
         android:text="Ok"
@@ -157,7 +176,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewMarket"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHistoryDetail"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 

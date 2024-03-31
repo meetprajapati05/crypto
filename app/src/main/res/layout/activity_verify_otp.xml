@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     style="@style/SCREEN"
     tools:context=".VerifyOtp">
 
@@ -21,6 +22,7 @@
             android:layout_marginTop="20sp"
             android:layout_marginEnd="20sp"
             android:textAlignment="center"
+            android:fontFamily="@font/kanit_semibold"
             style="@style/TEXT"
             android:text="Enter Verification Code"
             android:textColor="@color/black"
@@ -34,8 +36,9 @@
             android:layout_marginStart="20sp"
             style="@style/TEXT"
             android:layout_marginTop="5sp"
+            android:fontFamily="@font/lato_bold"
             android:layout_marginEnd="20sp"
-            android:text="We have sent you an SMS with a OTP code to your number for verification"
+            android:text="We have sent you an SMS with a OTP code to your number for verification."
             android:textAlignment="center" />
 
         <LinearLayout
@@ -179,7 +182,7 @@
                 android:paddingStart="5sp"
                 android:text="RESEND"
                 style="@style/TEXT"
-                android:textColor="@color/light_blue"
+                android:textColor="@color/light_green"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:visibility="invisible" />

@@ -2,6 +2,8 @@ package com.example.majorproject;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -47,6 +49,7 @@ public class HomePage extends AppCompatActivity {
     App app;
     MongoCollection<Document> collection;
     boolean first;
+    private double backPressedTime;
 
     boolean isEditGoogleAuth;
 
@@ -76,6 +79,20 @@ public class HomePage extends AppCompatActivity {
             editor.putString("email", user_email);
             editor.apply();
         }
+
+        //check the user are block by admin or not
+            collection.findOne(new Document("user_id", app.currentUser().getId().toString())).getAsync(new App.Callback<Document>() {
+                @Override
+                public void onResult(App.Result<Document> result) {
+                    if(result.get()!=null){
+                        boolean user_block = result.get().getBoolean("user_block");
+
+                        if(user_block){
+                            logout();
+                        }
+                    }
+                }
+            });
 
         if(isEditGoogleAuth){
             setFragment(new ProfileFragment());
@@ -124,6 +141,21 @@ public class HomePage extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 int itemId = item.getItemId();
+
+                //check the user are block by admin or not
+                    collection.findOne(new Document("user_id", app.currentUser().getId().toString())).getAsync(new App.Callback<Document>() {
+                        @Override
+                        public void onResult(App.Result<Document> result) {
+                            if(result.get()!=null){
+                                boolean user_block = result.get().getBoolean("user_block");
+
+                                if(user_block){
+                                    logout();
+                                }
+                            }
+                        }
+                    });
+
 
                if(itemId == R.id.bottomOptHome){
                    setFragment(new HomeFragment());
@@ -227,6 +259,27 @@ public class HomePage extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private  void  logout(){
+        //logout to block
+        new LogoutTask().execute();
+
+        SharedPreferences preferences = getSharedPreferences("MajorProject", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear(); // Clear all data from this SharedPreferences
+        editor.apply();
+
+        SharedPreferences preferencesWatchlist = getSharedPreferences("Watchlist", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editorWatchlist = preferencesWatchlist.edit();
+        editorWatchlist.clear(); // Clear all data from this SharedPreferences
+        editorWatchlist.apply();
+
+        //passintent on mainScreen
+        Intent iSignIn = new Intent(HomePage.this, SingIn.class);
+        iSignIn.putExtra("HomeLogout",true);
+        startActivity(iSignIn);
+        finishAffinity();
     }
 
     @Override

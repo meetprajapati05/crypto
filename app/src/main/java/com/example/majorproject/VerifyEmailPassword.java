@@ -53,6 +53,13 @@ public class VerifyEmailPassword extends AppCompatActivity {
             }
         });
 
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         Realm.init(this);
         app = new App(new AppConfiguration.Builder(getString(R.string.MONGO_APP_ID)).build());
 

@@ -31,7 +31,6 @@ public class WatchlistHomeAdapter extends RecyclerView.Adapter<WatchlistHomeAdap
     public WatchlistHomeAdapter(Context context, ArrayList<CryptoDataModel> cryptoData) {
         this.context = context;
         this.cryptoData = cryptoData;
-
     }
 
     @NonNull

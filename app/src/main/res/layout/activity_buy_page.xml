@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     style="@style/SCREEN"
     tools:context=".BuyPage">
 
@@ -11,16 +12,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TEXT"
-        app:navigationIcon="@drawable/baseline_arrow_back_24"
-        app:title="Buy"
-        />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/baseline_arrow_back_24">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/merriweather_bold"
+                android:text="Buy"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:background="@color/light_green"
+            android:alpha="0.2"
+            android:layout_below="@id/toolbar"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgBuyPageCrypto"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -105,19 +122,18 @@
         android:fontFamily="@font/alata"
         />
 
-    <TextView
-        android:id="@+id/text5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TEXT"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="20dp"
-        android:text="value"
-        android:textSize="18dp"
-        android:fontFamily="@font/alata"
-        />
+        <TextView
+            android:id="@+id/text5"
+            style="@style/TEXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/alata"
+            android:text="value"
+            android:textSize="18dp" />
 
     <TextView
         android:id="@+id/txtBuyPageCryptoValue"

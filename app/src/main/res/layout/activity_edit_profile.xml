@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/white"
-            android:fontFamily="@font/coiny"
+            android:fontFamily="@font/merriweather_bold"
             android:text="Profile"
             style="@style/TEXT"
             android:textColor="@color/black"

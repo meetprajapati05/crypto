@@ -429,8 +429,9 @@ public class SellPage extends AppCompatActivity {
 
         AndroidNetworking.initialize(SellPage.this,client);
 
-        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/{id}")
+        AndroidNetworking.get("https://api.coingecko.com/api/v3/coins/{id}?x_cg_demo_api_key=")
                 .addPathParameter("id", coin_id)
+                .addQueryParameter("x_cg_demo_api_key", getString(R.string.COINGECKO_API_KEY))
                 .setTag("BuyPageDetails")
                 .setPriority(Priority.HIGH)
                 .build()

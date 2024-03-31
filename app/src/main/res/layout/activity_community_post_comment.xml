@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/SCREEN"
+    android:background="@color/white"
     tools:context=".CommunityPostComment">
 
 
@@ -23,9 +24,16 @@
                 android:layout_gravity="center_horizontal"
                 android:textSize="24sp"
                 style="@style/TEXT"
-                android:fontFamily="@font/coiny"/>
+                android:fontFamily="@font/merriweather_bold"/>
 
         </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/light_green"
+        android:alpha="0.2"
+        android:layout_below="@id/toolbarAddCommunity"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshCommunityComment"
@@ -147,7 +155,7 @@
                     style="@style/TEXT"
                     android:layout_marginEnd="6sp"
                     android:layout_marginBottom="8sp"
-                    android:fontFamily="@font/allerta_stencil"
+                    android:fontFamily="@font/kanit_semibold"
                     android:text="Comments"
                     android:textStyle="bold"
                     android:textSize="20sp" />

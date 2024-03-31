@@ -44,6 +44,9 @@ public class SingIn extends AppCompatActivity {
 
     private boolean showPass = false;
 
+    private  double backspressTime;
+    boolean homeLogout;
+
     //Google Auth Variable
     GoogleSignInOptions gso;
     GoogleSignInClient googleSignInClient;
@@ -59,6 +62,8 @@ public class SingIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySingInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        homeLogout = getIntent().getBooleanExtra("HomeLogout", false);
 
         //Google SignIn Class obj creation
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestServerAuthCode(getString(R.string.SERVER_CLIENT_ID)).requestEmail().requestProfile().build();
@@ -85,6 +90,38 @@ public class SingIn extends AppCompatActivity {
                 binding.etLoginPass.setSelection(binding.etLoginPass.length());
             }
         });
+
+        //show block dailog when come to homepage logout
+        if(homeLogout){
+            Dialog dialog = new Dialog(SingIn.this);
+            dialog.setContentView(R.layout.dailog_warning_block_user);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(null);
+
+            dialog.findViewById(R.id.btnBlockDialogContect).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(Uri.parse("mailto:")); // Use this line to set the mailto: data scheme
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"developerpandav16@gmail.com"});
+
+                    Intent chooserIntent = Intent.createChooser(intent, "Share email");
+
+                    startActivity(chooserIntent);
+                    dialog.cancel();
+                }
+            });
+
+            dialog.findViewById(R.id.btnBlockDialogCancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
+
+            dialog.show();
+        }
 
         //Button LoginSignUp clicked code
         binding.btnLoginSignUp.setOnClickListener(new View.OnClickListener() {
@@ -483,5 +520,15 @@ public class SingIn extends AppCompatActivity {
                 Log.i("SignInLogoutFailed", "Logout unsuccessful");
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(backspressTime + 2000 > System.currentTimeMillis()){
+            super.onBackPressed();
+        }else{
+            Toast.makeText(getApplicationContext(), "Press again to exit", Toast.LENGTH_SHORT).show();
+        }
+        backspressTime = System.currentTimeMillis();
     }
 }
