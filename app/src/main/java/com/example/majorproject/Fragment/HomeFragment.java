@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Spannable;
@@ -131,6 +132,7 @@ public class HomeFragment extends Fragment {
         });
 
         binding.navigationHome.bringToFront();
+        binding.navigationHome.setItemIconTintList(null);
         binding.navigationHome.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -151,6 +153,16 @@ public class HomeFragment extends Fragment {
                 }
                 if(ItemId == R.id.drawerOptCalander){
                     startActivity(new Intent(getActivity(), SearchCurrency.class).putExtra("passTo", "Calander"));
+                }
+
+                if(ItemId == R.id.drawerOptYoutube){
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCmlG_1ahceuzFFq2Fjo4iCw")));
+                }
+                if(ItemId == R.id.drawerOptInstagram){
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/coing_team?igsh=OXFyYjZ4aTFncmpi")));
+                }
+                if (ItemId == R.id.drawerOptRate){
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+ getContext().getPackageName() +"&hl=en_IN&gl=US")));
                 }
 
                 new Handler().postDelayed(new Runnable() {

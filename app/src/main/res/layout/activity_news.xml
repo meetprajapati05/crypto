@@ -34,14 +34,13 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:background="@color/light_green"
+            android:alpha="0.2"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:background="@color/light_green"
-        android:alpha="0.2"
-        android:layout_marginTop="?attr/actionBarSize"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshNews"

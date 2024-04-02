@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.majorproject.BackgroundServices.NewsApiService;
 import com.example.majorproject.Fragment.HomeFragment;
 import com.example.majorproject.Fragment.MarketFragment;
 import com.example.majorproject.Fragment.PortfolioFragment;
@@ -49,6 +50,7 @@ public class HomePage extends AppCompatActivity {
     App app;
     MongoCollection<Document> collection;
     boolean first;
+    boolean previous;
     private double backPressedTime;
 
     boolean isEditGoogleAuth;
@@ -70,6 +72,8 @@ public class HomePage extends AppCompatActivity {
         userObjId = getIntent().getStringExtra("_id");
         signIn = getIntent().getBooleanExtra("signIn",false);
         first = getIntent().getBooleanExtra("first", false);
+
+        previous = getIntent().getBooleanExtra("previous", false);
 
         isEditGoogleAuth = getIntent().getBooleanExtra("isGoogleAuth", false);
 
@@ -98,6 +102,11 @@ public class HomePage extends AppCompatActivity {
             setFragment(new ProfileFragment());
             binding.bottomNavView.setSelectedItemId(R.id.bottomOptProfile);
         }
+
+        //if(!previous){
+            Intent serviceIntent = new Intent(this, NewsApiService.class);
+            startService(serviceIntent);
+        //}
 
         if(priviousPage!=null) {
             collection.findOne(new Document("_id", new ObjectId(userObjId))).getAsync(new App.Callback<Document>() {
@@ -280,6 +289,11 @@ public class HomePage extends AppCompatActivity {
         iSignIn.putExtra("HomeLogout",true);
         startActivity(iSignIn);
         finishAffinity();
+
+        //remove services
+        Intent serviceIntent = new Intent(this, NewsApiService.class);
+        stopService(serviceIntent);
+
     }
 
     @Override

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/drawerOptHome"
@@ -28,6 +28,32 @@
             android:title="Calander"
             android:icon="@drawable/baseline_calendar_month_24" />
 
-    </group>
+        <item android:title="Learning">
+
+            <menu>
+
+                <item
+                    android:id="@+id/drawerOptYoutube"
+                    android:title="You Tube"
+                    android:icon="@drawable/icon_you_tube" />
+
+                <item
+                    android:id="@+id/drawerOptInstagram"
+                    android:title="Instagram"
+                    android:icon="@drawable/icon_instagram" />
+
+            </menu>
+
+        </item>
+
+    <item android:title="Rate App">
+
+        <menu>
+            <item android:title="Rate Us"
+                android:id="@+id/drawerOptRate"
+                android:icon="@drawable/stars_color_icon"/>
+        </menu>
+
+    </item>
 
 </menu>

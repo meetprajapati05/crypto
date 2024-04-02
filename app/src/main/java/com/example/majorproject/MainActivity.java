@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     Intent iHome = new Intent(MainActivity.this, HomePage.class);
                     iHome.putExtra("email", user_id);
+                    iHome.putExtra("previous", true);
                     startActivity(iHome);
                     finish();
                 }

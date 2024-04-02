@@ -5,10 +5,14 @@ buildscript {
     repositories {
         mavenCentral()
         google()
+        jcenter()
         // This is causing the issue, especially if it's defined in a subproject.
         maven {
             name 'MavenRepo'
             url 'https://example.com/maven-repo'
+        }
+        maven {
+            url 'https://example.com/repository'
         }
     }
     dependencies {

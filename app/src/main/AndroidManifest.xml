@@ -8,6 +8,7 @@
     <uses-permission
         android:name="android.permission.CAMERA"
         tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -22,6 +23,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MajorProject"
         tools:targetApi="31">
+
+        <service
+            android:name=".BackgroundServices.NewsApiService"
+            android:enabled= "true"
+            android:exported= "true" >
+        </service>
+
         <activity
             android:name=".Wallet"
             android:exported="false" />
@@ -48,7 +56,8 @@
             android:exported="false" />
         <activity
             android:name=".News"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".CommunityPostComment"
             android:exported="false" />
@@ -119,6 +128,8 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+
     </application>
 
 </manifest>

@@ -400,6 +400,8 @@ public class VerifyOtp extends AppCompatActivity {
                                                                 public void onResult(App.Result<InsertOneResult> result) {
                                                                     if (result.isSuccess()) {
 
+                                                                       // sendEmail(email);
+
                                                                         // MongoDB insertion successful
                                                                         Toast.makeText(VerifyOtp.this, "Sign Up Successfully", Toast.LENGTH_SHORT).show();
                                                                         binding.verifyOtpProgress.setVisibility(View.INVISIBLE);
@@ -455,6 +457,60 @@ public class VerifyOtp extends AppCompatActivity {
             Toast.makeText(this, "VerifyCode is null", Toast.LENGTH_SHORT).show();
         }
     }
+
+    /*private void sendEmail(String email) {
+
+        String subject = "Hiii";
+        String body = "Hello User";
+        new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Void... params) {
+                return sendEmail(email, subject, body);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean success) {
+                if (success) {
+                    Toast.makeText(VerifyOtp.this, "Email sent successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(VerifyOtp.this, "Failed to send email", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute();
+    }
+
+    private boolean sendEmail(String recipient, String subject, String body) {
+        try {
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+            // Replace these with your actual email credentials
+            final String username = "developerpandav16@gmail.com";
+            final String password = "Pandav@2003";
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }
+                    });
+
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
+            message.setSubject(subject);
+            message.setText(body);
+
+            Transport.send(message);
+            return true;
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }*/
 
     @Override
     public void onBackPressed() {

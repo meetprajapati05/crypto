@@ -207,24 +207,31 @@
 
                 </RelativeLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/addCommunityRecycler"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/layoutAddCommunityUploadPost"
-                    android:layout_marginBottom="5sp"
-                    />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layoutAddCommunityUploadPost">
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/progressAddCommunityRecycler"
-                    android:layout_width="50sp"
-                    android:layout_height="50sp"
-                    android:layout_centerInParent="true"
-                    app:lottie_colorFilter="@color/light_green"
-                    android:visibility="gone"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/recyclerview_progress_2" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/addCommunityRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5sp"
+                        />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/progressAddCommunityRecycler"
+                        android:layout_width="120sp"
+                        android:layout_height="120sp"
+                        android:layout_centerInParent="true"
+                        android:visibility="visible"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/recyclerview_progress_2" />
+
+                </RelativeLayout>
+
+
 
             </RelativeLayout>
 

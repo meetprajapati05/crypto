@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
+import com.example.majorproject.BackgroundServices.NewsApiService;
 import com.example.majorproject.EditProfile;
 import com.example.majorproject.History;
 import com.example.majorproject.Models.UserModel;
@@ -111,6 +112,10 @@ public class ProfileFragment extends Fragment {
                                 Intent iSignIn = new Intent(getContext(), SingIn.class);
                                 startActivity(iSignIn);
                                 requireActivity().finishAffinity();
+
+                                //remove services
+                                Intent serviceIntent = new Intent(getContext(), NewsApiService.class);
+                                getContext().stopService(serviceIntent);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -307,10 +312,10 @@ public class ProfileFragment extends Fragment {
             // This method is called on the UI thread after doInBackground finishes
             if (success) {
                 // Handle UI updates or post-logout actions here
-                Toast.makeText(requireContext(), "Logout successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Logout successful", Toast.LENGTH_SHORT).show();
             } else {
                 // Handle failure or notify the user
-                Toast.makeText(requireContext(), "Logout failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Logout failed", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -353,6 +358,10 @@ public class ProfileFragment extends Fragment {
                 Intent iSignIn = new Intent(mContext, SingIn.class);
                 mContext.startActivity(iSignIn);
                 requireActivity().finishAffinity();
+
+                //remove services
+                Intent serviceIntent = new Intent(getContext(), NewsApiService.class);
+                getContext().stopService(serviceIntent);
             } else {
                 // Failed to remove user
                 System.err.println("Failed to remove user");
