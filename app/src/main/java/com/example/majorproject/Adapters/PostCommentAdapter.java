@@ -45,13 +45,15 @@ public class PostCommentAdapter extends RecyclerView.Adapter<PostCommentAdapter.
                     .load(data.get(position).getUser_image())
                     .into(holder.imgProfile);
         } else {
-            TextDrawable firstLatterImage = TextDrawable.builder()
-                    .beginConfig()
-                    .width(50)
-                    .height(50)
-                    .endConfig()
-                    .buildRect(String.valueOf(data.get(position).getUser_name().toUpperCase().charAt(0)), context.getResources().getColor(R.color.light_green));
-            holder.imgProfile.setImageDrawable(firstLatterImage);
+            if(data.get(position).getUser_name()!=null) {
+                TextDrawable firstLatterImage = TextDrawable.builder()
+                        .beginConfig()
+                        .width(ViewGroup.LayoutParams.MATCH_PARENT)
+                        .height(ViewGroup.LayoutParams.MATCH_PARENT)
+                        .endConfig()
+                        .buildRect(String.valueOf(data.get(position).getUser_name().toUpperCase().charAt(0)), context.getResources().getColor(R.color.light_green));
+                holder.imgProfile.setImageDrawable(firstLatterImage);
+            }
         }
 
         //set user name

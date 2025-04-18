@@ -103,10 +103,10 @@ public class HomePage extends AppCompatActivity {
             binding.bottomNavView.setSelectedItemId(R.id.bottomOptProfile);
         }
 
-        //if(!previous){
+        if(!previous){
             Intent serviceIntent = new Intent(this, NewsApiService.class);
             startService(serviceIntent);
-        //}
+        }
 
         if(priviousPage!=null) {
             collection.findOne(new Document("_id", new ObjectId(userObjId))).getAsync(new App.Callback<Document>() {

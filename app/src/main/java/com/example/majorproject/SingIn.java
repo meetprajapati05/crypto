@@ -1,10 +1,17 @@
 package com.example.majorproject;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -15,6 +22,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.majorproject.databinding.ActivitySingInBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -42,6 +51,8 @@ import io.realm.mongodb.mongo.result.InsertOneResult;
 public class SingIn extends AppCompatActivity {
     ActivitySingInBinding binding;
 
+    private static final int MY_CAMERA_REQUEST_CODE=1001;
+
     private boolean showPass = false;
 
     private  double backspressTime;
@@ -57,6 +68,7 @@ public class SingIn extends AppCompatActivity {
     MongoClient mongoClient;
     MongoDatabase mongoDatabase;
 
+    @SuppressLint("ObsoleteSdkInt")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +102,61 @@ public class SingIn extends AppCompatActivity {
                 binding.etLoginPass.setSelection(binding.etLoginPass.length());
             }
         });
+
+        String[] appPermission = {Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.CAMERA , Manifest.permission.READ_EXTERNAL_STORAGE};
+
+        //set notification then first time app is open in devices
+        SharedPreferences preferences = getSharedPreferences("MajorPermission",MODE_PRIVATE);
+        boolean firsttime = preferences.getBoolean("FirstTime", false);
+
+        if(!firsttime) {
+
+            for(String perm : appPermission) {
+
+                //Notification
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+
+                        requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
+
+                    }
+                }
+
+                //Camera
+                if (ContextCompat.checkSelfPermission(this,perm) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{android.Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+                }
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
+                    }
+                }else{
+
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R) {
+
+                        if(!Environment.isExternalStorageManager()) {
+                            try {
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                                intent.addCategory("android.intent.category.DEFAULT");
+                                intent.setData(Uri.parse(String.format("package:%s",getApplicationContext().getPackageName())));
+                                startActivityIfNeeded(intent,1001);
+                            }catch (Exception e){
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                                intent.setData(Uri.parse(String.format("package:%s",getApplicationContext().getPackageName())));
+                                startActivityIfNeeded(intent,1001);
+                            }
+                        }
+                    }
+                }
+            }
+
+            SharedPreferences preferences1 = getSharedPreferences("MajorPermission",MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences1.edit();
+            editor.putBoolean("FirstTime", true);
+            editor.apply();
+        }
+
 
         //show block dailog when come to homepage logout
         if(homeLogout){

@@ -39,7 +39,6 @@ import java.io.ByteArrayOutputStream;
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
@@ -335,12 +334,44 @@ public class EditProfile extends AppCompatActivity {
                 btnAddImageGal.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        //Storage
+                       /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (ContextCompat.checkSelfPermission(EditProfile.this,android.Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(EditProfile.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
+                            }else{
+                                Intent intent = new Intent();
+                                intent.setType("image/*");
+                                intent.setAction(Intent.ACTION_GET_CONTENT);
 
-                        startActivityIfNeeded(Intent.createChooser(intent, "Select Image : "), GALARY_REQUEST_ID);
-                        bottomSheetDialog.dismiss();
+                                startActivityIfNeeded(Intent.createChooser(intent, "Select Image : "), GALARY_REQUEST_ID);
+                                bottomSheetDialog.dismiss();
+                            }
+                        }else{
+
+                            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R) {
+
+                                if(!Environment.isExternalStorageManager()) {
+
+                                    try {
+                                        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                                        intent.addCategory("android.intent.category.DEFAULT");
+                                        intent.setData(Uri.parse(String.format("package:%s",getApplicationContext().getPackageName())));
+                                        startActivityIfNeeded(intent,GALARY_REQUEST_ID);
+                                    }catch (Exception e){
+                                        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                                        intent.setData(Uri.parse(String.format("package:%s",getApplicationContext().getPackageName())));
+                                        startActivityIfNeeded(intent,GALARY_REQUEST_ID);
+                                    }
+                                }else{*/
+                                    Intent intent = new Intent();
+                                    intent.setType("image/*");
+                                    intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                                    startActivityIfNeeded(Intent.createChooser(intent, "Select Image : "), GALARY_REQUEST_ID);
+                                    bottomSheetDialog.dismiss();
+                               /* }
+                            }
+                        }*/
                     }
                 });
             }

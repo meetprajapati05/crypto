@@ -90,27 +90,34 @@ public class NewsApiService extends Service {
 
 
                                     JSONObject simpleobject = array.getJSONObject(0);
-
+                                    String NEWS_ID = simpleobject.getString("id");
                                     SharedPreferences preferences = getSharedPreferences("MajorProject", MODE_PRIVATE);
                                     String newsId = preferences.getString("newsId", null);
 
                                     if(newsId!=null){
 
-                                        if(newsId.equals(simpleobject.getJSONObject("source_info"))){
+                                        Log.e("NewsNotifyTesting", "News Id : " + newsId);
+
+                                        if(!newsId.equals(NEWS_ID)){
                                             SharedPreferences.Editor editor = preferences.edit();
-                                            editor.putString("newsId", simpleobject.getString("id"));
+                                            editor.putString("newsId", NEWS_ID);
                                             editor.apply();
+
+                                            Log.e("NewsNotifyTesting", "Okay Working.");
 
                                             String imgUrl = simpleobject.getString("imageurl");
                                             String title = simpleobject.getString("title");
                                             String body = simpleobject.getString("body");
 
                                             setNotification(NewsApiService.this,title,body, imgUrl);
+                                        }else{
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            editor.putString("newsId", NEWS_ID);
+                                            editor.apply();
                                         }
-
                                     }else{
                                         SharedPreferences.Editor editor = preferences.edit();
-                                        editor.putString("newsId", simpleobject.getString("id"));
+                                        editor.putString("newsId", NEWS_ID);
                                         editor.apply();
 
                                        /* String imgUrl = simpleobject.getString("imageurl");

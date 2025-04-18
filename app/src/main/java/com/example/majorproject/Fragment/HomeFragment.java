@@ -113,7 +113,7 @@ public class HomeFragment extends Fragment {
 
         setNews(getContext());
 
-        //set maerquee text
+        //set marquee text
         binding.txtGlobleMarketCap.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         binding.txtGlobleMarketCap.setSelected(true);
 
@@ -156,7 +156,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 if(ItemId == R.id.drawerOptYoutube){
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCmlG_1ahceuzFFq2Fjo4iCw")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtube.com/@coingalaxy24?si=lJsRORalbAir2LDD")));
                 }
                 if(ItemId == R.id.drawerOptInstagram){
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/coing_team?igsh=OXFyYjZ4aTFncmpi")));

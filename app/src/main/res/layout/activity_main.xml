@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/spleetAnimation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:lottie_rawRes="@raw/split_screen_animation"

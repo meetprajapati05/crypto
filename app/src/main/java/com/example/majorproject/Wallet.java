@@ -43,6 +43,8 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
     String email;
     int payableVal = 0;
     int payableDollar;
+    Checkout checkout;
+    String user_email, phone_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,10 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
         setContentView(binding.getRoot());
 
         userObjId = getIntent().getStringExtra("_id");
+
+        checkout = new Checkout();
+        checkout.setKeyID(getString(R.string.RAZORPAY_API_ID));
+
 
         //initlizing Realm and realmDatabase
         Realm.init(this);
@@ -105,13 +111,13 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
             }
         });
 
+
+
         binding.btnWalletPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Checkout.preload(getApplicationContext());
 
-                Checkout checkout = new Checkout();
-                checkout.setKeyID(getString(R.string.RAZORPAY_API_ID));
+
 
                 MongoCollection<Document> collection = database.getCollection(getString(R.string.MONGO_DB_USER_COLLECTION));
 
@@ -119,47 +125,50 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
                     @SuppressLint({"SetTextI18n"})
                     @Override
                     public void onResult(App.Result<Document> result) {
-                        if(result.get()!=null){
-                            String user_id = result.get().getString("user_id");
-                            String user_name = result.get().getString("name");
-                            String user_email = result.get().getString("email");
-                            String phone_no = result.get().getString("phone_no");
-                            String img_link = result.get().getString("img_url");
-
-                            checkout.setImage(R.drawable.app_logo);
-
-                            /**
-                             * Reference to current activity
-                             */
-                            final Activity activity = Wallet.this;
-
-                            /**
-                             * Pass your payment options to the Razorpay Checkout as a JSONObject
-                             */
-
-                            int amount = Math.round(Float.parseFloat(""+payableVal) * 100);
-
-                            try {
-                                JSONObject options = new JSONObject();
-                                options.put("name","Coin Galaxy");
-                                options.put("description", "Add money to wallet.");
-                                options.put("theme.color", getColor(R.color.light_green));
-                                options.put("amount", amount);
-                                options.put("prefill.contact", phone_no);
-                                options.put("prefill.email", email);
-
-                                checkout.open(activity, options);
-
-                            } catch(Exception e) {
-                                Log.e("ErrPayment", "Error in starting Razorpay Checkout", e);
-                            }
-
+                        if (result.get() != null) {
+                            user_email = result.get().getString("email");
+                            phone_no = result.get().getString("phone_no");
                         }
-                    }
-                });
+                                                                                              }
+                                                                                          });
+
+
+                /**
+                 * Reference to current activity
+                 */
+                final Activity activity = Wallet.this;
+
+                /**
+                 * Pass your payment options to the Razorpay Checkout as a JSONObject
+                 */
+
+                int amount = Math.round(Float.parseFloat(""+payableVal) * 100);
+
+                try {
+                    JSONObject options = new JSONObject();
+                    options.put("name","Coin Galaxy");
+                    options.put("description", "Add money to wallet.");
+                    options.put("theme.color", getColor(R.color.light_green));
+                    options.put("amount", amount);
+                    options.put("prefill.contact", phone_no);
+                    options.put("prefill.email", user_email);
+
+                    checkout.open(activity, options);
+
+                } catch(Exception e) {
+                    Log.e("ErrPayment", "Error in starting Razorpay Checkout", e);
+                }
+
+               /*
+                });*/
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void setBalanceAndInvest() {
@@ -335,6 +344,7 @@ public class Wallet extends AppCompatActivity implements PaymentResultWithDataLi
             }
         });
     }
+
 
     @Override
     protected void onRestart() {
